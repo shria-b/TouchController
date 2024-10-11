@@ -43,8 +43,6 @@ class ControllerHudModel : KoinComponent {
                     right = anyPointerInButton(layout.right),
                 )
 
-                client.inGameHud
-
                 _state.getAndUpdate { state ->
                     state.copy(
                         status = state.status.copy(
