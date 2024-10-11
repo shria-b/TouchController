@@ -64,10 +64,11 @@ object ControllerHudRenderer : KoinComponent {
         val client = MinecraftClient.getInstance()
         val disabled = client.currentScreen != null
 
-        val state = viewModel.state.value
-        when (val layout = state.config.layout) {
-            is ButtonHudLayoutConfig -> drawButton(drawContext, state.config, state.status.button, layout, disabled)
-            is JoystickHudLayoutConfig -> drawJoystick(drawContext, state.config, state.status.joystick, layout, disabled)
+        val config = viewModel.config.value
+        val status = viewModel.status.value
+        when (val layout = config.layout) {
+            is ButtonHudLayoutConfig -> drawButton(drawContext, config, status.button, layout, disabled)
+            is JoystickHudLayoutConfig -> drawJoystick(drawContext, config, status.joystick, layout, disabled)
         }
     }
 }

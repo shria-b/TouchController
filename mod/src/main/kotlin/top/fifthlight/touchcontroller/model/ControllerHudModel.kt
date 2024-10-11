@@ -1,60 +1,65 @@
 package top.fifthlight.touchcontroller.model
 
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.getAndUpdate
-import net.minecraft.client.MinecraftClient
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import top.fifthlight.touchcontroller.ext.scaledSize
 import top.fifthlight.touchcontroller.layout.ButtonHudLayout
 import top.fifthlight.touchcontroller.layout.ButtonLayout
-import top.fifthlight.touchcontroller.state.ButtonHudLayoutConfig
-import top.fifthlight.touchcontroller.state.ButtonStatus
-import top.fifthlight.touchcontroller.state.ControllerHudState
-import top.fifthlight.touchcontroller.state.JoystickHudLayoutConfig
+import top.fifthlight.touchcontroller.state.*
 
 class ControllerHudModel : KoinComponent {
-    private val touchState by inject<TouchStateModel>()
-    private val _state = MutableStateFlow(ControllerHudState())
-    val state = _state.asStateFlow()
+    private val touchStateModel by inject<TouchStateModel>()
+    private val globalStateModel by inject<GlobalStateModel>()
+    private val _config = MutableStateFlow(ControllerHudConfig())
+    val config = _config.asStateFlow()
+    private val _status = MutableStateFlow(ControllerHudStatus())
+    val status = _status.asStateFlow()
 
-    fun refresh(client: MinecraftClient) {
-        val window = client.window
+    init {
+        @OptIn(DelicateCoroutinesApi::class)
+        GlobalScope.launch {
+            touchStateModel.state.combine(globalStateModel.state, ::Pair)
+                .combine(config) { (touch, global), config -> Triple(touch, global, config) }
+                .map { (touch, global, config) ->
+                    when (val layoutConfig = config.layout) {
+                        is ButtonHudLayoutConfig -> {
+                            val layout = ButtonHudLayout(layoutConfig, config.padding)
+                            val offset = config.align.alignOffset(global.windowSize, layout.size)
 
-        val hudState = state.value
-        val touchState = touchState.state.value
+                            fun anyPointerInButton(layout: ButtonLayout): Boolean = touch.pointers.any {
+                                val scaledOffset = it.position / global.scaleFactor
+                                scaledOffset.inRegion(offset + layout.offset, layout.size)
+                            }
 
-        val windowSize = window.scaledSize
-        when (val layoutConfig = hudState.config.layout) {
-            is ButtonHudLayoutConfig -> {
-                val layout = ButtonHudLayout(layoutConfig, hudState.config.padding)
-                val offset = hudState.config.align.alignOffset(windowSize, layout.size)
+                            ControllerHudStatus(
+                                button = ButtonStatus(
+                                    forward = anyPointerInButton(layout.forward),
+                                    backward = anyPointerInButton(layout.backward),
+                                    left = anyPointerInButton(layout.left),
+                                    right = anyPointerInButton(layout.right),
+                                )
+                            )
+                        }
 
-                fun anyPointerInButton(layout: ButtonLayout): Boolean = touchState.pointers.any {
-                    val scaledOffset = it.position / window.scaleFactor.toFloat()
-                    scaledOffset.inRegion(offset + layout.offset, layout.size)
+                        is JoystickHudLayoutConfig -> {
+                            // TODO
+                            ControllerHudStatus(
+                                joystick = JoystickStatus(
+                                    x = 0f,
+                                    y = 0f
+                                )
+                            )
+                        }
+                    }
+                }.collect {
+                    _status.value = it
                 }
-
-                val buttonStatus = ButtonStatus(
-                    forward = anyPointerInButton(layout.forward),
-                    backward = anyPointerInButton(layout.backward),
-                    left = anyPointerInButton(layout.left),
-                    right = anyPointerInButton(layout.right),
-                )
-
-                _state.getAndUpdate { state ->
-                    state.copy(
-                        status = state.status.copy(
-                            button = buttonStatus
-                        )
-                    )
-                }
-            }
-
-            is JoystickHudLayoutConfig -> {
-                // TODO
-            }
         }
     }
 }

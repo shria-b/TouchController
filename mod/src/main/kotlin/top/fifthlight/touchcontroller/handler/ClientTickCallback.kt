@@ -5,7 +5,7 @@ import net.minecraft.client.MinecraftClient
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.SocketProxyHolder
-import top.fifthlight.touchcontroller.model.ControllerHudModel
+import top.fifthlight.touchcontroller.model.GlobalStateModel
 import top.fifthlight.touchcontroller.model.TouchStateModel
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.proxy.message.AddPointerMessage
@@ -14,11 +14,12 @@ import top.fifthlight.touchcontroller.state.PointerState
 
 class ClientTickStartCallback: ClientTickEvents.StartTick, KoinComponent {
     private val handler: SocketProxyHolder by inject()
-    private val controllerHudModel: ControllerHudModel by inject()
     private val touchStateModel: TouchStateModel by inject()
+    private val globalStateModel: GlobalStateModel by inject()
 
     override fun onStartTick(client: MinecraftClient) {
-        var touchUpdated = false
+        globalStateModel.update(client)
+
         handler.socketProxy?.let { proxy ->
             proxy.receive { message ->
                 when (message) {
@@ -28,7 +29,6 @@ class ClientTickStartCallback: ClientTickEvents.StartTick, KoinComponent {
                             index = message.index,
                             position = message.position
                         ))
-                        touchUpdated = true
                     }
                 }
             }
@@ -48,11 +48,6 @@ class ClientTickStartCallback: ClientTickEvents.StartTick, KoinComponent {
             } else {
                 touchStateModel.clearPointer()
             }
-            touchUpdated = true
-        }
-
-        if (touchUpdated) {
-            controllerHudModel.refresh(client)
         }
     }
 }

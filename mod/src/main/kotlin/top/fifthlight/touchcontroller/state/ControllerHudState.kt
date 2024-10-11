@@ -3,11 +3,6 @@ package top.fifthlight.touchcontroller.state
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 
-data class ControllerHudState(
-    val config: ControllerHudConfig = ControllerHudConfig(),
-    val status: ControllerHudStatus = ControllerHudStatus(),
-)
-
 data class ControllerHudConfig(
     val padding: Int = 8,
     val opacity: Float = 1f,

@@ -18,21 +18,22 @@ class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
             return
         }
 
-        val state = controllerHudModel.state.value
+        val config = controllerHudModel.config.value
+        val status = controllerHudModel.status.value
 
-        when (state.config.layout) {
+        when (config.layout) {
             is ButtonHudLayoutConfig -> {
-                val status = state.status.button
-                if (status.forward) {
+                val buttonStatus = status.button
+                if (buttonStatus.forward) {
                     input.pressingForward = true
                 }
-                if (status.backward) {
+                if (buttonStatus.backward) {
                     input.pressingBack = true
                 }
-                if (status.left) {
+                if (buttonStatus.left) {
                     input.pressingLeft = true
                 }
-                if (status.right) {
+                if (buttonStatus.right) {
                     input.pressingRight = true
                 }
             }

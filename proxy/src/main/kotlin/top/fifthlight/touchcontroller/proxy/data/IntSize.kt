@@ -9,6 +9,10 @@ value class IntSize(
     val height: Int
         get() = packed.toInt()
 
+    companion object {
+        val ZERO = IntSize(0, 0)
+    }
+
     operator fun plus(length: Int) = IntSize(width = width + length, height = height + length)
 }
 

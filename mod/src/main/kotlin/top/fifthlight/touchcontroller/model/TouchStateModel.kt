@@ -2,7 +2,7 @@ package top.fifthlight.touchcontroller.model
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.getAndUpdate
+import kotlinx.coroutines.flow.update
 import org.koin.core.component.KoinComponent
 import top.fifthlight.touchcontroller.state.PointerState
 import top.fifthlight.touchcontroller.state.TouchState
@@ -12,7 +12,7 @@ class TouchStateModel: KoinComponent {
     val state = _state.asStateFlow()
 
     fun addPointer(pointer: PointerState) {
-        _state.getAndUpdate { state ->
+        _state.update { state ->
             state.copy(
                 pointers = state.pointers.filter { it.index != pointer.index } + pointer
             )
@@ -20,7 +20,7 @@ class TouchStateModel: KoinComponent {
     }
 
     fun removePointer(index: Int) {
-        _state.getAndUpdate { state ->
+        _state.update { state ->
             state.copy(
                 pointers = state.pointers.filter { it.index != index }
             )
@@ -28,7 +28,7 @@ class TouchStateModel: KoinComponent {
     }
 
     fun clearPointer() {
-        _state.getAndUpdate { state ->
+        _state.update { state ->
             state.copy(
                 pointers = listOf()
             )

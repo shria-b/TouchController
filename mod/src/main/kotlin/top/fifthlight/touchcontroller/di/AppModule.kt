@@ -12,6 +12,7 @@ import top.fifthlight.touchcontroller.handler.KeyboardInputHandler
 import top.fifthlight.touchcontroller.handler.WorldRendererHandler
 import top.fifthlight.touchcontroller.model.ControllerHudModel
 import top.fifthlight.touchcontroller.model.CrosshairStateModel
+import top.fifthlight.touchcontroller.model.GlobalStateModel
 import top.fifthlight.touchcontroller.model.TouchStateModel
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback as FabricHudRenderCallback
 import top.fifthlight.touchcontroller.event.HudRenderCallback as TouchControllerHudRenderCallback
@@ -22,6 +23,7 @@ val appModule = module {
     single<StartTick> { ClientTickStartCallback() }
     single<KeyboardInputEvents.EndInputTick> { KeyboardInputHandler() }
     single { WorldRendererHandler() } binds arrayOf(BeforeBlockOutline::class, TouchControllerHudRenderCallback.CrosshairRender::class)
+    single { GlobalStateModel() }
     single { ControllerHudModel() }
     single { TouchStateModel() }
     single { CrosshairStateModel() }
