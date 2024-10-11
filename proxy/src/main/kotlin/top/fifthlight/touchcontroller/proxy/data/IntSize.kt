@@ -13,6 +13,12 @@ value class IntSize(
         val ZERO = IntSize(0, 0)
     }
 
+    operator fun contains(offset: Offset): Boolean {
+        val x = 0 <= offset.x && offset.x < width
+        val y = 0 <= offset.y && offset.y < height
+        return x && y
+    }
+
     operator fun plus(length: Int) = IntSize(width = width + length, height = height + length)
 }
 

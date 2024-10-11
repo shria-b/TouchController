@@ -1,12 +1,36 @@
 package top.fifthlight.touchcontroller.handler
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.RenderTickCounter
-import top.fifthlight.touchcontroller.render.ControllerHudRenderer
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import top.fifthlight.touchcontroller.ext.scaledWindowSize
+import top.fifthlight.touchcontroller.layout.Context
+import top.fifthlight.touchcontroller.layout.Hud
+import top.fifthlight.touchcontroller.model.ControllerHudModel
+import top.fifthlight.touchcontroller.model.CrosshairStateModel
+import top.fifthlight.touchcontroller.model.TouchStateModel
+import top.fifthlight.touchcontroller.proxy.data.IntOffset
 
-class HudCallbackHandler: HudRenderCallback {
+class HudCallbackHandler : HudRenderCallback, KoinComponent {
+    private val controllerHudModel: ControllerHudModel by inject()
+    private val touchStateModel: TouchStateModel by inject()
+    private val crosshairStateModel: CrosshairStateModel by inject()
+
     override fun onHudRender(drawContext: DrawContext, tickCounter: RenderTickCounter) {
-        ControllerHudRenderer.render(drawContext, tickCounter)
+        val client = MinecraftClient.getInstance()
+        val status = Context(
+            drawContext = drawContext,
+            size = drawContext.scaledWindowSize,
+            offset = IntOffset.ZERO,
+            scale = client.window.scaleFactor.toFloat(),
+            pointers = touchStateModel.pointers
+        ).run {
+            Hud(controllerHudModel.config, crosshairStateModel.state)
+            status
+        }
+        controllerHudModel.state = status
     }
 }

@@ -4,7 +4,7 @@ import top.fifthlight.touchcontroller.proxy.data.Offset
 
 data class CrosshairState(
     val config: CrosshairConfig = CrosshairConfig(),
-    val status: CrosshairStatus = CrosshairStatus(),
+    val status: CrosshairStatus? = null,
 )
 
 data class CrosshairConfig(
@@ -13,7 +13,6 @@ data class CrosshairConfig(
 )
 
 data class CrosshairStatus(
-    val enabled: Boolean = true,
-    val position: Offset = Offset(left = 128f, top = 128f),
-    val breakPercent: Float = .5f,
+    val position: Offset,
+    val breakPercent: Float,
 )

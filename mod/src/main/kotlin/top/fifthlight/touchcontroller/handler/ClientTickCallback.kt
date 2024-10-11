@@ -10,7 +10,6 @@ import top.fifthlight.touchcontroller.model.TouchStateModel
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.proxy.message.AddPointerMessage
 import top.fifthlight.touchcontroller.proxy.message.VersionMessage
-import top.fifthlight.touchcontroller.state.PointerState
 
 class ClientTickStartCallback: ClientTickEvents.StartTick, KoinComponent {
     private val handler: SocketProxyHolder by inject()
@@ -25,10 +24,10 @@ class ClientTickStartCallback: ClientTickEvents.StartTick, KoinComponent {
                 when (message) {
                     is VersionMessage -> {}
                     is AddPointerMessage -> {
-                        touchStateModel.addPointer(PointerState(
+                        touchStateModel.addPointer(
                             index = message.index,
                             position = message.position
-                        ))
+                        )
                     }
                 }
             }
@@ -40,10 +39,8 @@ class ClientTickStartCallback: ClientTickEvents.StartTick, KoinComponent {
                     top = client.mouse.y.toFloat()
                 )
                 touchStateModel.addPointer(
-                    PointerState(
-                        index = 0,
-                        position = mousePosition
-                    )
+                    index = 0,
+                    position = mousePosition
                 )
             } else {
                 touchStateModel.clearPointer()

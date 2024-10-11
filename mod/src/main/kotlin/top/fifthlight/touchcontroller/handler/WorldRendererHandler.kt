@@ -6,7 +6,6 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.RenderTickCounter
 import net.minecraft.util.hit.HitResult
 import top.fifthlight.touchcontroller.event.HudRenderCallback
-import top.fifthlight.touchcontroller.render.CrosshairRenderer
 
 class WorldRendererHandler: BeforeBlockOutline, HudRenderCallback.CrosshairRender {
     override fun beforeBlockOutline(context: WorldRenderContext, hitResult: HitResult?): Boolean {
@@ -14,7 +13,6 @@ class WorldRendererHandler: BeforeBlockOutline, HudRenderCallback.CrosshairRende
     }
 
     override fun onCrosshairRender(drawContext: DrawContext, tickCounter: RenderTickCounter): Boolean {
-        CrosshairRenderer.render(drawContext, tickCounter)
         return false
     }
 }

@@ -1,37 +1,21 @@
 package top.fifthlight.touchcontroller.model
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import org.koin.core.component.KoinComponent
-import top.fifthlight.touchcontroller.state.PointerState
-import top.fifthlight.touchcontroller.state.TouchState
+import top.fifthlight.touchcontroller.proxy.data.Offset
+import top.fifthlight.touchcontroller.state.Pointer
 
-class TouchStateModel: KoinComponent {
-    private val _state = MutableStateFlow(TouchState())
-    val state = _state.asStateFlow()
+class TouchStateModel : KoinComponent {
+    val pointers = HashMap<Int, Pointer>()
 
-    fun addPointer(pointer: PointerState) {
-        _state.update { state ->
-            state.copy(
-                pointers = state.pointers.filter { it.index != pointer.index } + pointer
-            )
-        }
+    fun addPointer(index: Int, position: Offset) {
+        pointers[index] = Pointer(position = position)
     }
 
     fun removePointer(index: Int) {
-        _state.update { state ->
-            state.copy(
-                pointers = state.pointers.filter { it.index != index }
-            )
-        }
+        pointers.remove(index)
     }
 
     fun clearPointer() {
-        _state.update { state ->
-            state.copy(
-                pointers = listOf()
-            )
-        }
+        pointers.clear()
     }
 }

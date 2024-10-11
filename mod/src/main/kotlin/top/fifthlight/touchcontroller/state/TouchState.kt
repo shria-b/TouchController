@@ -2,11 +2,14 @@ package top.fifthlight.touchcontroller.state
 
 import top.fifthlight.touchcontroller.proxy.data.Offset
 
-data class PointerState(
-    val index: Int,
-    val position: Offset
-)
+sealed class PointerState {
+    data object New: PointerState()
+    data object View: PointerState()
+    data class Button(val id: String): PointerState()
+    data class SwipeButton(val id: String): PointerState()
+}
 
-data class TouchState(
-    val pointers: List<PointerState> = listOf()
+data class Pointer(
+    var position: Offset,
+    var state: PointerState = PointerState.New
 )
