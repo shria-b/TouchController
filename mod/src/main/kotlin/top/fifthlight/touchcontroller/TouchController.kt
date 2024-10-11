@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
 import org.koin.logger.slf4jLogger
@@ -16,6 +16,8 @@ import top.fifthlight.touchcontroller.event.KeyboardInputEvents
 import top.fifthlight.touchcontroller.proxy.LauncherSocketProxy
 import top.fifthlight.touchcontroller.proxy.createClientProxy
 import top.fifthlight.touchcontroller.proxy.message.VersionMessage
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback as FabricHudRenderCallback
+import top.fifthlight.touchcontroller.event.HudRenderCallback as TouchControllerHudRenderCallback
 
 private val controllerLogger = LoggerFactory.getLogger("TouchController")
 
@@ -53,7 +55,9 @@ object TouchController : ClientModInitializer {
 
 	private fun Koin.initialize() {
 		controllerLogger.info("Client proxy set, initialize mod")
-		HudRenderCallback.EVENT.register(get())
+		FabricHudRenderCallback.EVENT.register(get())
+		TouchControllerHudRenderCallback.CROSSHAIR.register(get())
+		WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register(get())
 		ClientTickEvents.START_CLIENT_TICK.register(get())
 		KeyboardInputEvents.END_INPUT_TICK.register(get())
 	}
