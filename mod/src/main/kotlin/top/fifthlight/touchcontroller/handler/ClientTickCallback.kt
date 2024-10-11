@@ -33,17 +33,21 @@ class ClientTickStartCallback: ClientTickEvents.StartTick, KoinComponent {
                 }
             }
         } ?: run {
-            if (client.mouse.isCursorLocked) {
-                client.mouse.unlockCursor()
+            val mouse = client.mouse
+            if (mouse.wasLeftButtonClicked()) {
+                val mousePosition = Offset(
+                    left = client.mouse.x.toFloat(),
+                    top = client.mouse.y.toFloat()
+                )
+                touchStateModel.addPointer(
+                    PointerState(
+                        index = 0,
+                        position = mousePosition
+                    )
+                )
+            } else {
+                touchStateModel.clearPointer()
             }
-            val mousePosition = Offset(
-                left = client.mouse.x.toFloat(),
-                top = client.mouse.y.toFloat()
-            )
-            touchStateModel.addPointer(PointerState(
-                index = 0,
-                position = mousePosition
-            ))
             touchUpdated = true
         }
 
