@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.fifthlight.touchcontroller.event.HudRenderCallback;
 
 @Mixin(InGameHud.class)
-public class InGameHudMixin {
+public abstract class InGameHudMixin {
     @Inject(method = "renderCrosshair", at = @At("HEAD"), cancellable = true)
     public void renderCrosshair(DrawContext drawContext, RenderTickCounter tickCounter, CallbackInfo callbackInfo) {
         boolean shouldRender = HudRenderCallback.INSTANCE.getCROSSHAIR().invoker().onCrosshairRender(drawContext, tickCounter);

@@ -8,7 +8,11 @@ class TouchStateModel : KoinComponent {
     val pointers = HashMap<Int, Pointer>()
 
     fun addPointer(index: Int, position: Offset) {
-        pointers[index] = Pointer(position = position)
+        pointers[index]?.let { pointer ->
+            pointer.position = position
+        } ?: run{
+            pointers[index] = Pointer(position = position)
+        }
     }
 
     fun removePointer(index: Int) {

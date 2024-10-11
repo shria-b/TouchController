@@ -11,7 +11,6 @@ import org.joml.Matrix4f
 import top.fifthlight.touchcontroller.ext.withBlend
 import top.fifthlight.touchcontroller.ext.withBlendFunction
 import top.fifthlight.touchcontroller.ext.withMatrix
-import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.CrosshairConfig
 import top.fifthlight.touchcontroller.state.CrosshairState
@@ -68,6 +67,7 @@ private fun renderInner(drawContext: DrawContext, config: CrosshairConfig, state
 
     BufferRenderer.drawWithGlobalProgram(bufferBuilder.end())
 }
+
 fun Context.Crosshair(state: CrosshairState) {
     val status = state.status
     val config = state.config
@@ -76,9 +76,9 @@ fun Context.Crosshair(state: CrosshairState) {
         return
     }
 
-    val center = IntOffset(
-        left = status.position.left.toInt(),
-        top = status.position.top.toInt(),
+    val center = Offset(
+        left = status.position.left,
+        top = status.position.top,
     )
 
     drawContext.matrices.withMatrix {
@@ -89,10 +89,10 @@ fun Context.Crosshair(state: CrosshairState) {
                 srcAlpha = GlStateManager.SrcFactor.ONE,
                 dstAlpha = GlStateManager.DstFactor.ZERO
             ) {
-                translate(center.left.toFloat(), center.top.toFloat(), 0f)
-                renderOuter(drawContext, state.config)
+                translate(center.left, center.top, 0f)
+                renderOuter(drawContext, config)
                 if (status.breakPercent > 0f) {
-                    renderInner(drawContext, state.config, status)
+                    renderInner(drawContext, config, status)
                 }
             }
         }

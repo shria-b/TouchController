@@ -6,7 +6,10 @@
     "defaultRequire": 1
   },
   "client": [
+    "ClientPlayerInteractionManagerAccessor",
+    "CrosshairTargetMixin",
     "CursorLockMixin",
+    "DisableMouseDirectionMixin",
     "InGameHudMixin",
     "KeyboardInputMixin"
   ]

@@ -28,7 +28,13 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
             scale = client.window.scaleFactor.toFloat(),
             pointers = touchStateModel.pointers
         ).run {
-            Hud(controllerHudModel.config, crosshairStateModel.state)
+            Hud(
+                config = controllerHudModel.config,
+                crosshairModel = crosshairStateModel,
+                onViewDelta = { (x, y) ->
+                    client.player?.changeLookDirection(x.toDouble(), y.toDouble())
+                }
+            )
             status
         }
         controllerHudModel.state = status
