@@ -23,7 +23,7 @@ object ControllerHudRenderer : KoinComponent {
         disabled: Boolean
     ) {
         val layout = ButtonHudLayout(layoutConfig, config.padding)
-        val offset = config.align.alignOffset(drawContext.scaledWindowSize, config.align, layout.size)
+        val offset = config.align.alignOffset(drawContext.scaledWindowSize, layout.size)
 
         fun drawButton(layout: ButtonLayout, clicked: Boolean) {
             val color = if (!disabled && clicked) {
