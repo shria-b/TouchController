@@ -29,11 +29,7 @@ class ControllerHudModel : KoinComponent {
         when (val layoutConfig = hudState.config.layout) {
             is ButtonHudLayoutConfig -> {
                 val layout = ButtonHudLayout(layoutConfig, hudState.config.padding)
-                val offset = hudState.config.align.alignOffset(
-                    windowSize,
-                    hudState.config.align,
-                    layout.size
-                )
+                val offset = hudState.config.align.alignOffset(windowSize, layout.size)
 
                 fun anyPointerInButton(layout: ButtonLayout): Boolean = touchState.pointers.any {
                     val scaledOffset = it.position / window.scaleFactor.toFloat()
@@ -46,8 +42,6 @@ class ControllerHudModel : KoinComponent {
                     left = anyPointerInButton(layout.left),
                     right = anyPointerInButton(layout.right),
                 )
-
-                client.inGameHud
 
                 _state.getAndUpdate { state ->
                     state.copy(

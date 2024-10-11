@@ -23,8 +23,8 @@ enum class ControllerHudAlign {
     LEFT_BOTTOM,
     RIGHT_BOTTOM;
 
-    fun alignOffset(windowSize: IntSize, align: ControllerHudAlign, size: IntSize): IntOffset {
-        return when (align) {
+    fun alignOffset(windowSize: IntSize, size: IntSize): IntOffset {
+        return when (this) {
             LEFT_TOP -> IntOffset(
                 left = 0,
                 top = 0,
