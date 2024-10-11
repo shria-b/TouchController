@@ -40,22 +40,5 @@ class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
 
             }
         }
-
-        fun getMovementMultiplier(positive: Boolean, negative: Boolean): Float {
-            if (positive == negative) {
-                return 0.0f
-            }
-            return if (positive) 1.0f else -1.0f
-        }
-
-        val options = client.options
-        input.movementForward = getMovementMultiplier(input.pressingForward, input.pressingBack)
-        input.movementSideways = getMovementMultiplier(input.pressingLeft, input.pressingRight)
-        input.jumping = options.jumpKey.isPressed
-        input.sneaking = options.sneakKey.isPressed
-        if (slowDown) {
-            input.movementSideways *= slowDownFactor
-            input.movementForward *= slowDownFactor
-        }
     }
 }
