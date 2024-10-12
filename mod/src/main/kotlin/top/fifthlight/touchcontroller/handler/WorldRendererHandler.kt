@@ -11,6 +11,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.SocketProxyHolder
 import top.fifthlight.touchcontroller.event.HudRenderCallback
+import top.fifthlight.touchcontroller.model.CrosshairStateModel
 import top.fifthlight.touchcontroller.model.GlobalStateModel
 import top.fifthlight.touchcontroller.model.TouchStateModel
 import top.fifthlight.touchcontroller.proxy.data.Offset
@@ -21,9 +22,10 @@ class WorldRendererHandler: WorldRenderEvents.Start, BeforeBlockOutline, HudRend
     private val handler: SocketProxyHolder by inject()
     private val touchStateModel: TouchStateModel by inject()
     private val globalStateModel: GlobalStateModel by inject()
+    private val crosshairStateModel: CrosshairStateModel by inject()
 
     override fun beforeBlockOutline(context: WorldRenderContext, hitResult: HitResult?): Boolean {
-        return false
+        return crosshairStateModel.state.status != null
     }
 
     override fun onCrosshairRender(drawContext: DrawContext, tickCounter: RenderTickCounter): Boolean {

@@ -8,7 +8,7 @@ data class ControllerHudConfig(
     val align: Align = Align.LEFT_BOTTOM,
     val enableSecondaryHand: Boolean = true,
     val lockSneak: Boolean = true,
-    val layout: ControllerHudLayoutConfig = JoystickHudLayoutConfig()
+    val layout: ControllerHudLayoutConfig = DPadHudLayoutConfig()
 )
 
 sealed class ControllerHudLayoutConfig
