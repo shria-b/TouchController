@@ -2,8 +2,9 @@ package top.fifthlight.touchcontroller.ext
 
 import net.minecraft.client.util.math.MatrixStack
 
-inline fun MatrixStack.withMatrix(crossinline block: MatrixStack.() -> Unit) {
+inline fun <reified T> MatrixStack.withMatrix(crossinline block: MatrixStack.() -> T): T {
     push()
-    block()
+    val result = block()
     pop()
+    return result
 }

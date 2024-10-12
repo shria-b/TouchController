@@ -35,7 +35,8 @@ enum class Align {
 }
 
 inline fun <reified T> Context.withAlign(align: Align, size: IntSize, crossinline block: Context.() -> T): T =
-    withOffset(
+    withRect(
         offset = align.alignOffset(windowSize = this.size, size = size),
+        size = size,
         block = block
     )

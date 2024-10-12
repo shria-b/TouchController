@@ -10,7 +10,7 @@ import net.minecraft.util.Colors
 import org.joml.Matrix4f
 import top.fifthlight.touchcontroller.ext.withBlend
 import top.fifthlight.touchcontroller.ext.withBlendFunction
-import top.fifthlight.touchcontroller.ext.withMatrix
+import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.CrosshairConfig
 import top.fifthlight.touchcontroller.state.CrosshairState
@@ -81,7 +81,7 @@ fun Context.Crosshair(state: CrosshairState) {
         top = status.position.top,
     )
 
-    drawContext.matrices.withMatrix {
+    drawContext.withTranslate(center) {
         withBlend {
             withBlendFunction(
                 srcFactor = GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR,
@@ -89,7 +89,6 @@ fun Context.Crosshair(state: CrosshairState) {
                 srcAlpha = GlStateManager.SrcFactor.ONE,
                 dstAlpha = GlStateManager.DstFactor.ZERO
             ) {
-                translate(center.left, center.top, 0f)
                 renderOuter(drawContext, config)
                 if (status.breakPercent > 0f) {
                     renderInner(drawContext, config, status)

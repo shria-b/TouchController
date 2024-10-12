@@ -1,8 +1,7 @@
 package top.fifthlight.touchcontroller.layout
 
 import net.minecraft.util.Colors
-import top.fifthlight.touchcontroller.proxy.data.IntOffset
-import top.fifthlight.touchcontroller.proxy.data.IntSize
+import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.ControllerHudConfig
 import top.fifthlight.touchcontroller.state.JoystickHudLayoutConfig
@@ -10,12 +9,16 @@ import top.fifthlight.touchcontroller.state.PointerState
 import kotlin.math.sqrt
 
 fun Context.Joystick(config: ControllerHudConfig, layout: JoystickHudLayoutConfig) {
-    withOffset(config.padding, config.padding) {
-        val size = IntSize(layout.size, layout.size)
+    withRect(
+        x = config.padding,
+        y = config.padding,
+        width = layout.size,
+        height = layout.size,
+    ) {
         var currentPointer = pointers.values.firstOrNull {
             it.state is PointerState.Joystick
         }
-        currentPointer?.let { pointer ->
+        currentPointer?.let {
             pointers.values.forEach {
                 when (it.state) {
                     PointerState.New -> it.state = PointerState.Invalid
@@ -53,19 +56,15 @@ fun Context.Joystick(config: ControllerHudConfig, layout: JoystickHudLayoutConfi
             }
         }
 
-        drawContext.fill(0, 0, layout.size, layout.size, Colors.BLACK)
+        drawContext.fill(0, 0, size.width, size.height, Colors.BLACK)
         val drawOffset = normalizedOffset ?: Offset(0f, 0f)
-        val actualOffset = ((drawOffset + 1f) / 2f * layout.size.toFloat()).toIntOffset() - IntOffset(
-            layout.stickSize,
-            layout.stickSize
-        ) / 2
-        drawContext.fill(
-            actualOffset.x,
-            actualOffset.y,
-            actualOffset.x + layout.stickSize,
-            actualOffset.y + layout.stickSize,
-            Colors.RED
-        )
+        val actualOffset = ((drawOffset + 1f) / 2f * size) - Offset(
+            layout.stickSize.toFloat(),
+            layout.stickSize.toFloat()
+        ) / 2f
+        drawContext.withTranslate(actualOffset) {
+            drawContext.fill(0, 0, layout.stickSize, layout.stickSize, Colors.RED)
+        }
 
         normalizedOffset?.let { (right, backward) ->
             status.left = -right

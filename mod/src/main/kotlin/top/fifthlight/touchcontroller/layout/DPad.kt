@@ -7,42 +7,46 @@ import top.fifthlight.touchcontroller.state.DPadHudLayoutConfig
 fun Context.DPad(config: ControllerHudConfig, layout: DPadHudLayoutConfig) {
     val buttonSize = IntSize(width = layout.size, height = layout.size)
 
-    val forward = withOffset(
+    val forward = withRect(
         x = layout.size + config.padding * 2,
         y = config.padding,
+        width = buttonSize.width,
+        height = buttonSize.height
     ) {
         SwipeButton(
-            size = buttonSize,
             id = "dpad_forward",
         )
     }
 
-    val backward = withOffset(
+    val backward = withRect(
         x = layout.size + config.padding * 2,
         y = layout.size * 2 + config.padding * 3,
+        width = buttonSize.width,
+        height = buttonSize.height
     ) {
         SwipeButton(
-            size = buttonSize,
             id = "dpad_backward",
         )
     }
 
-    val left = withOffset(
+    val left = withRect(
         x = config.padding,
         y = layout.size + config.padding * 2,
+        width = buttonSize.width,
+        height = buttonSize.height
     ) {
         SwipeButton(
-            size = buttonSize,
             id = "dpad_left",
         )
     }
 
-    val right = withOffset(
+    val right = withRect(
         x = layout.size * 2 + config.padding * 3,
         y = layout.size + config.padding * 2,
+        width = buttonSize.width,
+        height = buttonSize.height
     ) {
         SwipeButton(
-            size = buttonSize,
             id = "dpad_right",
         )
     }

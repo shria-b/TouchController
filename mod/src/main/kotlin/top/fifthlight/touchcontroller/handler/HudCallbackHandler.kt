@@ -24,7 +24,7 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
         val status = Context(
             drawContext = drawContext,
             size = drawContext.scaledWindowSize,
-            offset = IntOffset.ZERO,
+            screenOffset = IntOffset.ZERO,
             scale = client.window.scaleFactor.toFloat(),
             pointers = touchStateModel.pointers
         ).run {
