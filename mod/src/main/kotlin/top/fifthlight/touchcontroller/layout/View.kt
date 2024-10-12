@@ -41,7 +41,7 @@ fun Context.View(crosshairStatus: CrosshairStatus?, onNewCrosshairStatus: (Cross
         val manager = MinecraftClient.getInstance().interactionManager
         val accessor = manager as ClientPlayerInteractionManagerAccessor
         onNewCrosshairStatus(CrosshairStatus(
-            position = pointer.position / scale,
+            position = pointer.position,
             breakPercent = accessor.currentBreakingProgress,
         ))
     } ?: run {
