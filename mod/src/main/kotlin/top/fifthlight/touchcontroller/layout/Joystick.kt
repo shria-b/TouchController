@@ -66,5 +66,10 @@ fun Context.Joystick(config: ControllerHudConfig, layout: JoystickHudLayoutConfi
             actualOffset.y + layout.stickSize,
             Colors.RED
         )
+
+        normalizedOffset?.let { (right, backward) ->
+            status.left = -right
+            status.forward = -backward
+        }
     }
 }

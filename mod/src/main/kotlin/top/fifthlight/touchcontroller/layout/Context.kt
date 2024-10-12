@@ -8,10 +8,8 @@ import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.Pointer
 
 data class ContextStatus(
-    var forward: Boolean = false,
-    var backward: Boolean = false,
-    var left: Boolean = false,
-    var right: Boolean = false,
+    var forward: Float = 0f,
+    var left: Float = 0f,
     var sneak: Boolean = false,
 )
 

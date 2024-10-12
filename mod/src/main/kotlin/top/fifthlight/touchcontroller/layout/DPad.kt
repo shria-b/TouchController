@@ -1,13 +1,13 @@
 package top.fifthlight.touchcontroller.layout
 
 import top.fifthlight.touchcontroller.proxy.data.IntSize
-import top.fifthlight.touchcontroller.state.DPadHudLayoutConfig
 import top.fifthlight.touchcontroller.state.ControllerHudConfig
+import top.fifthlight.touchcontroller.state.DPadHudLayoutConfig
 
 fun Context.DPad(config: ControllerHudConfig, layout: DPadHudLayoutConfig) {
     val buttonSize = IntSize(width = layout.size, height = layout.size)
 
-    status.forward = withOffset(
+    val forward = withOffset(
         x = layout.size + config.padding * 2,
         y = config.padding,
     ) {
@@ -17,7 +17,7 @@ fun Context.DPad(config: ControllerHudConfig, layout: DPadHudLayoutConfig) {
         )
     }
 
-    status.backward = withOffset(
+    val backward = withOffset(
         x = layout.size + config.padding * 2,
         y = layout.size * 2 + config.padding * 3,
     ) {
@@ -27,7 +27,7 @@ fun Context.DPad(config: ControllerHudConfig, layout: DPadHudLayoutConfig) {
         )
     }
 
-    status.left = withOffset(
+    val left = withOffset(
         x = config.padding,
         y = layout.size + config.padding * 2,
     ) {
@@ -37,7 +37,7 @@ fun Context.DPad(config: ControllerHudConfig, layout: DPadHudLayoutConfig) {
         )
     }
 
-    status.right = withOffset(
+    val right = withOffset(
         x = layout.size * 2 + config.padding * 3,
         y = layout.size + config.padding * 2,
     ) {
@@ -45,5 +45,15 @@ fun Context.DPad(config: ControllerHudConfig, layout: DPadHudLayoutConfig) {
             size = buttonSize,
             id = "dpad_right",
         )
+    }
+
+    when (Pair(forward, backward)) {
+        Pair(true, false) -> status.forward = 1f
+        Pair(false, true) -> status.forward = -1f
+    }
+
+    when (Pair(left, right)) {
+        Pair(true, false) -> status.left = 1f
+        Pair(false, true) -> status.left = -1f
     }
 }

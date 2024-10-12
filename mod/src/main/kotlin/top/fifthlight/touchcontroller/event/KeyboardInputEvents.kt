@@ -9,14 +9,14 @@ object KeyboardInputEvents {
     val END_INPUT_TICK: Event<EndInputTick> = EventFactory.createArrayBacked(
         EndInputTick::class.java
     ) { callbacks: Array<EndInputTick> ->
-        EndInputTick { input, slowDown, slowDownFactor ->
+        EndInputTick { input ->
             for (event in callbacks) {
-                event.onEndTick(input, slowDown, slowDownFactor)
+                event.onEndTick(input)
             }
         }
     }
 
     fun interface EndInputTick {
-        fun onEndTick(input: KeyboardInput, slowDown: Boolean, slowDownFactor: Float)
+        fun onEndTick(input: KeyboardInput)
     }
 }

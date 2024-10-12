@@ -6,39 +6,21 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
 import top.fifthlight.touchcontroller.model.ControllerHudModel
-import top.fifthlight.touchcontroller.state.DPadHudLayoutConfig
-import top.fifthlight.touchcontroller.state.JoystickHudLayoutConfig
 
 class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
     private val controllerHudModel: ControllerHudModel by inject()
 
-    override fun onEndTick(input: KeyboardInput, slowDown: Boolean, slowDownFactor: Float) {
+    override fun onEndTick(input: KeyboardInput) {
         val client = MinecraftClient.getInstance()
         if (client.currentScreen != null) {
             return
         }
 
-        val config = controllerHudModel.config
         val state = controllerHudModel.state
 
-        when (config.layout) {
-            is DPadHudLayoutConfig -> {
-                if (state.forward) {
-                    input.pressingForward = true
-                }
-                if (state.backward) {
-                    input.pressingBack = true
-                }
-                if (state.left) {
-                    input.pressingLeft = true
-                }
-                if (state.right) {
-                    input.pressingRight = true
-                }
-            }
-            is JoystickHudLayoutConfig -> {
-
-            }
-        }
+        input.movementForward += state.forward
+        input.movementSideways += state.left
+        input.movementForward = input.movementForward.coerceIn(-1f, 1f)
+        input.movementSideways = input.movementSideways.coerceIn(-1f, 1f)
     }
 }
