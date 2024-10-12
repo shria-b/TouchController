@@ -41,6 +41,12 @@ value class IntOffset(
         left = left - other.left,
         top = top - other.top
     )
+    operator fun times(num: Int) = IntOffset(left = left * num, top = top * num)
+    operator fun div(num: Int) = IntOffset(left = left / num, top = top / num)
+
+    override fun toString(): String {
+        return "IntOffset(left=$left, top=$top)"
+    }
 }
 
 fun IntOffset(left: Int, top: Int) = IntOffset((left.toLong() shl 32) or top.toLong())

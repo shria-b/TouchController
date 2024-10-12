@@ -1,10 +1,10 @@
 package top.fifthlight.touchcontroller.layout
 
 import top.fifthlight.touchcontroller.proxy.data.IntSize
-import top.fifthlight.touchcontroller.state.ButtonHudLayoutConfig
+import top.fifthlight.touchcontroller.state.DPadHudLayoutConfig
 import top.fifthlight.touchcontroller.state.ControllerHudConfig
 
-fun Context.DPad(config: ControllerHudConfig, layout: ButtonHudLayoutConfig) {
+fun Context.DPad(config: ControllerHudConfig, layout: DPadHudLayoutConfig) {
     val buttonSize = IntSize(width = layout.size, height = layout.size)
 
     status.forward = withOffset(

@@ -4,6 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import org.koin.core.component.KoinComponent
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
+import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.Pointer
 
 data class ContextStatus(
@@ -35,7 +36,10 @@ data class Context(
 
     inline fun <reified T> withSize(size: IntSize, crossinline block: Context.() -> T): T = copy(size = size).block()
 
-    fun anyPointerInRect(size: IntSize): List<Pointer> = pointers.values.filter {
-        ((it.position / scale) - offset) in size
-    }
+    val Pointer.scaledOffset: Offset
+        get() = ((position / scale) - offset)
+
+    fun Pointer.inRect(size: IntSize): Boolean = scaledOffset in size
+
+    fun getPointersInRect(size: IntSize): List<Pointer> = pointers.values.filter { it.inRect(size) }
 }

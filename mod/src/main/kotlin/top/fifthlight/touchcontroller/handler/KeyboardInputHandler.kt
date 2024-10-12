@@ -6,7 +6,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
 import top.fifthlight.touchcontroller.model.ControllerHudModel
-import top.fifthlight.touchcontroller.state.ButtonHudLayoutConfig
+import top.fifthlight.touchcontroller.state.DPadHudLayoutConfig
 import top.fifthlight.touchcontroller.state.JoystickHudLayoutConfig
 
 class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
@@ -22,7 +22,7 @@ class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
         val state = controllerHudModel.state
 
         when (config.layout) {
-            is ButtonHudLayoutConfig -> {
+            is DPadHudLayoutConfig -> {
                 if (state.forward) {
                     input.pressingForward = true
                 }

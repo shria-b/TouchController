@@ -25,8 +25,12 @@ fun Context.View(crosshairStatus: CrosshairStatus?, onNewCrosshairStatus: (Cross
         pointers.values.forEach {
             when (it.state) {
                 PointerState.New -> {
-                    it.state = PointerState.View(it.position)
-                    currentViewPointer = it
+                    if (currentViewPointer != null) {
+                        it.state = PointerState.Invalid
+                    } else {
+                        it.state = PointerState.View(it.position)
+                        currentViewPointer = it
+                    }
                 }
                 else -> {}
             }

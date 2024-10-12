@@ -20,7 +20,7 @@ fun Context.SwipeButton(
     size: IntSize,
     id: String,
 ): Boolean {
-    val pointers = anyPointerInRect(size)
+    val pointers = getPointersInRect(size)
     var clicked = false
     for (pointer in pointers) {
         when (pointer.state) {
@@ -43,7 +43,7 @@ fun Context.Button(
     size: IntSize,
     id: String
 ): Boolean {
-    val pointers = anyPointerInRect(size)
+    val pointers = getPointersInRect(size)
     var clicked = false
     for (pointer in pointers) {
         when (val state = pointer.state) {

@@ -13,8 +13,12 @@ data class Offset(
         val ZERO = Offset(0f, 0f)
     }
 
+    fun toIntOffset() = IntOffset(left = left.toInt(), top = top.toInt())
+
     operator fun plus(length: Float) = Offset(left = left + length, top = top + length)
+    operator fun minus(length: Float) = Offset(left = left - length, top = top - length)
     operator fun div(num: Float) = Offset(left = left / num, top = top / num)
+    operator fun times(num: Float): Offset = Offset(left = left * num, top = top * num)
     operator fun minus(offset: IntOffset) = Offset(left = left - offset.left, top = top - offset.top)
     operator fun minus(offset: Offset) = Offset(left = left - offset.left, top = top - offset.top)
 }
