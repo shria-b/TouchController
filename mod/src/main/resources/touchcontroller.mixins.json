@@ -7,9 +7,11 @@
   },
   "client": [
     "ClientPlayerInteractionManagerAccessor",
+    "ControlsOptionsScreenMixin",
     "CrosshairTargetMixin",
     "CursorLockMixin",
     "DisableMouseDirectionMixin",
+    "GameOptionsScreenAccessor",
     "InGameHudMixin",
     "KeyboardInputMixin"
   ]
