@@ -13,6 +13,13 @@ base {
 	archivesName = archivesBaseName
 }
 
+repositories {
+	maven {
+		name = "Terraformers"
+		url = "https://maven.terraformersmc.com/"
+	}
+}
+
 dependencies {
 	minecraft(libs.minecraft)
 	mappings("net.fabricmc:yarn:${libs.versions.yarn.get()}:v2")
@@ -20,6 +27,7 @@ dependencies {
 
 	modImplementation(libs.fabric.api)
 	modImplementation(libs.fabric.language.kotlin)
+	modImplementation(libs.modmenu)
 
 	implementation(project(":proxy"))
 	implementation(libs.koin.core)
