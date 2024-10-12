@@ -1,20 +1,16 @@
 package top.fifthlight.touchcontroller.proxy.data
 
-@JvmInline
-value class IntOffset(
-    private val packed: Long,
+data class IntOffset(
+    val left: Int,
+    val top: Int,
 ) {
-    val left: Int
-        get() = (packed shr 32).toInt()
-    val top: Int
-        get() = packed.toInt()
     val x
         get() = left
     val y
         get() = top
 
     companion object {
-        val ZERO = IntOffset(0)
+        val ZERO = IntOffset(0, 0)
     }
 
     fun inRegion(offset: IntOffset, size: IntSize): Boolean {
@@ -48,5 +44,3 @@ value class IntOffset(
         return "IntOffset(left=$left, top=$top)"
     }
 }
-
-fun IntOffset(left: Int, top: Int) = IntOffset((left.toLong() shl 32) or top.toLong())
