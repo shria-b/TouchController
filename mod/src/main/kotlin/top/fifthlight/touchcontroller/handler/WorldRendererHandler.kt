@@ -23,6 +23,7 @@ class WorldRendererHandler: WorldRenderEvents.Start, BeforeBlockOutline, HudRend
     private val touchStateModel: TouchStateModel by inject()
     private val globalStateModel: GlobalStateModel by inject()
     private val crosshairStateModel: CrosshairStateModel by inject()
+    private val client: MinecraftClient by inject()
 
     override fun beforeBlockOutline(context: WorldRenderContext, hitResult: HitResult?): Boolean {
         return crosshairStateModel.state.status != null
@@ -33,7 +34,6 @@ class WorldRendererHandler: WorldRenderEvents.Start, BeforeBlockOutline, HudRend
     }
 
     override fun onStart(context: WorldRenderContext) {
-        val client = MinecraftClient.getInstance()
         globalStateModel.update(client)
 
         handler.socketProxy?.let { proxy ->

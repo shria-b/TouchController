@@ -18,9 +18,9 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
     private val controllerHudModel: ControllerHudModel by inject()
     private val touchStateModel: TouchStateModel by inject()
     private val crosshairStateModel: CrosshairStateModel by inject()
+    private val client: MinecraftClient by inject()
 
     override fun onHudRender(drawContext: DrawContext, tickCounter: RenderTickCounter) {
-        val client = MinecraftClient.getInstance()
         val status = Context(
             drawContext = drawContext,
             size = drawContext.scaledWindowSize,

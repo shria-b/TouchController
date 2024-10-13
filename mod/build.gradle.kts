@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm)
 }
 
-version = "1.0.0"
+version = "0.0.1"
 group = "top.fifthlight.touchcontroller"
 
 var modName = "TouchController"

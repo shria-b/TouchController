@@ -9,9 +9,9 @@ import top.fifthlight.touchcontroller.model.ControllerHudModel
 
 class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
     private val controllerHudModel: ControllerHudModel by inject()
+    private val client: MinecraftClient by inject()
 
     override fun onEndTick(input: KeyboardInput) {
-        val client = MinecraftClient.getInstance()
         if (client.currentScreen != null) {
             return
         }

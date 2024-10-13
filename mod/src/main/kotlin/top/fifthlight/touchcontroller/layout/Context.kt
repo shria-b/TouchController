@@ -1,7 +1,9 @@
 package top.fifthlight.touchcontroller.layout
 
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntRect
@@ -21,8 +23,10 @@ data class Context(
     val screenOffset: IntOffset,
     val scale: Float,
     val pointers: Map<Int, Pointer>,
-    val status: ContextStatus = ContextStatus()
+    val status: ContextStatus = ContextStatus(),
 ) : KoinComponent {
+    val client: MinecraftClient by inject()
+
     inline fun <reified T> withOffset(offset: IntOffset, crossinline block: Context.() -> T): T =
         drawContext.withTranslate(offset.x.toFloat(), offset.y.toFloat()) {
             copy(

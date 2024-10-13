@@ -1,6 +1,5 @@
 package top.fifthlight.touchcontroller.layout
 
-import net.minecraft.client.MinecraftClient
 import top.fifthlight.touchcontroller.mixin.ClientPlayerInteractionManagerAccessor
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.CrosshairStatus
@@ -38,7 +37,7 @@ fun Context.View(crosshairStatus: CrosshairStatus?, onNewCrosshairStatus: (Cross
     }
 
     currentViewPointer?.let { pointer ->
-        val manager = MinecraftClient.getInstance().interactionManager
+        val manager = client.interactionManager
         val accessor = manager as ClientPlayerInteractionManagerAccessor
         onNewCrosshairStatus(CrosshairStatus(
             position = pointer.position,

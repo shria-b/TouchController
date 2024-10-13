@@ -2,6 +2,7 @@ package top.fifthlight.touchcontroller.di
 
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents.BeforeBlockOutline
+import net.minecraft.client.MinecraftClient
 import org.koin.dsl.binds
 import org.koin.dsl.module
 import top.fifthlight.touchcontroller.SocketProxyHolder
@@ -17,6 +18,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback as FabricHu
 import top.fifthlight.touchcontroller.event.HudRenderCallback as TouchControllerHudRenderCallback
 
 val appModule = module {
+    single { MinecraftClient.getInstance() }
     single { SocketProxyHolder() }
     single<FabricHudRenderCallback> { HudCallbackHandler() }
     single<KeyboardInputEvents.EndInputTick> { KeyboardInputHandler() }
