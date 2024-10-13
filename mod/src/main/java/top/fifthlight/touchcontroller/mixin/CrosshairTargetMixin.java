@@ -1,6 +1,5 @@
 package top.fifthlight.touchcontroller.mixin;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
@@ -42,10 +41,6 @@ public abstract class CrosshairTargetMixin {
     @Shadow
     public abstract Matrix4f getBasicProjectionMatrix(double fov);
 
-    @Shadow
-    @Final
-    MinecraftClient client;
-
     @Unique
     private static HitResult findTargetWithDirection(Entity camera, Vec3d direction, double blockInteractionRange, double entityInteractionRange, float tickDelta) {
         double interactionRange = Math.max(blockInteractionRange, entityInteractionRange);
@@ -76,9 +71,7 @@ public abstract class CrosshairTargetMixin {
             return;
         }
 
-        var window = client.getWindow();
-
-        var screen = new Vector2d(crosshairStatus.getPosition().getX() / window.getWidth(), crosshairStatus.getPosition().getY() / window.getHeight());
+        var screen = new Vector2d(crosshairStatus.getPosition().getX(), crosshairStatus.getPosition().getY());
         var ndc = new Vector4d(2 * screen.x - 1, 1 - 2 * screen.y, -1f, 1f);
         var fov = getFov(this.camera, tickDelta, true);
 

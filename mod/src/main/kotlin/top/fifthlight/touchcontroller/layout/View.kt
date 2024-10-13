@@ -18,8 +18,8 @@ fun Context.View(crosshairStatus: CrosshairStatus?, onNewCrosshairStatus: (Cross
                 else -> {}
             }
         }
-        onPointerDelta(pointer.position - state.lastPosition)
-        pointer.state = PointerState.View(pointer.position)
+        onPointerDelta(pointer.rawOffset - state.lastPosition)
+        pointer.state = PointerState.View(pointer.rawOffset)
     } ?: run {
         pointers.values.forEach {
             when (it.state) {
@@ -27,7 +27,7 @@ fun Context.View(crosshairStatus: CrosshairStatus?, onNewCrosshairStatus: (Cross
                     if (currentViewPointer != null) {
                         it.state = PointerState.Invalid
                     } else {
-                        it.state = PointerState.View(it.position)
+                        it.state = PointerState.View(it.rawOffset)
                         currentViewPointer = it
                     }
                 }

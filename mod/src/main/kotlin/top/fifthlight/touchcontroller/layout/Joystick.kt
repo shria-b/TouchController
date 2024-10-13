@@ -45,8 +45,7 @@ fun Context.Joystick(config: ControllerHudConfig, layout: JoystickHudLayoutConfi
             }
         }
         val normalizedOffset = currentPointer?.let { pointer ->
-            val pointerOffset = pointer.scaledOffset
-            val offset = pointerOffset / layout.size.toFloat() * 2f - 1f
+            val offset = pointer.scaledOffset / layout.size.toFloat() * 2f - 1f
             val squaredLength = offset.x * offset.x + offset.y * offset.y
             if (squaredLength > 1) {
                 val length = sqrt(squaredLength)

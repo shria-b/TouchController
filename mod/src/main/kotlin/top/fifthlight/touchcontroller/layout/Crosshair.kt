@@ -7,6 +7,7 @@ import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.util.Colors
+import top.fifthlight.touchcontroller.ext.scaledSize
 import top.fifthlight.touchcontroller.ext.withBlend
 import top.fifthlight.touchcontroller.ext.withBlendFunction
 import top.fifthlight.touchcontroller.ext.withTranslate
@@ -75,12 +76,7 @@ fun Context.Crosshair(state: CrosshairState) {
         return
     }
 
-    val center = Offset(
-        left = status.position.left / scale,
-        top = status.position.top / scale,
-    )
-
-    drawContext.withTranslate(center) {
+    drawContext.withTranslate(status.position * window.scaledSize) {
         withBlend {
             withBlendFunction(
                 srcFactor = GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR,
