@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "touchcontroller",
 	"version": "${version}",
-	"name": "TouchController",
+	"name": "${name}",
 	"description": "Bring controlling style of bedrock version to Java version!",
 	"authors": [
 		"fifth_light"
