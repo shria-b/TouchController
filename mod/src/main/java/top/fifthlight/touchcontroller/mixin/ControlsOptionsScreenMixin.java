@@ -8,7 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.fifthlight.touchcontroller.asset.Texts;
-import top.fifthlight.touchcontroller.config.TouchControllerConfigScreen;
+
+import static top.fifthlight.touchcontroller.config.TouchControllerConfigScreenKt.TouchControllerConfigScreen;
 
 @Mixin(ControlsOptionsScreen.class)
 public abstract class ControlsOptionsScreenMixin {
@@ -17,6 +18,6 @@ public abstract class ControlsOptionsScreenMixin {
         var client = MinecraftClient.getInstance();
         var screen = (ControlsOptionsScreen) (Object) this;
         var body = ((GameOptionsScreenAccessor) this).body();
-        body.addWidgetEntry(ButtonWidget.builder(Texts.INSTANCE.getOPTIONS_SCREEN(), btn -> client.setScreen(new TouchControllerConfigScreen(screen))).build(), null);
+        body.addWidgetEntry(ButtonWidget.builder(Texts.INSTANCE.getOPTIONS_SCREEN(), btn -> client.setScreen(TouchControllerConfigScreen(screen))).build(), null);
     }
 }

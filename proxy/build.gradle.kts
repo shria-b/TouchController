@@ -4,5 +4,5 @@ plugins {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.slf4j.api)
+    compileOnly(libs.slf4j.api)
 }

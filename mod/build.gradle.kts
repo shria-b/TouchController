@@ -16,6 +16,15 @@ repositories {
         name = "Terraformers"
         url = uri("https://maven.terraformersmc.com/")
     }
+    maven {
+        name = "Xander Maven"
+        url = uri("https://maven.isxander.dev/releases")
+    }
+}
+
+fun DependencyHandlerScope.includeAndImplementation(dependencyNotation: Any) {
+    include(dependencyNotation)
+    implementation(dependencyNotation)
 }
 
 dependencies {
@@ -26,11 +35,11 @@ dependencies {
     modImplementation(libs.fabric.api)
     modImplementation(libs.fabric.language.kotlin)
     modImplementation(libs.modmenu)
+    modImplementation(libs.yacl)
 
-    implementation(project(":proxy"))
-    implementation(libs.koin.core)
-    implementation(libs.koin.logger.slf4j)
-    implementation(libs.kotlinx.coroutines.core)
+    includeAndImplementation(project(":proxy"))
+    includeAndImplementation(libs.koin.core)
+    includeAndImplementation(libs.koin.logger.slf4j)
 }
 
 tasks.withType<ProcessResources> {
@@ -40,6 +49,7 @@ tasks.withType<ProcessResources> {
         expand(mapOf(
             "version" to project.version,
             "name" to modName,
+            "version_yacl" to libs.versions.yacl.get(),
         ))
     }
 }
