@@ -1,21 +1,10 @@
 package top.fifthlight.touchcontroller.layout
 
-import net.minecraft.util.Colors
 import top.fifthlight.touchcontroller.state.PointerState
-
-private fun Context.BaseButton(
-    clicked: Boolean
-) {
-    val color = if (clicked) {
-        Colors.RED
-    } else {
-        Colors.BLACK
-    }
-    drawContext.fill(0, 0, size.width, size.height, color)
-}
 
 fun Context.SwipeButton(
     id: String,
+    content: Context.(clicked: Boolean) -> Unit,
 ): Boolean {
     val pointers = getPointersInRect(size)
     var clicked = false
@@ -31,13 +20,13 @@ fun Context.SwipeButton(
             else -> {}
         }
     }
-    BaseButton(clicked)
+    content(clicked)
     return clicked
 }
 
-
 fun Context.Button(
-    id: String
+    id: String,
+    content: Context.(clicked: Boolean) -> Unit,
 ): Boolean {
     val pointers = getPointersInRect(size)
     var clicked = false
@@ -56,6 +45,6 @@ fun Context.Button(
         }
     }
 
-    BaseButton(clicked)
+    content(clicked)
     return clicked
 }

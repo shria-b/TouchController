@@ -16,4 +16,5 @@ class IntSize(
 
     operator fun plus(length: Int) = IntSize(width = width + length, height = height + length)
     operator fun minus(offset: IntOffset) = IntSize(width = width - offset.left, height = height - offset.top)
+    fun toSize(): Size = Size(width = width.toFloat(), height = height.toFloat())
 }

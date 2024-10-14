@@ -25,6 +25,7 @@ data class SocketProxyHolder(
 )
 
 object TouchController : ClientModInitializer {
+	const val NAMESPACE = "touchcontroller"
 	var disableCursorLock = false
 
 	override fun onInitializeClient() {

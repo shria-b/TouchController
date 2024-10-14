@@ -2,10 +2,11 @@ package top.fifthlight.touchcontroller.asset
 
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
+import top.fifthlight.touchcontroller.TouchController
 
 object Texts {
-    private const val PREFIX = "touch_controller"
+    private fun translatable(id: String): MutableText = Text.translatable("${TouchController.NAMESPACE}.$id")
 
-    val OPTIONS_SCREEN: MutableText = Text.translatable("$PREFIX.screen.options")
-    val OPTIONS_SCREEN_TITLE: MutableText = Text.translatable("$PREFIX.screen.options.title")
+    val OPTIONS_SCREEN = translatable("screen.options")
+    val OPTIONS_SCREEN_TITLE = translatable("screen.options.title")
 }

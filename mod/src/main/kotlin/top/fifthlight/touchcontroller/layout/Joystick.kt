@@ -1,17 +1,18 @@
 package top.fifthlight.touchcontroller.layout
 
-import net.minecraft.util.Colors
-import top.fifthlight.touchcontroller.ext.withTranslate
+import top.fifthlight.touchcontroller.asset.Textures
+import top.fifthlight.touchcontroller.ext.drawTexture
 import top.fifthlight.touchcontroller.proxy.data.Offset
-import top.fifthlight.touchcontroller.state.ControllerHudConfig
+import top.fifthlight.touchcontroller.proxy.data.Rect
+import top.fifthlight.touchcontroller.proxy.data.Size
 import top.fifthlight.touchcontroller.state.JoystickHudLayoutConfig
 import top.fifthlight.touchcontroller.state.PointerState
 import kotlin.math.sqrt
 
-fun Context.Joystick(config: ControllerHudConfig, layout: JoystickHudLayoutConfig) {
+fun Context.Joystick(layout: JoystickHudLayoutConfig) {
     withRect(
-        x = config.padding,
-        y = config.padding,
+        x = layout.padding,
+        y = layout.padding,
         width = layout.size,
         height = layout.size,
     ) {
@@ -44,6 +45,7 @@ fun Context.Joystick(config: ControllerHudConfig, layout: JoystickHudLayoutConfi
                 }
             }
         }
+
         val normalizedOffset = currentPointer?.let { pointer ->
             val offset = pointer.scaledOffset / layout.size.toFloat() * 2f - 1f
             val squaredLength = offset.x * offset.x + offset.y * offset.y
@@ -55,15 +57,25 @@ fun Context.Joystick(config: ControllerHudConfig, layout: JoystickHudLayoutConfi
             }
         }
 
-        drawContext.fill(0, 0, size.width, size.height, Colors.BLACK)
-        val drawOffset = normalizedOffset ?: Offset(0f, 0f)
+        drawContext.drawTexture(
+            id = Textures.JOYSTICK_PAD,
+            dstRect = Rect(size = size.toSize())
+        )
+        val drawOffset = normalizedOffset ?: Offset.ZERO
         val actualOffset = ((drawOffset + 1f) / 2f * size) - Offset(
             layout.stickSize.toFloat(),
             layout.stickSize.toFloat()
         ) / 2f
-        drawContext.withTranslate(actualOffset) {
-            drawContext.fill(0, 0, layout.stickSize, layout.stickSize, Colors.RED)
-        }
+        drawContext.drawTexture(
+            id = Textures.JOYSTICK_STICK,
+            dstRect = Rect(
+                offset = actualOffset,
+                size = Size(
+                    width = layout.stickSize.toFloat(),
+                    height = layout.stickSize.toFloat()
+                )
+            )
+        )
 
         normalizedOffset?.let { (right, backward) ->
             status.left = -right

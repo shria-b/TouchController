@@ -2,6 +2,7 @@ package top.fifthlight.touchcontroller.ext
 
 import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
+import net.minecraft.client.gl.ShaderProgram
 
 inline fun withBlend(crossinline block: () -> Unit) {
     RenderSystem.enableBlend()
@@ -19,4 +20,13 @@ inline fun withBlendFunction(
     RenderSystem.blendFuncSeparate(srcFactor, dstFactor, srcAlpha, dstAlpha)
     block()
     RenderSystem.defaultBlendFunc()
+}
+
+inline fun withShader(noinline program: () -> ShaderProgram, crossinline block: () -> Unit) {
+    val originalShader = RenderSystem.getShader()
+    RenderSystem.setShader(program)
+    block()
+    originalShader?.let {
+        RenderSystem.setShader { it }
+    }
 }

@@ -2,15 +2,9 @@ package top.fifthlight.touchcontroller.layout
 
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.gui.DrawContext
-import net.minecraft.client.render.BufferRenderer
-import net.minecraft.client.render.Tessellator
-import net.minecraft.client.render.VertexFormat
-import net.minecraft.client.render.VertexFormats
+import net.minecraft.client.render.*
 import net.minecraft.util.Colors
-import top.fifthlight.touchcontroller.ext.scaledSize
-import top.fifthlight.touchcontroller.ext.withBlend
-import top.fifthlight.touchcontroller.ext.withBlendFunction
-import top.fifthlight.touchcontroller.ext.withTranslate
+import top.fifthlight.touchcontroller.ext.*
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.CrosshairConfig
 import top.fifthlight.touchcontroller.state.CrosshairState
@@ -28,44 +22,47 @@ private fun point(angle: Float, radius: Float) = Offset(
 )
 
 private fun renderOuter(drawContext: DrawContext, config: CrosshairConfig) {
-    val matrix = drawContext.matrices.peek().positionMatrix
-    val bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
+    withShader({ GameRenderer.getPositionColorProgram()!! }) {
+        val matrix = drawContext.matrices.peek().positionMatrix
+        val bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
+        val innerRadius = config.radius.toFloat()
+        val outerRadius = (config.radius + config.outerRadius).toFloat()
+        var angle = -PI.toFloat() / 2f
+        for (i in 0 until CROSSHAIR_CIRCLE_PARTS) {
+            val endAngle = angle + CROSSHAIR_CIRCLE_ANGLE
+            val point0 = point(angle, outerRadius)
+            val point1 = point(endAngle, outerRadius)
+            val point2 = point(angle, innerRadius)
+            val point3 = point(endAngle, innerRadius)
+            angle = endAngle
 
-    val innerRadius = config.radius.toFloat()
-    val outerRadius = (config.radius + config.outerRadius).toFloat()
-    var angle = -PI.toFloat() / 2f
-    for (i in 0 until CROSSHAIR_CIRCLE_PARTS) {
-        val endAngle = angle + CROSSHAIR_CIRCLE_ANGLE
-        val point0 = point(angle, outerRadius)
-        val point1 = point(endAngle, outerRadius)
-        val point2 = point(angle, innerRadius)
-        val point3 = point(endAngle, innerRadius)
-        angle = endAngle
+            bufferBuilder.vertex(matrix, point0.x, point0.y, 0f).color(Colors.WHITE)
+            bufferBuilder.vertex(matrix, point2.x, point2.y, 0f).color(Colors.WHITE)
+            bufferBuilder.vertex(matrix, point3.x, point3.y, 0f).color(Colors.WHITE)
+            bufferBuilder.vertex(matrix, point1.x, point1.y, 0f).color(Colors.WHITE)
+        }
 
-        bufferBuilder.vertex(matrix, point0.x, point0.y, 0f).color(Colors.WHITE)
-        bufferBuilder.vertex(matrix, point2.x, point2.y, 0f).color(Colors.WHITE)
-        bufferBuilder.vertex(matrix, point3.x, point3.y, 0f).color(Colors.WHITE)
-        bufferBuilder.vertex(matrix, point1.x, point1.y, 0f).color(Colors.WHITE)
+        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end())
     }
-
-    BufferRenderer.drawWithGlobalProgram(bufferBuilder.end())
 }
 
 private fun renderInner(drawContext: DrawContext, config: CrosshairConfig, state: CrosshairStatus) {
-    val matrix = drawContext.matrices.peek().positionMatrix
-    val bufferBuilder =
-        Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR)
-    bufferBuilder.vertex(matrix, 0f, 0f, 0f).color(Colors.WHITE)
+    withShader({ GameRenderer.getPositionColorProgram()!! }) {
+        val matrix = drawContext.matrices.peek().positionMatrix
+        val bufferBuilder =
+            Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR)
+        bufferBuilder.vertex(matrix, 0f, 0f, 0f).color(Colors.WHITE)
 
-    var angle = 0f
-    for (i in 0..CROSSHAIR_CIRCLE_PARTS) {
-        val point = point(angle, config.radius * state.breakPercent)
-        angle -= CROSSHAIR_CIRCLE_ANGLE
+        var angle = 0f
+        for (i in 0..CROSSHAIR_CIRCLE_PARTS) {
+            val point = point(angle, config.radius * state.breakPercent)
+            angle -= CROSSHAIR_CIRCLE_ANGLE
 
-        bufferBuilder.vertex(matrix, point.x, point.y, 0f).color(Colors.WHITE)
+            bufferBuilder.vertex(matrix, point.x, point.y, 0f).color(Colors.WHITE)
+        }
+
+        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end())
     }
-
-    BufferRenderer.drawWithGlobalProgram(bufferBuilder.end())
 }
 
 fun Context.Crosshair(state: CrosshairState) {
