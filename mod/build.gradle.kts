@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.fabric.loom)
     alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 version = "0.0.1"

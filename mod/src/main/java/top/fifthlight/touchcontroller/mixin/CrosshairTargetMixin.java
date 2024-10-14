@@ -14,6 +14,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector2d;
 import org.joml.Vector3d;
 import org.joml.Vector4d;
+import org.koin.java.KoinJavaComponent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -66,7 +67,8 @@ public abstract class CrosshairTargetMixin {
 
     @Inject(method = "findCrosshairTarget", at = @At("HEAD"), cancellable = true)
     private void findCrosshairTarget(Entity camera, double blockInteractionRange, double entityInteractionRange, float tickDelta, CallbackInfoReturnable<HitResult> cir) {
-        var crosshairStatus = CrosshairStateModel.INSTANCE.getState().getStatus();
+        var crosshairModel = (CrosshairStateModel) KoinJavaComponent.get(CrosshairStateModel.class);
+        var crosshairStatus = crosshairModel.getState().getStatus();
         if (crosshairStatus == null) {
             return;
         }

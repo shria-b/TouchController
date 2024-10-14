@@ -10,6 +10,7 @@ import net.minecraft.util.hit.HitResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.SocketProxyHolder
+import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.event.HudRenderCallback
 import top.fifthlight.touchcontroller.model.CrosshairStateModel
 import top.fifthlight.touchcontroller.model.GlobalStateModel
@@ -23,6 +24,7 @@ class WorldRendererHandler: WorldRenderEvents.Start, BeforeBlockOutline, HudRend
     private val touchStateModel: TouchStateModel by inject()
     private val globalStateModel: GlobalStateModel by inject()
     private val crosshairStateModel: CrosshairStateModel by inject()
+    private val configHolder: TouchControllerConfigHolder by inject()
     private val client: MinecraftClient by inject()
 
     override fun beforeBlockOutline(context: WorldRenderContext, hitResult: HitResult?): Boolean {
@@ -48,7 +50,10 @@ class WorldRendererHandler: WorldRenderEvents.Start, BeforeBlockOutline, HudRend
                     }
                 }
             }
-        } ?: run {
+        }
+
+        val config = configHolder.config.value
+        if (config.enableTouchEmulation) {
             val mouse = client.mouse
             if (mouse.wasLeftButtonClicked()) {
                 val mousePosition = Offset(
