@@ -34,7 +34,7 @@ fun DrawContext.drawTexture(id: Identifier, dstRect: Rect, uvRect: Rect = Rect.O
 
 fun DrawContext.drawTexture(id: Identifier, dstRect: Rect, uvRect: Rect = Rect.ONE, color: Int) {
     RenderSystem.setShaderTexture(0, id)
-    withShader(program = { GameRenderer.getPositionTexProgram()!! }) {
+    withShader(program = { GameRenderer.getPositionTexColorProgram()!! }) {
         val matrix = matrices.peek().positionMatrix
         val bufferBuilder =
             Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR)

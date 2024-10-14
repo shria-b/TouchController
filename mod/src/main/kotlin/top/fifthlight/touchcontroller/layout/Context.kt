@@ -18,6 +18,7 @@ data class ContextStatus(
     var forward: Float = 0f,
     var left: Float = 0f,
     var sneak: Boolean = false,
+    var jump:Boolean = false
 )
 
 data class Context(

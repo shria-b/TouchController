@@ -12,7 +12,7 @@ public abstract class KeyboardInputMixin {
     @Inject(
             at = @At(
                     value = "FIELD",
-                    target = "Lnet/minecraft/client/input/KeyboardInput;movementSideways:F",
+                    target = "Lnet/minecraft/client/input/KeyboardInput;sneaking:Z",
                     shift = At.Shift.AFTER
             ),
             method = "tick"
