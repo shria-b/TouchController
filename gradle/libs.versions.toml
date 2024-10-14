@@ -7,6 +7,7 @@ loom = "1.7-SNAPSHOT"
 coroutines = "1.9.0"
 slf4j = "2.0.13"
 koin = "3.5.6"
+serialization = "1.7.3"
 
 # Minecraft Mods
 fabric-api = "0.105.0+1.21.1"
@@ -30,4 +31,5 @@ yacl = { group = "dev.isxander", name = "yet-another-config-lib", version.ref = 
 
 [plugins]
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 fabric-loom = { id = "fabric-loom", version.ref = "loom" }

@@ -4,7 +4,7 @@ import org.koin.core.component.KoinComponent
 import top.fifthlight.touchcontroller.state.CrosshairState
 import top.fifthlight.touchcontroller.state.CrosshairStatus
 
-object CrosshairStateModel: KoinComponent {
+class CrosshairStateModel: KoinComponent {
     var state = CrosshairState()
         private set
 

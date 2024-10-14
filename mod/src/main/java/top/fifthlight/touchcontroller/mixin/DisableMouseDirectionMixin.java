@@ -1,10 +1,12 @@
 package top.fifthlight.touchcontroller.mixin;
 
 import net.minecraft.client.Mouse;
+import org.koin.java.KoinJavaComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder;
 
 @Mixin(Mouse.class)
 abstract class DisableMouseDirectionMixin {
@@ -18,6 +20,13 @@ abstract class DisableMouseDirectionMixin {
             cancellable = true
     )
     private void updateMouse(double timeDelta, CallbackInfo ci) {
-        ci.cancel();
+        var configHolder = (TouchControllerConfigHolder) KoinJavaComponent.getOrNull(TouchControllerConfigHolder.class);
+        if (configHolder == null) {
+            return;
+        }
+        var config = configHolder.getConfig().getValue();
+        if (config.getDisableMouse()) {
+            ci.cancel();
+        }
     }
 }

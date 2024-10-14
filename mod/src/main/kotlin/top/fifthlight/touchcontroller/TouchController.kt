@@ -10,6 +10,7 @@ import org.koin.core.Koin
 import org.koin.core.context.startKoin
 import org.koin.logger.slf4jLogger
 import org.slf4j.LoggerFactory
+import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.di.appModule
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
 import top.fifthlight.touchcontroller.proxy.LauncherSocketProxy
@@ -26,7 +27,6 @@ data class SocketProxyHolder(
 
 object TouchController : ClientModInitializer {
 	const val NAMESPACE = "touchcontroller"
-	var disableCursorLock = false
 
 	override fun onInitializeClient() {
 		controllerLogger.info("Loading TouchController…")
@@ -46,8 +46,6 @@ object TouchController : ClientModInitializer {
 			GlobalScope.launch {
 				start()
 			}
-		} ?: run {
-			disableCursorLock = true
 		}
 
 		app.koin.initialize()
@@ -55,6 +53,8 @@ object TouchController : ClientModInitializer {
 
 	private fun Koin.initialize() {
 		controllerLogger.info("Client proxy set, initialize mod")
+		val configHolder: TouchControllerConfigHolder = get()
+		configHolder.load()
 		FabricHudRenderCallback.EVENT.register(get())
 		TouchControllerHudRenderCallback.CROSSHAIR.register(get())
 		WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register(get())

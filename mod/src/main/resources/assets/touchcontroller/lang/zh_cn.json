@@ -1,4 +1,15 @@
 {
   "touchcontroller.screen.options": "触摸设置…",
-  "touchcontroller.screen.options.title": "触摸设置"
+  "touchcontroller.screen.options.title": "触摸设置",
+
+  "touchcontroller.screen.options.category.global.title": "全局",
+
+  "touchcontroller.screen.options.category.global.disable_mouse.title": "禁用鼠标输入",
+  "touchcontroller.screen.options.category.global.disable_mouse.description": "在游戏内禁用鼠标输入。当你的系统将触摸输入映射为鼠标输入时十分有用。",
+
+  "touchcontroller.screen.options.category.global.disable_cursor_lock.title": "禁用光标锁定",
+  "touchcontroller.screen.options.category.global.disable_cursor_lock.description": "在游戏内禁用光标锁定，从而游戏不会捕获光标的焦点。在使用 PojavLauncher 时启用这个选项。",
+
+  "touchcontroller.screen.options.category.global.enable_touch_emulation.title": "启用触摸模拟",
+  "touchcontroller.screen.options.category.global.enable_touch_emulation.description": "将鼠标输入模拟为触摸输入。仅在调试时启用这个选项。"
 }
