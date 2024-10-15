@@ -3,13 +3,28 @@
   "touchcontroller.screen.options.title": "触摸设置",
 
   "touchcontroller.screen.options.category.global.title": "全局",
+  "touchcontroller.screen.options.category.global.tooltip": "全局选项",
 
   "touchcontroller.screen.options.category.global.disable_mouse.title": "禁用鼠标输入",
   "touchcontroller.screen.options.category.global.disable_mouse.description": "在游戏内禁用鼠标输入。当你的系统将触摸输入映射为鼠标输入时十分有用。",
-
   "touchcontroller.screen.options.category.global.disable_cursor_lock.title": "禁用光标锁定",
   "touchcontroller.screen.options.category.global.disable_cursor_lock.description": "在游戏内禁用光标锁定，从而游戏不会捕获光标的焦点。在使用 PojavLauncher 时启用这个选项。",
-
   "touchcontroller.screen.options.category.global.enable_touch_emulation.title": "启用触摸模拟",
-  "touchcontroller.screen.options.category.global.enable_touch_emulation.description": "将鼠标输入模拟为触摸输入。仅在调试时启用这个选项。"
+  "touchcontroller.screen.options.category.global.enable_touch_emulation.description": "将鼠标输入模拟为触摸输入。仅在调试时启用这个选项。",
+
+  "touchcontroller.screen.options.category.custom.title": "自定义",
+  "touchcontroller.screen.options.category.custom.tooltip": "自定义布局",
+
+  "touchcontroller.screen.options.widget.general.property.top.left": "锚点：左上角",
+  "touchcontroller.screen.options.widget.general.property.top.right": "锚点：右上角",
+  "touchcontroller.screen.options.widget.general.property.bottom.left": "锚点：左下角",
+  "touchcontroller.screen.options.widget.general.property.bottom.right": "锚点：右下角",
+  "touchcontroller.screen.options.widget.general.property.opacity": "透明度: %s",
+
+  "touchcontroller.screen.options.widget.dpad.property.classic": "经典外观",
+  "touchcontroller.screen.options.widget.dpad.property.size": "按键大小",
+  "touchcontroller.screen.options.widget.dpad.property.padding": "按键边距",
+
+  "touchcontroller.screen.options.widget.joystick.property.size": "面板大小",
+  "touchcontroller.screen.options.widget.joystick.property.stick_size": "手柄大小"
 }

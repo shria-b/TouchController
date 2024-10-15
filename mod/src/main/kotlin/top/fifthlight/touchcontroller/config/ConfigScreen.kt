@@ -13,12 +13,12 @@ fun openConfigScreen(parent: Screen): Screen {
     val configHolder: TouchControllerConfigHolder = context.get()
     var config = configHolder.config.value
 
-
     return YetAnotherConfigLib(TouchController.NAMESPACE) {
         title(Texts.OPTIONS_SCREEN_TITLE)
 
-        val globalCategory by categories.registering {
+        val globalCategory by categories.registering("global") {
             name(Texts.OPTIONS_CATEGORY_GLOBAL_TITLE)
+            tooltip(Texts.OPTIONS_CATEGORY_GLOBAL_TOOLTIP)
 
             val disableMouse by rootOptions.registering {
                 name(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_TITLE)
@@ -41,6 +41,12 @@ fun openConfigScreen(parent: Screen): Screen {
                 binding(false, { config.enableTouchEmulation }, { config = config.copy(enableTouchEmulation = it) })
             }
         }
+
+        categories.register("custom", CustomCategory(
+            name = Texts.OPTIONS_CATEGORY_CUSTOM_TITLE,
+            tooltip = Texts.OPTIONS_CATEGORY_CUSTOM_TOOLTIP,
+            config = config
+        ))
 
         save {
             configHolder.save(config)

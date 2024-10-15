@@ -27,8 +27,8 @@ data class AddPointerMessage(
             return AddPointerMessage(
                 index = buffer.getInt(),
                 position = Offset(
-                    left = buffer.getFloat(),
-                    top = buffer.getFloat()
+                    x = buffer.getFloat(),
+                    y = buffer.getFloat()
                 )
             )
         }

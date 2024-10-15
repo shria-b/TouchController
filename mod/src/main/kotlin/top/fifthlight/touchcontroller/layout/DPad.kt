@@ -2,20 +2,19 @@ package top.fifthlight.touchcontroller.layout
 
 import net.minecraft.util.Colors
 import top.fifthlight.touchcontroller.asset.Textures
-import top.fifthlight.touchcontroller.proxy.data.IntSize
-import top.fifthlight.touchcontroller.state.DPadHudLayoutConfig
+import top.fifthlight.touchcontroller.config.control.DPadConfig
 
-fun Context.DPad(layout: DPadHudLayoutConfig) {
-    val buttonSize = IntSize(width = layout.size, height = layout.size)
+fun Context.DPad(config: DPadConfig) {
+    val buttonSize = config.buttonSize()
 
     val forward = withRect(
-        x = layout.size + layout.padding * 2,
-        y = layout.padding,
+        x = buttonSize.width + config.padding,
+        y = 0,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
         SwipeButton(id = "dpad_forward") { clicked ->
-            when (Pair(layout.classic, clicked)) {
+            when (Pair(config.classic, clicked)) {
                 Pair(true, false) -> Texture(id = Textures.DPAD_UP_CLASSIC)
                 Pair(true, true) -> Texture(id = Textures.DPAD_UP_CLASSIC, color = Colors.WHITE)
                 Pair(false, false) -> Texture(id = Textures.DPAD_UP)
@@ -25,13 +24,13 @@ fun Context.DPad(layout: DPadHudLayoutConfig) {
     }
 
     val backward = withRect(
-        x = layout.size + layout.padding * 2,
-        y = layout.size * 2 + layout.padding * 3,
+        x = buttonSize.width + config.padding,
+        y = (buttonSize.height + config.padding) * 2,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
         SwipeButton(id = "dpad_backward") { clicked ->
-            when (Pair(layout.classic, clicked)) {
+            when (Pair(config.classic, clicked)) {
                 Pair(true, false) -> Texture(id = Textures.DPAD_DOWN_CLASSIC)
                 Pair(true, true) -> Texture(id = Textures.DPAD_DOWN_CLASSIC, color = Colors.WHITE)
                 Pair(false, false) -> Texture(id = Textures.DPAD_DOWN)
@@ -41,13 +40,13 @@ fun Context.DPad(layout: DPadHudLayoutConfig) {
     }
 
     val left = withRect(
-        x = layout.padding,
-        y = layout.size + layout.padding * 2,
+        x = 0,
+        y = buttonSize.height + config.padding,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
         SwipeButton(id = "dpad_left") { clicked ->
-            when (Pair(layout.classic, clicked)) {
+            when (Pair(config.classic, clicked)) {
                 Pair(true, false) -> Texture(id = Textures.DPAD_LEFT_CLASSIC)
                 Pair(true, true) -> Texture(id = Textures.DPAD_LEFT_CLASSIC, color = Colors.WHITE)
                 Pair(false, false) -> Texture(id = Textures.DPAD_LEFT)
@@ -57,13 +56,13 @@ fun Context.DPad(layout: DPadHudLayoutConfig) {
     }
 
     val right = withRect(
-        x = layout.size * 2 + layout.padding * 3,
-        y = layout.size + layout.padding * 2,
+        x = (buttonSize.width + config.padding) * 2,
+        y = buttonSize.height + config.padding,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
         SwipeButton(id = "dpad_right") { clicked ->
-            when (Pair(layout.classic, clicked)) {
+            when (Pair(config.classic, clicked)) {
                 Pair(true, false) -> Texture(id = Textures.DPAD_RIGHT_CLASSIC)
                 Pair(true, true) -> Texture(id = Textures.DPAD_RIGHT_CLASSIC, color = Colors.WHITE)
                 Pair(false, false) -> Texture(id = Textures.DPAD_RIGHT)

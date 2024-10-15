@@ -1,13 +1,16 @@
 package top.fifthlight.touchcontroller.proxy.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class IntOffset(
-    val left: Int,
-    val top: Int,
+    val x: Int,
+    val y: Int,
 ) {
-    val x
-        get() = left
-    val y
-        get() = top
+    val left
+        get() = x
+    val top
+        get() = y
 
     companion object {
         val ZERO = IntOffset(0, 0)
@@ -19,28 +22,30 @@ data class IntOffset(
         return x && y
     }
 
-    operator fun plus(length: Int) = IntOffset(left = left + length, top = top + length)
+    fun toOffset() = Offset(x = x.toFloat(), y = y.toFloat())
+
+    operator fun plus(length: Int) = IntOffset(x = x + length, y = y + length)
     operator fun plus(other: IntSize) = IntOffset(
-        left = left + other.width,
-        top = top + other.height
+        x = x + other.width,
+        y = y + other.height
     )
     operator fun plus(other: IntOffset) = IntOffset(
-        left = left + other.left,
-        top = top + other.top
+        x = x + other.x,
+        y = y + other.y
     )
-    operator fun minus(length: Int) = IntOffset(left = left - length, top = top - length)
+    operator fun minus(length: Int) = IntOffset(x = x - length, y = y - length)
     operator fun minus(other: IntSize) = IntOffset(
-        left = left - other.width,
-        top = top - other.height
+        x = x - other.width,
+        y = y - other.height
     )
     operator fun minus(other: IntOffset) = IntOffset(
-        left = left - other.left,
-        top = top - other.top
+        x = x - other.x,
+        y = y - other.y
     )
-    operator fun times(num: Int) = IntOffset(left = left * num, top = top * num)
-    operator fun div(num: Int) = IntOffset(left = left / num, top = top / num)
+    operator fun times(num: Int) = IntOffset(x = x * num, y = y * num)
+    operator fun div(num: Int) = IntOffset(x = x / num, y = y / num)
 
     override fun toString(): String {
-        return "IntOffset(left=$left, top=$top)"
+        return "IntOffset(left=$x, top=$y)"
     }
 }

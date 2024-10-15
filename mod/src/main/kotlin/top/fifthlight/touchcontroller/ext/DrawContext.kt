@@ -19,6 +19,15 @@ inline fun <reified T> DrawContext.withTranslate(x: Float, y: Float, crossinline
         block()
     }
 
+inline fun <reified T> DrawContext.withScale(scale: Float, crossinline block: () -> T): T =
+    withScale(scale, scale, block)
+
+inline fun <reified T> DrawContext.withScale(x: Float, y: Float, crossinline block: () -> T): T =
+    matrices.withMatrix {
+        matrices.scale(x, y, 1f)
+        block()
+    }
+
 fun DrawContext.drawTexture(id: Identifier, dstRect: Rect, uvRect: Rect = Rect.ONE) {
     RenderSystem.setShaderTexture(0, id)
     withShader(program = { GameRenderer.getPositionTexProgram()!! }) {

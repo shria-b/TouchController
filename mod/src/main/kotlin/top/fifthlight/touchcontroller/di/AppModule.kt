@@ -24,6 +24,7 @@ import top.fifthlight.touchcontroller.event.HudRenderCallback as TouchController
 val appModule = module {
     single { MinecraftClient.getInstance() }
     single { FabricLoader.getInstance() }
+    single { get<MinecraftClient>().textRenderer }
     single {
         @OptIn(ExperimentalSerializationApi::class)
         Json {

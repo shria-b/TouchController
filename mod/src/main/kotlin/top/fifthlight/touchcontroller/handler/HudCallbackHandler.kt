@@ -6,6 +6,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.RenderTickCounter
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.ext.scaledWindowSize
 import top.fifthlight.touchcontroller.layout.Context
 import top.fifthlight.touchcontroller.layout.Hud
@@ -15,6 +16,7 @@ import top.fifthlight.touchcontroller.model.TouchStateModel
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 
 class HudCallbackHandler : HudRenderCallback, KoinComponent {
+    private val configHolder: TouchControllerConfigHolder by inject()
     private val controllerHudModel: ControllerHudModel by inject()
     private val touchStateModel: TouchStateModel by inject()
     private val crosshairStateModel: CrosshairStateModel by inject()
@@ -29,7 +31,7 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
             pointers = touchStateModel.pointers
         ).run {
             Hud(
-                config = controllerHudModel.config,
+                widgets = configHolder.config.value.widgetConfigs,
                 crosshairModel = crosshairStateModel,
                 onViewDelta = { (x, y) ->
                     client.player?.changeLookDirection(x.toDouble(), y.toDouble())

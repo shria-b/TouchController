@@ -57,8 +57,8 @@ class WorldRendererHandler: WorldRenderEvents.Start, BeforeBlockOutline, HudRend
             val mouse = client.mouse
             if (mouse.wasLeftButtonClicked()) {
                 val mousePosition = Offset(
-                    left = (mouse.x / client.window.width).toFloat(),
-                    top = (mouse.y / client.window.height).toFloat()
+                    x = (mouse.x / client.window.width).toFloat(),
+                    y = (mouse.y / client.window.height).toFloat()
                 )
                 touchStateModel.addPointer(
                     index = 0,

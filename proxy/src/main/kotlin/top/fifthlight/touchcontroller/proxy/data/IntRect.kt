@@ -5,11 +5,11 @@ data class IntRect(
     val size: IntSize
 ) {
     val left
-        get() = offset.left
+        get() = offset.x
     val top
-        get() = offset.top
+        get() = offset.y
     val right
-        get() = offset.left + size.width
+        get() = offset.x + size.width
     val bottom
-        get() = offset.top + size.height
+        get() = offset.y + size.height
 }

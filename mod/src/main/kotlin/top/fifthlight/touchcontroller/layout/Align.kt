@@ -9,34 +9,31 @@ enum class Align {
     LEFT_BOTTOM,
     RIGHT_BOTTOM;
 
-    fun alignOffset(windowSize: IntSize, size: IntSize): IntOffset {
+    fun alignOffset(windowSize: IntSize, size: IntSize, offset: IntOffset): IntOffset {
         return when (this) {
-            LEFT_TOP -> IntOffset(
-                left = 0,
-                top = 0,
-            )
+            LEFT_TOP -> offset
 
             RIGHT_TOP -> IntOffset(
-                left = windowSize.width - size.width,
-                top = 0,
+                x = windowSize.width - size.width - offset.x,
+                y = offset.y,
             )
 
             LEFT_BOTTOM -> IntOffset(
-                left = 0,
-                top = windowSize.height - size.height,
+                x = offset.x,
+                y = windowSize.height - size.height - offset.y,
             )
 
             RIGHT_BOTTOM -> IntOffset(
-                left = windowSize.width - size.width,
-                top = windowSize.height - size.height,
+                x = windowSize.width - size.width - offset.x,
+                y = windowSize.height - size.height - offset.y,
             )
         }
     }
 }
 
-inline fun <reified T> Context.withAlign(align: Align, size: IntSize, crossinline block: Context.() -> T): T =
+inline fun <reified T> Context.withAlign(align: Align, size: IntSize, offset: IntOffset = IntOffset.ZERO, crossinline block: Context.() -> T): T =
     withRect(
-        offset = align.alignOffset(windowSize = this.size, size = size),
+        offset = align.alignOffset(windowSize = this.size, offset = offset, size = size),
         size = size,
         block = block
     )

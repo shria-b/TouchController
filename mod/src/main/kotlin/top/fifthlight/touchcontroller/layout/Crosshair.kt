@@ -17,8 +17,8 @@ private const val CROSSHAIR_CIRCLE_PARTS = 24
 private const val CROSSHAIR_CIRCLE_ANGLE = 2 * PI.toFloat() / CROSSHAIR_CIRCLE_PARTS
 
 private fun point(angle: Float, radius: Float) = Offset(
-    left = cos(angle) * radius,
-    top = sin(angle) * radius
+    x = cos(angle) * radius,
+    y = sin(angle) * radius
 )
 
 private fun renderOuter(drawContext: DrawContext, config: CrosshairConfig) {
