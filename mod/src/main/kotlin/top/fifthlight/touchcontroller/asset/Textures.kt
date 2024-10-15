@@ -18,6 +18,6 @@ object Textures {
     val DPAD_DOWN_ACTIVE = texture("textures/gui/dpad/down_active.png")
     val DPAD_LEFT_ACTIVE = texture("textures/gui/dpad/left_active.png")
     val DPAD_RIGHT_ACTIVE = texture("textures/gui/dpad/right_active.png")
-    val JOYSTICK_PAD = texture("textures/gui/joystick/pad")
-    val JOYSTICK_STICK = texture("textures/gui/joystick/stick")
+    val JOYSTICK_PAD = texture("textures/gui/joystick/pad.png")
+    val JOYSTICK_STICK = texture("textures/gui/joystick/stick.png")
 }
