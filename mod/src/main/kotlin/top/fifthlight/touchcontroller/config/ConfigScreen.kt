@@ -11,7 +11,7 @@ import top.fifthlight.touchcontroller.asset.Texts
 fun openConfigScreen(parent: Screen): Screen {
     val context = GlobalContext.get()
     val configHolder: TouchControllerConfigHolder = context.get()
-    var config = configHolder.config.value
+    var config = configHolder.config.value.clone()
 
     return YetAnotherConfigLib(TouchController.NAMESPACE) {
         title(Texts.OPTIONS_SCREEN_TITLE)
