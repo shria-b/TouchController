@@ -12,7 +12,6 @@ fun openConfigScreen(parent: Screen): Screen {
     val context = GlobalContext.get()
     val configHolder: TouchControllerConfigHolder = context.get()
     var config = configHolder.config.value
-    val layout = configHolder.layout.value
 
     return YetAnotherConfigLib(TouchController.NAMESPACE) {
         title(Texts.OPTIONS_SCREEN_TITLE)
@@ -46,12 +45,10 @@ fun openConfigScreen(parent: Screen): Screen {
         categories.register("custom", CustomCategory(
             name = Texts.OPTIONS_CATEGORY_CUSTOM_TITLE,
             tooltip = Texts.OPTIONS_CATEGORY_CUSTOM_TOOLTIP,
-            initialConfig = layout
         ))
 
         save {
             configHolder.saveConfig(config)
-            configHolder.saveLayout(layout)
         }
     }.generateScreen(parent)
 }

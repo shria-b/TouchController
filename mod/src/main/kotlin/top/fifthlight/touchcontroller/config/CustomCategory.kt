@@ -48,12 +48,16 @@ private class CustomTab(
     @JvmField
     val title: Text,
     tabArea: ScreenRect,
-    screen: YACLScreen,
+    private val screen: YACLScreen,
     layoutConfig: ObservableValue<TouchControllerLayout>
 ) : Tab, KoinComponent {
     private val selectedConfig = ObservableValue<ControllerWidgetConfig?>(null)
 
     override fun getTitle(): Text = title
+
+    private val saveFinishedButton: ButtonWidget
+    private val cancelResetButton: ButtonWidget
+    private val undoButton: ButtonWidget
 
     private val layout = BorderLayout(
         left = tabArea.left,
@@ -102,20 +106,29 @@ private class CustomTab(
                 setRowSpacing(padding)
                 createAdder(2).apply {
                     ButtonWidget.builder(Text.literal("Reset")) {
-
+                        screen.cancelOrReset()
                     }.apply {
                         size(smallButtonWidth, buttonHeight)
-                    }.build().also { add(it) }
+                    }.build().also {
+                        cancelResetButton = it
+                        add(it)
+                    }
                     ButtonWidget.builder(Text.literal("Undo")) {
-
+                        screen.undo()
                     }.apply {
                         size(smallButtonWidth, buttonHeight)
-                    }.build().also { add(it) }
+                    }.build().also {
+                        undoButton = it
+                        add(it)
+                    }
                     ButtonWidget.builder(Text.literal("Finish")) {
-
+                        screen.finishOrSave()
                     }.apply {
                         size(rightPanelWidth, buttonHeight)
-                    }.build().also { add(it, 2) }
+                    }.build().also {
+                        saveFinishedButton = it
+                        add(it, 2)
+                    }
                 }
                 setSecondElement(this) { _, _, _ -> refreshPositions() }
             }
@@ -131,14 +144,22 @@ private class CustomTab(
             }
         }
         refreshPositions()
+        updateButtons()
     }
 
     init {
         OptionUtils.forEachOptions(screen.config) { option ->
             option.addListener { _, _ ->
-
+                updateButtons()
             }
         }
+    }
+
+    private fun updateButtons() {
+        val pendingChanges = screen.pendingChanges()
+
+        undoButton.active = pendingChanges
+        // TODO update message
     }
 
     override fun forEachChild(consumer: Consumer<ClickableWidget>) = layout.forEachChild(consumer)
@@ -152,10 +173,11 @@ private class CustomTab(
 
 class CustomCategory(
     private val name: Text,
-    private val tooltip: Text,
-    initialConfig: TouchControllerLayout
-) : ConfigCategory, CustomTabProvider {
-    private val config = ObservableValue(initialConfig)
+    private val tooltip: Text
+) : ConfigCategory, CustomTabProvider, KoinComponent {
+    private val configHolder: TouchControllerConfigHolder = get()
+    private val currentConfig = configHolder.layout
+    private val pendingConfig = ObservableValue(currentConfig.value)
     override fun name(): Text = name
 
     private val groups = ImmutableList.of(
@@ -171,9 +193,16 @@ class CustomCategory(
                             throw UnsupportedOperationException()
                     }
                 }
-                binding(defaultTouchControllerLayout, { config.value }, { config.value = it })
+                binding(defaultTouchControllerLayout, { currentConfig.value }, { configHolder.saveLayout(it) })
             }.build().also { option ->
-                config.addListener { option.requestSet(it) }
+                pendingConfig.addListener {
+                    if (option.pendingValue() != it) {
+                        option.requestSet(it)
+                    }
+                }
+                option.addListener { _, configs ->
+                    pendingConfig.value = configs
+                }
             })
         }.build()
     )
@@ -186,6 +215,6 @@ class CustomCategory(
         title = name,
         tabArea = tabArea,
         screen = screen,
-        layoutConfig = config
+        layoutConfig = pendingConfig
     )
 }
