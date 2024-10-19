@@ -23,27 +23,37 @@ data class DPadConfig(
     override val offset: IntOffset = IntOffset.ZERO,
     override val opacity: Float = 1f
 ) : ControllerWidgetConfig() {
+    companion object {
+        private val _properties = persistentListOf<Property<DPadConfig, *, *>>(
+            FloatProperty(
+                getValue = { it.size },
+                setValue = { config, value -> config.copy(size = value) },
+                startValue = .5f,
+                endValue = 2f,
+                messageFormatter = {
+                    Text.translatable(
+                        Texts.OPTIONS_WIDGET_DPAD_PROPERTY_SIZE,
+                        round(it * 100f).toString()
+                    )
+                },
+            ),
+            IntProperty(
+                getValue = { it.padding },
+                setValue = { config, value -> config.copy(padding = value) },
+                range = 0..16,
+                messageFormatter = { Text.translatable(Texts.OPTIONS_WIDGET_DPAD_PROPERTY_PADDING, it) }
+            ),
+            BooleanProperty(
+                getValue = { it.classic },
+                setValue = { config, value -> config.copy(classic = value) },
+                message = Texts.OPTIONS_WIDGET_DPAD_PROPERTY_CLASSIC,
+            )
+        )
+    }
+
     @Suppress("UNCHECKED_CAST")
     @Transient
-    override val properties = super.properties + persistentListOf<Property<DPadConfig, *>>(
-        FloatProperty(
-            getValue = { it.size },
-            setValue = { config, value -> config.copy(size = value) },
-            startValue = .5f,
-            endValue = 2f,
-            messageFormatter = {
-                Text.translatable(
-                    Texts.OPTIONS_WIDGET_DPAD_PROPERTY_SIZE,
-                    round(opacity * 100f).toString()
-                )
-            },
-        ),
-        BooleanProperty(
-            getValue = { it.classic },
-            setValue = { config, value -> config.copy(classic = value) },
-            message = Texts.OPTIONS_WIDGET_DPAD_PROPERTY_CLASSIC,
-        )
-    ) as PersistentList<Property<ControllerWidgetConfig, *>>
+    override val properties = super.properties + _properties as PersistentList<Property<ControllerWidgetConfig, *, *>>
 
     fun buttonSize(): IntSize = IntSize((22f * size).toInt() * 3, (22f * size).toInt() * 3)
 

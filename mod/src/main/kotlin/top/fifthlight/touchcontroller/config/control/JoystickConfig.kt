@@ -12,6 +12,7 @@ import top.fifthlight.touchcontroller.layout.Context
 import top.fifthlight.touchcontroller.layout.Joystick
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
+import kotlin.math.round
 
 @Serializable
 data class JoystickConfig(
@@ -21,24 +22,38 @@ data class JoystickConfig(
     override val offset: IntOffset = IntOffset.ZERO,
     override val opacity: Float = 1f
 ) : ControllerWidgetConfig() {
+    companion object {
+        private val _properties = persistentListOf<Property<JoystickConfig, *, *>>(
+            FloatProperty(
+                getValue = { it.size },
+                setValue = { config, value -> config.copy(size = value) },
+                startValue = .5f,
+                endValue = 2f,
+                messageFormatter = {
+                    Text.translatable(
+                        Texts.OPTIONS_WIDGET_JOYSTICK_SIZE,
+                        round(it * 100f).toString()
+                    )
+                },
+            ),
+            FloatProperty(
+                getValue = { it.stickSize },
+                setValue = { config, value -> config.copy(stickSize = value) },
+                startValue = .5f,
+                endValue = 2f,
+                messageFormatter = {
+                    Text.translatable(
+                        Texts.OPTIONS_WIDGET_JOYSTICK_STICK_SIZE,
+                        round(it * 100f).toString()
+                    )
+                },
+            ),
+        )
+    }
+
     @Suppress("UNCHECKED_CAST")
     @Transient
-    override val properties = super.properties + persistentListOf<Property<JoystickConfig, *>>(
-        FloatProperty(
-            getValue = { it.size },
-            setValue = { config, value -> config.copy(size = value) },
-            startValue = .5f,
-            endValue = 2f,
-            messageFormatter = { Text.translatable(Texts.OPTIONS_WIDGET_JOYSTICK_SIZE, it) },
-        ),
-        FloatProperty(
-            getValue = { it.stickSize },
-            setValue = { config, value -> config.copy(stickSize = value) },
-            startValue = .5f,
-            endValue = 2f,
-            messageFormatter = { Text.translatable(Texts.OPTIONS_WIDGET_JOYSTICK_STICK_SIZE, it) },
-        ),
-    ) as PersistentList<Property<ControllerWidgetConfig, *>>
+    override val properties = super.properties + _properties as PersistentList<Property<ControllerWidgetConfig, *, *>>
 
     override fun size(): IntSize = IntSize((size * 72).toInt())
 

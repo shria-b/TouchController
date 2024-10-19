@@ -19,12 +19,12 @@
   "touchcontroller.screen.options.widget.general.property.top.right": "锚点：右上角",
   "touchcontroller.screen.options.widget.general.property.bottom.left": "锚点：左下角",
   "touchcontroller.screen.options.widget.general.property.bottom.right": "锚点：右下角",
-  "touchcontroller.screen.options.widget.general.property.opacity": "透明度: %s",
+  "touchcontroller.screen.options.widget.general.property.opacity": "透明度: %s%%",
 
   "touchcontroller.screen.options.widget.dpad.property.classic": "经典外观",
-  "touchcontroller.screen.options.widget.dpad.property.size": "按键大小",
-  "touchcontroller.screen.options.widget.dpad.property.padding": "按键边距",
+  "touchcontroller.screen.options.widget.dpad.property.size": "按键大小: %s%%",
+  "touchcontroller.screen.options.widget.dpad.property.padding": "按键边距: %d",
 
-  "touchcontroller.screen.options.widget.joystick.property.size": "面板大小",
-  "touchcontroller.screen.options.widget.joystick.property.stick_size": "手柄大小"
+  "touchcontroller.screen.options.widget.joystick.property.size": "面板大小: %s%%",
+  "touchcontroller.screen.options.widget.joystick.property.stick_size": "手柄大小: %s%%"
 }
