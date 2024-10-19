@@ -15,8 +15,8 @@ import top.fifthlight.touchcontroller.proxy.data.IntSize
 
 @Serializable
 data class JoystickConfig(
-    var size: Float = 1f,
-    var stickSize: Float = 1f,
+    val size: Float = 1f,
+    val stickSize: Float = 1f,
     override val align: Align = Align.LEFT_BOTTOM,
     override val offset: IntOffset = IntOffset.ZERO,
     override val opacity: Float = 1f

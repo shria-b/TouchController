@@ -16,9 +16,9 @@ import kotlin.math.round
 
 @Serializable
 data class DPadConfig(
-    var classic: Boolean = true,
-    var size: Float = 1f,
-    var padding: Int = 4,
+    val classic: Boolean = true,
+    val size: Float = 1f,
+    val padding: Int = 4,
     override val align: Align = Align.LEFT_BOTTOM,
     override val offset: IntOffset = IntOffset.ZERO,
     override val opacity: Float = 1f
