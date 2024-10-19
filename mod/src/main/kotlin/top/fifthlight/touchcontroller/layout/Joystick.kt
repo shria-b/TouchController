@@ -5,7 +5,6 @@ import top.fifthlight.touchcontroller.config.control.JoystickConfig
 import top.fifthlight.touchcontroller.ext.drawTexture
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.proxy.data.Rect
-import top.fifthlight.touchcontroller.proxy.data.Size
 import top.fifthlight.touchcontroller.state.PointerState
 import kotlin.math.sqrt
 
@@ -56,13 +55,13 @@ fun Context.Joystick(layout: JoystickConfig) {
         dstRect = Rect(size = size.toSize())
     )
     val drawOffset = normalizedOffset ?: Offset.ZERO
-    val stickSize = (layout.stickSize * 16).toInt()
-    val actualOffset = ((drawOffset + 1f) / 2f * size) - Offset(stickSize.toFloat()) / 2f
+    val stickSize = layout.stickSize()
+    val actualOffset = ((drawOffset + 1f) / 2f * size) - stickSize.toSize() / 2f
     drawContext.drawTexture(
         id = Textures.JOYSTICK_STICK,
         dstRect = Rect(
             offset = actualOffset,
-            size = Size(stickSize.toFloat())
+            size = stickSize.toSize()
         )
     )
 

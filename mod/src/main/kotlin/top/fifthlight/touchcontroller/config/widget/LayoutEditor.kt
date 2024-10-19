@@ -11,8 +11,10 @@ import net.minecraft.text.Text
 import net.minecraft.util.Colors
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import top.fifthlight.touchcontroller.config.TouchControllerConfig
+import top.fifthlight.touchcontroller.config.ObservableValue
+import top.fifthlight.touchcontroller.config.TouchControllerLayout
 import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
+import top.fifthlight.touchcontroller.config.replaceItem
 import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.layout.Align.*
 import top.fifthlight.touchcontroller.layout.Context
@@ -28,11 +30,10 @@ class LayoutEditor(
     width: Int = 0,
     height: Int = 0,
     message: Text? = null,
-    private val config: TouchControllerConfig,
-    private val onWidgetSelected: (LayoutEditor, ControllerWidgetConfig?) -> Unit
+    private val layoutConfig: ObservableValue<TouchControllerLayout>,
+    private val selectedConfig: ObservableValue<ControllerWidgetConfig?>,
 ) : ClickableWidget(x, y, width, height, message), KoinComponent {
     private val client: MinecraftClient by inject()
-    var selectedConfig: ControllerWidgetConfig? = null
 
     override fun renderWidget(drawContext: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         val context = Context(
@@ -44,14 +45,14 @@ class LayoutEditor(
             status = ContextStatus()
         )
         drawContext.withTranslate(x.toFloat(), y.toFloat()) {
-            config.widgetConfigs.forEach { config ->
+            layoutConfig.value.forEach { config ->
                 context.withAlign(
                     align = config.align,
                     offset = config.offset,
                     size = config.size()
                 ) {
                     config.render(this)
-                    if (selectedConfig == config) {
+                    if (selectedConfig.value == config) {
                         context.drawContext.drawBorder(0, 0, size.width, size.height, Colors.WHITE)
                     }
                 }
@@ -66,7 +67,7 @@ class LayoutEditor(
         val pointerPosition = IntOffset(x = mouseX.toInt() - x, y = mouseY.toInt() - y)
         val screenSize = IntSize(width, height)
 
-        for (widget in config.widgetConfigs) {
+        for (widget in layoutConfig.value) {
             val size = widget.size()
             val offset = widget.align.alignOffset(screenSize, size, widget.offset)
             val pointerOffset = pointerPosition - offset
@@ -74,39 +75,43 @@ class LayoutEditor(
                 dragStart = Offset(mouseX.toFloat(), mouseY.toFloat())
                 origOffset = widget.offset
                 client.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
-                onWidgetSelected(this, widget)
+                selectedConfig.value = widget
                 return
             }
         }
-        onWidgetSelected(this, null)
+        selectedConfig.value = null
     }
 
     override fun onDrag(mouseX: Double, mouseY: Double, deltaX: Double, deltaY: Double) {
-        val config = selectedConfig ?: return
+        val config = selectedConfig.value ?: return
         val dragPosition = Offset(mouseX.toFloat(), mouseY.toFloat()) - dragStart
-        config.offset = when (config.align) {
+        val newOffset = when (config.align) {
             LEFT_TOP -> IntOffset(
                 x = origOffset.x + dragPosition.x.toInt(),
                 y = origOffset.y + dragPosition.y.toInt()
             )
+
             RIGHT_TOP -> IntOffset(
                 x = origOffset.x - dragPosition.x.toInt(),
                 y = origOffset.y + dragPosition.y.toInt()
             )
+
             LEFT_BOTTOM -> IntOffset(
                 x = origOffset.x + dragPosition.x.toInt(),
                 y = origOffset.y - dragPosition.y.toInt()
             )
+
             RIGHT_BOTTOM -> IntOffset(
                 x = origOffset.x - dragPosition.x.toInt(),
                 y = origOffset.y - dragPosition.y.toInt()
             )
         }
+        val newConfig = config.cloneBase(offset = newOffset)
+        layoutConfig.replaceItem(config, newConfig)
+        selectedConfig.value = newConfig
     }
 
     override fun playDownSound(soundManager: SoundManager) {}
 
-    override fun appendClickableNarrations(builder: NarrationMessageBuilder) {
-
-    }
+    override fun appendClickableNarrations(builder: NarrationMessageBuilder) {}
 }

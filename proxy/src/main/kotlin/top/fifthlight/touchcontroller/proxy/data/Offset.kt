@@ -21,5 +21,6 @@ data class Offset(
     operator fun times(num: Float): Offset = Offset(x = x * num, y = y * num)
     operator fun minus(offset: IntOffset) = Offset(x = x - offset.x, y = y - offset.y)
     operator fun minus(offset: Offset) = Offset(x = x - offset.x, y = y - offset.y)
+    operator fun minus(size: Size) = Offset(x = x - size.width, y = y - size.height)
     operator fun times(size: IntSize) = Offset(x = x * size.width.toFloat(), y = y * size.height.toFloat())
 }

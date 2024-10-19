@@ -31,7 +31,7 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
             pointers = touchStateModel.pointers
         ).run {
             Hud(
-                widgets = configHolder.config.value.widgetConfigs,
+                widgets = configHolder.layout.value,
                 crosshairModel = crosshairStateModel,
                 onViewDelta = { (x, y) ->
                     client.player?.changeLookDirection(x.toDouble(), y.toDouble())

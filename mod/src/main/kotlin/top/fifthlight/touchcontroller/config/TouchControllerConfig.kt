@@ -1,21 +1,25 @@
 package top.fifthlight.touchcontroller.config
 
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.serialization.Serializable
 import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
+import top.fifthlight.touchcontroller.config.control.DPadConfig
+import top.fifthlight.touchcontroller.layout.Align
+import top.fifthlight.touchcontroller.proxy.data.IntOffset
 
 @Serializable
 data class TouchControllerConfig(
     val disableMouse: Boolean = true,
     val disableMouseLock: Boolean = true,
     val enableTouchEmulation: Boolean = false,
-    val widgetConfigs: ArrayList<ControllerWidgetConfig> = arrayListOf()
-) {
-    fun clone(
-        disableMouse: Boolean = this.disableMouse,
-        disableMouseLock: Boolean = this.disableMouseLock,
-        enableTouchEmulation: Boolean = this.enableTouchEmulation,
-        widgetConfigs: ArrayList<ControllerWidgetConfig> = this.widgetConfigs
-    ) = TouchControllerConfig(
-        disableMouse, disableMouseLock, enableTouchEmulation, ArrayList(widgetConfigs.map { it.copy() })
+)
+
+typealias TouchControllerLayout = PersistentList<ControllerWidgetConfig>
+
+val defaultTouchControllerLayout: TouchControllerLayout = persistentListOf(
+    DPadConfig(
+        align = Align.LEFT_BOTTOM,
+        offset = IntOffset(8, 8)
     )
-}
+)

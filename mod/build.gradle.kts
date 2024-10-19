@@ -41,6 +41,7 @@ dependencies {
     includeAndImplementation(project(":proxy"))
     includeAndImplementation(libs.koin.core)
     includeAndImplementation(libs.koin.logger.slf4j)
+    includeAndImplementation(libs.kotlinx.collections.immutable)
 }
 
 tasks.withType<ProcessResources> {
