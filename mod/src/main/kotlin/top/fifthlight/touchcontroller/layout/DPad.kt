@@ -87,17 +87,7 @@ fun Context.DPad(config: DPadConfig) {
         when (config.extraButton) {
             DPadExtraButton.NONE -> {}
             DPadExtraButton.SNEAK -> RawSneakButton(dpad = true, classic = config.classic)
-
-            DPadExtraButton.JUMP -> {
-                result.jump = Button(id = "jump") { clicked ->
-                    when (Pair(config.classic, clicked)) {
-                        Pair(true, false) -> Texture(id = Textures.JUMP_CLASSIC)
-                        Pair(true, true) -> Texture(id = Textures.JUMP_CLASSIC, color = Colors.WHITE)
-                        Pair(false, false) -> Texture(id = Textures.JUMP)
-                        Pair(false, true) -> Texture(id = Textures.JUMP_ACTIVE)
-                    }
-                }.clicked
-            }
+            DPadExtraButton.JUMP -> RawJumpButton(classic = config.classic)
         }
     }
 

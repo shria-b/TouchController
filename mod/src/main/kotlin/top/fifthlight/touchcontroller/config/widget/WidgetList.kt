@@ -8,10 +8,7 @@ import net.minecraft.client.gui.widget.ElementListWidget
 import net.minecraft.util.Colors
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
-import top.fifthlight.touchcontroller.config.control.DPadConfig
-import top.fifthlight.touchcontroller.config.control.JoystickConfig
-import top.fifthlight.touchcontroller.config.control.SneakButtonConfig
+import top.fifthlight.touchcontroller.config.control.*
 import top.fifthlight.touchcontroller.ext.withScale
 import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.layout.Context
@@ -34,7 +31,8 @@ class WidgetList(
         private val DEFAULT_CONFIGS = listOf(
             DPadConfig(),
             JoystickConfig(),
-            SneakButtonConfig()
+            SneakButtonConfig(),
+            JumpButtonConfig()
         )
     }
 

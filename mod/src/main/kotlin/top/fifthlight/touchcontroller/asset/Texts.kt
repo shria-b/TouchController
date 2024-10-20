@@ -60,4 +60,7 @@ object Texts {
 
     val OPTIONS_WIDGET_SNEAK_BUTTON_PROPERTY_SIZE = key("screen.options.widget.sneak_button.property.size")
     val OPTIONS_WIDGET_SNEAK_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.sneak_button.property.classic")
+
+    val OPTIONS_WIDGET_JUMP_BUTTON_PROPERTY_SIZE = key("screen.options.widget.jump_button.property.size")
+    val OPTIONS_WIDGET_JUMP_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.jump_button.property.classic")
 }
