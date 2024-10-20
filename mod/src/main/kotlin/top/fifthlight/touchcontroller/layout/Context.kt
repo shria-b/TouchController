@@ -30,7 +30,6 @@ data class ContextCounter(
     fun tick() {
         if (sneak > 0) {
             sneak--
-            println(sneak)
         }
     }
 }
