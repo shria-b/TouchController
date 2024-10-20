@@ -13,6 +13,7 @@ import org.koin.core.component.get
 import org.koin.core.component.inject
 import org.slf4j.LoggerFactory
 import top.fifthlight.touchcontroller.TouchController
+import top.fifthlight.touchcontroller.ext.TouchControllerLayoutSerializer
 import java.nio.file.FileAlreadyExistsException
 import kotlin.io.path.createDirectory
 import kotlin.io.path.readText
@@ -22,8 +23,8 @@ class TouchControllerConfigHolder : KoinComponent {
     private val fabricLoader: FabricLoader = get()
     private val logger = LoggerFactory.getLogger(TouchControllerConfig::class.java)
     private val configDir = fabricLoader.configDir.resolve(TouchController.NAMESPACE)
-    private val configFile = configDir.resolve("touch_controller.json")
-    private val layoutFile = configDir.resolve("touch_controller_layout.json")
+    private val configFile = configDir.resolve("config.json")
+    private val layoutFile = configDir.resolve("layout.json")
 
     private val json: Json by inject()
     private var configLoaded = atomic(false)
@@ -33,7 +34,7 @@ class TouchControllerConfigHolder : KoinComponent {
     val layout = _layout.asStateFlow()
 
     fun load() {
-        if (configLoaded.compareAndSet(expect = false,update = true)) {
+        if (configLoaded.compareAndSet(expect = false, update = true)) {
             @OptIn(DelicateCoroutinesApi::class)
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
@@ -65,29 +66,36 @@ class TouchControllerConfigHolder : KoinComponent {
                 } catch (_: FileAlreadyExistsException) {
                 }
             }
-            config.collectLatest {
-                if (!configLoaded.value) {
-                    return@collectLatest
-                }
-                withContext(Dispatchers.IO) {
-                    try {
-                        createConfigDirectory()
-                        configFile.writeText(json.encodeToString(_config.value))
-                    } catch (ex: Exception) {
-                        logger.warn("Failed to write config: ", ex)
+            launch {
+                config.collectLatest { config ->
+                    if (!configLoaded.value) {
+                        return@collectLatest
+                    }
+                    withContext(Dispatchers.IO) {
+                        try {
+                            createConfigDirectory()
+                            configFile.writeText(json.encodeToString(config))
+                        } catch (ex: Exception) {
+                            logger.warn("Failed to write config: ", ex)
+                        }
                     }
                 }
             }
-            layout.collectLatest {
-                if (!configLoaded.value) {
-                    return@collectLatest
-                }
-                withContext(Dispatchers.IO) {
-                    try {
-                        createConfigDirectory()
-                        layoutFile.writeText(json.encodeToString(_layout.value))
-                    } catch (ex: Exception) {
-                        logger.warn("Failed to write layout: ", ex)
+            launch {
+                val serializer = TouchControllerLayoutSerializer()
+                layout.collectLatest { layout ->
+                    if (!configLoaded.value) {
+                        return@collectLatest
+                    }
+                    withContext(Dispatchers.IO) {
+                        try {
+                            createConfigDirectory()
+                            layoutFile.writeText(
+                                json.encodeToString(serializer, layout)
+                            )
+                        } catch (ex: Exception) {
+                            logger.warn("Failed to write layout: ", ex)
+                        }
                     }
                 }
             }
