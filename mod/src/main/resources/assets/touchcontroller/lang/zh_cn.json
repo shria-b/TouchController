@@ -15,6 +15,17 @@
   "touchcontroller.screen.options.category.custom.title": "自定义",
   "touchcontroller.screen.options.category.custom.tooltip": "自定义布局",
 
+  "touchcontroller.screen.options.save.title": "保存",
+  "touchcontroller.screen.options.save.tooltip": "保存并应用当前的更改。",
+  "touchcontroller.screen.options.finish.title": "完成",
+  "touchcontroller.screen.options.finish.tooltip": "关闭界面。",
+  "touchcontroller.screen.options.reset.title": "重置",
+  "touchcontroller.screen.options.reset.tooltip": "重置所有设置到默认值。",
+  "touchcontroller.screen.options.undo.title": "撤销",
+  "touchcontroller.screen.options.undo.tooltip": "撤销所有的修改，关闭界面。",
+  "touchcontroller.screen.options.cancel.title": "关闭",
+  "touchcontroller.screen.options.cancel.tooltip": "撤销所有的修改，关闭界面。",
+
   "touchcontroller.screen.options.widget.general.property.top.left": "锚点：左上角",
   "touchcontroller.screen.options.widget.general.property.top.right": "锚点：右上角",
   "touchcontroller.screen.options.widget.general.property.bottom.left": "锚点：左下角",

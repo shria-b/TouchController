@@ -8,6 +8,7 @@ import dev.isxander.yacl3.gui.YACLScreen
 import kotlinx.collections.immutable.plus
 import net.minecraft.client.gui.ScreenRect
 import net.minecraft.client.gui.tab.Tab
+import net.minecraft.client.gui.tooltip.Tooltip
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.ClickableWidget
 import net.minecraft.client.gui.widget.GridWidget
@@ -15,12 +16,14 @@ import net.minecraft.client.gui.widget.Positioner
 import net.minecraft.text.Text
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import top.fifthlight.touchcontroller.asset.Texts
 import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
 import top.fifthlight.touchcontroller.config.widget.BorderLayout
 import top.fifthlight.touchcontroller.config.widget.LayoutEditor
 import top.fifthlight.touchcontroller.config.widget.PropertiesPanel
 import top.fifthlight.touchcontroller.config.widget.WidgetList
 import java.util.function.Consumer
+import javax.tools.Tool
 
 class ObservableValue<Value>(value: Value) {
     private val listeners = mutableListOf<(Value) -> Unit>()
@@ -105,17 +108,20 @@ private class CustomTab(
                 setColumnSpacing(padding)
                 setRowSpacing(padding)
                 createAdder(2).apply {
-                    ButtonWidget.builder(Text.literal("Reset")) {
+                    ButtonWidget.builder(Text.of("Cancel")) {
                         screen.cancelOrReset()
+                        updateButtons()
                     }.apply {
                         size(smallButtonWidth, buttonHeight)
                     }.build().also {
                         cancelResetButton = it
                         add(it)
                     }
-                    ButtonWidget.builder(Text.literal("Undo")) {
+                    ButtonWidget.builder(Texts.OPTIONS_UNDO_TITLE) {
                         screen.undo()
+                        updateButtons()
                     }.apply {
+                        tooltip(Tooltip.of(Texts.OPTIONS_UNDO_TOOLTIP))
                         size(smallButtonWidth, buttonHeight)
                     }.build().also {
                         undoButton = it
@@ -123,6 +129,7 @@ private class CustomTab(
                     }
                     ButtonWidget.builder(Text.literal("Finish")) {
                         screen.finishOrSave()
+                        updateButtons()
                     }.apply {
                         size(rightPanelWidth, buttonHeight)
                     }.build().also {
@@ -159,7 +166,17 @@ private class CustomTab(
         val pendingChanges = screen.pendingChanges()
 
         undoButton.active = pendingChanges
-        // TODO update message
+        if (pendingChanges) {
+            saveFinishedButton.setMessage(Texts.OPTIONS_SAVE_TITLE)
+            saveFinishedButton.setTooltip(Tooltip.of(Texts.OPTIONS_SAVE_TOOLTIP))
+            cancelResetButton.setMessage(Texts.OPTIONS_CANCEL_TITLE)
+            cancelResetButton.setTooltip(Tooltip.of(Texts.OPTIONS_CANCEL_TOOLTIP))
+        } else {
+            saveFinishedButton.setMessage(Texts.OPTIONS_FINISH_TITLE)
+            saveFinishedButton.setTooltip(Tooltip.of(Texts.OPTIONS_FINISH_TOOLTIP))
+            cancelResetButton.setMessage(Texts.OPTIONS_RESET_TITLE)
+            cancelResetButton.setTooltip(Tooltip.of(Texts.OPTIONS_RESET_TOOLTIP))
+        }
     }
 
     override fun forEachChild(consumer: Consumer<ClickableWidget>) = layout.forEachChild(consumer)
