@@ -11,10 +11,11 @@ import org.koin.core.component.get
 import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
 import top.fifthlight.touchcontroller.config.control.DPadConfig
 import top.fifthlight.touchcontroller.config.control.JoystickConfig
+import top.fifthlight.touchcontroller.config.control.SneakButtonConfig
 import top.fifthlight.touchcontroller.ext.withScale
 import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.layout.Context
-import top.fifthlight.touchcontroller.layout.ContextStatus
+import top.fifthlight.touchcontroller.layout.ContextResult
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 
@@ -33,6 +34,7 @@ class WidgetList(
         private val DEFAULT_CONFIGS = listOf(
             DPadConfig(),
             JoystickConfig(),
+            SneakButtonConfig()
         )
     }
 
@@ -83,7 +85,7 @@ class WidgetList(
                 screenOffset = offset,
                 scale = client.window.scaleFactor.toFloat() * componentScaleFactor,
                 pointers = emptyMap(),
-                status = ContextStatus()
+                result = ContextResult()
             )
             drawContext.withTranslate(offset.toOffset()) {
                 drawContext.withScale(componentScaleFactor) {

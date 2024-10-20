@@ -14,12 +14,26 @@ import top.fifthlight.touchcontroller.proxy.data.IntSize
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.Pointer
 
-data class ContextStatus(
+data class ContextResult(
     var forward: Float = 0f,
     var left: Float = 0f,
-    var sneak: Boolean = false,
-    var jump: Boolean = false
+    var jump: Boolean = false,
 )
+
+data class ContextStatus(
+    var sneakLocked: Boolean = false
+)
+
+data class ContextCounter(
+    var sneak: Int = 0
+) {
+    fun tick() {
+        if (sneak > 0) {
+            sneak--
+            println(sneak)
+        }
+    }
+}
 
 data class Context(
     val drawContext: DrawContext,
@@ -27,7 +41,9 @@ data class Context(
     val screenOffset: IntOffset,
     val scale: Float,
     val pointers: Map<Int, Pointer>,
+    val result: ContextResult = ContextResult(),
     val status: ContextStatus = ContextStatus(),
+    val timer: ContextCounter = ContextCounter(),
 ) : KoinComponent {
     val client: MinecraftClient by inject()
     val window: Window

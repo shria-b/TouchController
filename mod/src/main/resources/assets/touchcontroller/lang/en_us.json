@@ -41,6 +41,9 @@
   "touchcontroller.screen.options.widget.dpad.property.extra_button.jump": "Extra button: Jump",
   "touchcontroller.screen.options.widget.dpad.property.extra_button.sneak": "Extra button: Sneak",
 
+  "touchcontroller.screen.options.widget.sneak_button.property.size": "Button size",
+  "touchcontroller.screen.options.widget.sneak_button.property.classic": "Classic look",
+
   "touchcontroller.screen.options.widget.joystick.property.size": "Panel size",
   "touchcontroller.screen.options.widget.joystick.property.stick_size": "Stick size"
 }

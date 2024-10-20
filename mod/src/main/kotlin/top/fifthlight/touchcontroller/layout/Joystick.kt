@@ -66,7 +66,7 @@ fun Context.Joystick(layout: JoystickConfig) {
     )
 
     normalizedOffset?.let { (right, backward) ->
-        status.left = -right
-        status.forward = -backward
+        result.left = -right
+        result.forward = -backward
     }
 }

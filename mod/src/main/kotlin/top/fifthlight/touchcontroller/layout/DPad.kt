@@ -22,7 +22,7 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(false, false) -> Texture(id = Textures.DPAD_UP)
                 Pair(false, true) -> Texture(id = Textures.DPAD_UP_ACTIVE)
             }
-        }
+        }.clicked
     }
 
     val backward = withRect(
@@ -38,7 +38,7 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(false, false) -> Texture(id = Textures.DPAD_DOWN)
                 Pair(false, true) -> Texture(id = Textures.DPAD_DOWN_ACTIVE)
             }
-        }
+        }.clicked
     }
 
     val left = withRect(
@@ -54,7 +54,7 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(false, false) -> Texture(id = Textures.DPAD_LEFT)
                 Pair(false, true) -> Texture(id = Textures.DPAD_LEFT_ACTIVE)
             }
-        }
+        }.clicked
     }
 
     val right = withRect(
@@ -70,7 +70,7 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(false, false) -> Texture(id = Textures.DPAD_RIGHT)
                 Pair(false, true) -> Texture(id = Textures.DPAD_RIGHT_ACTIVE)
             }
-        }
+        }.clicked
     }
 
     val centerOffset = (if (config.classic) {
@@ -86,37 +86,28 @@ fun Context.DPad(config: DPadConfig) {
     ) {
         when (config.extraButton) {
             DPadExtraButton.NONE -> {}
-            DPadExtraButton.SNEAK -> {
-                status.sneak = Button(id = "sneak") { clicked ->
-                    when (Pair(config.classic, clicked)) {
-                        Pair(true, false) -> Texture(id = Textures.SNEAK_CLASSIC)
-                        Pair(true, true) -> Texture(id = Textures.SNEAK_CLASSIC, color = Colors.WHITE)
-                        Pair(false, false) -> Texture(id = Textures.SNEAK_DPAD)
-                        Pair(false, true) -> Texture(id = Textures.SNEAK_DPAD_ACTIVE)
-                    }
-                }
-            }
+            DPadExtraButton.SNEAK -> RawSneakButton(dpad = true, classic = config.classic)
 
             DPadExtraButton.JUMP -> {
-                status.jump = Button(id = "jump") { clicked ->
+                result.jump = Button(id = "jump") { clicked ->
                     when (Pair(config.classic, clicked)) {
                         Pair(true, false) -> Texture(id = Textures.JUMP_CLASSIC)
                         Pair(true, true) -> Texture(id = Textures.JUMP_CLASSIC, color = Colors.WHITE)
                         Pair(false, false) -> Texture(id = Textures.JUMP)
                         Pair(false, true) -> Texture(id = Textures.JUMP_ACTIVE)
                     }
-                }
+                }.clicked
             }
         }
     }
 
     when (Pair(forward, backward)) {
-        Pair(true, false) -> status.forward = 1f
-        Pair(false, true) -> status.forward = -1f
+        Pair(true, false) -> result.forward = 1f
+        Pair(false, true) -> result.forward = -1f
     }
 
     when (Pair(left, right)) {
-        Pair(true, false) -> status.left = 1f
-        Pair(false, true) -> status.left = -1f
+        Pair(true, false) -> result.left = 1f
+        Pair(false, true) -> result.left = -1f
     }
 }
