@@ -25,6 +25,8 @@ object Textures {
     val JUMP = texture("textures/gui/dpad/jump.png")
     val SNEAK_ACTIVE = texture("textures/gui/dpad/sneak_active.png")
     val JUMP_ACTIVE = texture("textures/gui/dpad/jump_active.png")
+    val SNEAK_DPAD = texture("textures/gui/dpad/sneak_dpad.png")
+    val SNEAK_DPAD_ACTIVE = texture("textures/gui/dpad/sneak_dpad_active.png")
 
     val JOYSTICK_PAD = texture("textures/gui/joystick/pad.png")
     val JOYSTICK_STICK = texture("textures/gui/joystick/stick.png")

@@ -23,8 +23,8 @@ enum class DPadExtraButton {
 @Serializable
 data class DPadConfig(
     val classic: Boolean = true,
-    val size: Float = 1f,
-    val padding: Int = 4,
+    val size: Float = 2f,
+    val padding: Int = if (classic) 4 else -1,
     val extraButton: DPadExtraButton = DPadExtraButton.SNEAK,
     override val align: Align = Align.LEFT_BOTTOM,
     override val offset: IntOffset = IntOffset.ZERO,
@@ -45,7 +45,7 @@ data class DPadConfig(
                 getValue = { it.size },
                 setValue = { config, value -> config.copy(size = value) },
                 startValue = .5f,
-                endValue = 2f,
+                endValue = 4f,
                 messageFormatter = {
                     Text.translatable(
                         Texts.OPTIONS_WIDGET_DPAD_PROPERTY_SIZE,
@@ -56,7 +56,7 @@ data class DPadConfig(
             IntProperty(
                 getValue = { it.padding },
                 setValue = { config, value -> config.copy(padding = value) },
-                range = 0..16,
+                range = -1..16,
                 messageFormatter = { Text.translatable(Texts.OPTIONS_WIDGET_DPAD_PROPERTY_PADDING, it) }
             ),
             BooleanProperty(
@@ -71,9 +71,10 @@ data class DPadConfig(
     @Transient
     override val properties = super.properties + _properties as PersistentList<Property<ControllerWidgetConfig, *, *>>
 
-    fun buttonSize(): IntSize = IntSize((22f * size).toInt() * 3, (22f * size).toInt() * 3)
+    fun buttonSize(): IntSize = IntSize((22f * size).toInt(), (22f * size).toInt())
+    fun buttonPadding(): Int = (padding * size).toInt()
 
-    override fun size(): IntSize = buttonSize() * 3 + padding * 2
+    override fun size(): IntSize = buttonSize() * 3 + buttonPadding() * 2
 
     override fun render(context: Context) = context.DPad(this@DPadConfig)
 

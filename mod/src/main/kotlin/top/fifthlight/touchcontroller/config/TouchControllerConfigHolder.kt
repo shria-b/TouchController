@@ -59,20 +59,35 @@ class TouchControllerConfigHolder : KoinComponent {
     init {
         @OptIn(DelicateCoroutinesApi::class)
         GlobalScope.launch {
+            fun createConfigDirectory() {
+                try {
+                    configDir.createDirectory()
+                } catch (_: FileAlreadyExistsException) {
+                }
+            }
             config.collectLatest {
                 if (!configLoaded.value) {
                     return@collectLatest
                 }
                 withContext(Dispatchers.IO) {
                     try {
-                        try {
-                            configDir.createDirectory()
-                        } catch (_: FileAlreadyExistsException) {
-                        }
+                        createConfigDirectory()
                         configFile.writeText(json.encodeToString(_config.value))
-                        layoutFile.writeText(json.encodeToString(_layout.value))
                     } catch (ex: Exception) {
                         logger.warn("Failed to write config: ", ex)
+                    }
+                }
+            }
+            layout.collectLatest {
+                if (!configLoaded.value) {
+                    return@collectLatest
+                }
+                withContext(Dispatchers.IO) {
+                    try {
+                        createConfigDirectory()
+                        layoutFile.writeText(json.encodeToString(_layout.value))
+                    } catch (ex: Exception) {
+                        logger.warn("Failed to write layout: ", ex)
                     }
                 }
             }

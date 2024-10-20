@@ -7,9 +7,10 @@ import top.fifthlight.touchcontroller.config.control.DPadExtraButton
 
 fun Context.DPad(config: DPadConfig) {
     val buttonSize = config.buttonSize()
+    val padding = config.buttonPadding()
 
     val forward = withRect(
-        x = buttonSize.width + config.padding,
+        x = buttonSize.width + padding,
         y = 0,
         width = buttonSize.width,
         height = buttonSize.height
@@ -25,8 +26,8 @@ fun Context.DPad(config: DPadConfig) {
     }
 
     val backward = withRect(
-        x = buttonSize.width + config.padding,
-        y = (buttonSize.height + config.padding) * 2,
+        x = buttonSize.width + padding,
+        y = (buttonSize.height + padding) * 2,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
@@ -42,7 +43,7 @@ fun Context.DPad(config: DPadConfig) {
 
     val left = withRect(
         x = 0,
-        y = buttonSize.height + config.padding,
+        y = buttonSize.height + padding,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
@@ -57,8 +58,8 @@ fun Context.DPad(config: DPadConfig) {
     }
 
     val right = withRect(
-        x = (buttonSize.width + config.padding) * 2,
-        y = buttonSize.height + config.padding,
+        x = (buttonSize.width + padding) * 2,
+        y = buttonSize.height + padding,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
@@ -72,11 +73,16 @@ fun Context.DPad(config: DPadConfig) {
         }
     }
 
+    val centerOffset = (if (config.classic) {
+        22 - 18
+    } else {
+        0
+    }) / 2
     withRect(
-        x = buttonSize.width + config.padding,
-        y = buttonSize.height + config.padding,
-        width = buttonSize.width,
-        height = buttonSize.height
+        x = buttonSize.width + padding + centerOffset,
+        y = buttonSize.height + padding + centerOffset,
+        width = buttonSize.width - centerOffset * 2,
+        height = buttonSize.height - centerOffset * 2
     ) {
         when (config.extraButton) {
             DPadExtraButton.NONE -> {}
@@ -85,8 +91,8 @@ fun Context.DPad(config: DPadConfig) {
                     when (Pair(config.classic, clicked)) {
                         Pair(true, false) -> Texture(id = Textures.SNEAK_CLASSIC)
                         Pair(true, true) -> Texture(id = Textures.SNEAK_CLASSIC, color = Colors.WHITE)
-                        Pair(false, false) -> Texture(id = Textures.SNEAK)
-                        Pair(false, true) -> Texture(id = Textures.SNEAK_ACTIVE)
+                        Pair(false, false) -> Texture(id = Textures.SNEAK_DPAD)
+                        Pair(false, true) -> Texture(id = Textures.SNEAK_DPAD_ACTIVE)
                     }
                 }
             }
