@@ -86,6 +86,7 @@ class PropertiesPanel(
             val properties = newConfig?.properties
             if (selectedProperties != properties) {
                 clearEntries()
+                selectedProperties = properties
                 val config = newConfig ?: return@addListener
                 properties?.forEach {
                     addEntry(createEntry(config, it))
@@ -93,7 +94,6 @@ class PropertiesPanel(
             } else {
                 children().forEach(PropertiesPanelEntry<*, *, *>::update)
             }
-            selectedProperties = properties
         }
     }
 
