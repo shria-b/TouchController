@@ -107,8 +107,8 @@ class IntProperty<Config : ControllerWidgetConfig>(
     private val range: IntRange,
     private val messageFormatter: (Int) -> Text,
 ) : ControllerWidgetConfig.Property<Config, Int, ConfigSliderWidget> {
-    private fun fromRawToValue(raw: Double): Int = (raw * (range.last - range.first + 1) + range.first).toInt()
-    private fun fromValueToRaw(value: Int): Double = (value.toDouble() - range.first) / (range.last - range.first + 1)
+    private fun fromRawToValue(raw: Double): Int = (raw * (range.last - range.first) + range.first).toInt()
+    private fun fromValueToRaw(value: Int): Double = (value.toDouble() - range.first) / (range.last - range.first)
 
     override fun createController(editProvider: ControllerWidgetConfig.PropertyEditProvider<Config>) =
         object : ControllerWidgetConfig.PropertyWidget<Config, ConfigSliderWidget> {
