@@ -39,6 +39,8 @@ object Texts {
     val OPTIONS_UNDO_TOOLTIP = translatable("screen.options.undo.tooltip")
     val OPTIONS_CANCEL_TITLE = translatable("screen.options.cancel.title")
     val OPTIONS_CANCEL_TOOLTIP = translatable("screen.options.cancel.tooltip")
+    val OPTIONS_REMOVE_TITLE = translatable("screen.options.remove.title")
+    val OPTIONS_REMOVE_TOOLTIP = translatable("screen.options.remove.tooltip")
 
     val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_TOP_LEFT = translatable("screen.options.widget.general.property.top.left")
     val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_TOP_RIGHT = translatable("screen.options.widget.general.property.top.right")

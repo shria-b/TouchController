@@ -25,6 +25,8 @@
   "touchcontroller.screen.options.undo.tooltip": "撤销所有的修改，关闭界面。",
   "touchcontroller.screen.options.cancel.title": "关闭",
   "touchcontroller.screen.options.cancel.tooltip": "撤销所有的修改，关闭界面。",
+  "touchcontroller.screen.options.remove.title": "删除",
+  "touchcontroller.screen.options.remove.tooltip": "删除选中的组件。",
 
   "touchcontroller.screen.options.widget.general.property.top.left": "锚点：左上角",
   "touchcontroller.screen.options.widget.general.property.top.right": "锚点：右上角",

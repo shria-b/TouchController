@@ -5,6 +5,7 @@ import dev.isxander.yacl3.api.*
 import dev.isxander.yacl3.api.utils.Dimension
 import dev.isxander.yacl3.api.utils.OptionUtils
 import dev.isxander.yacl3.gui.YACLScreen
+import kotlinx.collections.immutable.minus
 import kotlinx.collections.immutable.plus
 import net.minecraft.client.gui.ScreenRect
 import net.minecraft.client.gui.tab.Tab
@@ -23,7 +24,6 @@ import top.fifthlight.touchcontroller.config.widget.LayoutEditor
 import top.fifthlight.touchcontroller.config.widget.PropertiesPanel
 import top.fifthlight.touchcontroller.config.widget.WidgetList
 import java.util.function.Consumer
-import javax.tools.Tool
 
 class ObservableValue<Value>(value: Value) {
     private val listeners = mutableListOf<(Value) -> Unit>()
@@ -45,6 +45,10 @@ fun ObservableValue<TouchControllerLayout>.replaceItem(
 ) {
     val index = value.indexOf(oldItem).takeIf { it >= 0 } ?: return
     value = value.set(index, newItem)
+}
+
+fun ObservableValue<TouchControllerLayout>.removeItem(item: ControllerWidgetConfig) {
+    value -= item
 }
 
 private class CustomTab(
@@ -97,14 +101,31 @@ private class CustomTab(
             }
         }
         val rightPanelWidth = 200
+        val buttonHeight = 20
         BorderLayout(width = rightPanelWidth, direction = BorderLayout.Direction.VERTICAL).apply {
+            ButtonWidget.builder(Texts.OPTIONS_REMOVE_TITLE) {
+                selectedConfig.value?.let {
+                    layoutConfig.removeItem(it)
+                    selectedConfig.value = null
+                }
+            }.apply {
+                tooltip(Tooltip.of(Texts.OPTIONS_REMOVE_TOOLTIP))
+                size(rightPanelWidth, buttonHeight)
+            }.build().also { removeButton ->
+                removeButton.active = false
+                selectedConfig.addListener {
+                    removeButton.active = it != null
+                }
+                setFirstElement(removeButton) { _, width, height ->
+                    removeButton.setDimensions(width, height)
+                }
+            }
             setCenterElement(propertiesPanel) { _, width, height ->
                 propertiesPanel.setDimensions(width, height)
             }
             GridWidget().apply {
                 val padding = 8
                 val smallButtonWidth = (rightPanelWidth - padding) / 2
-                val buttonHeight = 20
                 setColumnSpacing(padding)
                 setRowSpacing(padding)
                 createAdder(2).apply {

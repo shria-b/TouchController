@@ -25,6 +25,8 @@
   "touchcontroller.screen.options.undo.tooltip": "Cancel all pending changes.",
   "touchcontroller.screen.options.cancel.title": "Cancel",
   "touchcontroller.screen.options.cancel.tooltip": "Cancel all pending changes and exit.",
+  "touchcontroller.screen.options.remove.title": "Remove",
+  "touchcontroller.screen.options.remove.tooltip": "Remove selected control.",
 
   "touchcontroller.screen.options.widget.general.property.top.left": "Anchor: top left",
   "touchcontroller.screen.options.widget.general.property.top.right": "Anchor: top right",
