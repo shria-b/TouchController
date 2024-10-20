@@ -35,8 +35,11 @@
   "touchcontroller.screen.options.widget.general.property.opacity": "Opacity: %s",
 
   "touchcontroller.screen.options.widget.dpad.property.classic": "Classic look",
-  "touchcontroller.screen.options.widget.dpad.property.size": "Button size",
-  "touchcontroller.screen.options.widget.dpad.property.padding": "Button margin",
+  "touchcontroller.screen.options.widget.dpad.property.size": "Button size: %s%%",
+  "touchcontroller.screen.options.widget.dpad.property.padding": "Button margin: %s%%",
+  "touchcontroller.screen.options.widget.dpad.property.extra_button.none": "Extra button: None",
+  "touchcontroller.screen.options.widget.dpad.property.extra_button.jump": "Extra button: Jump",
+  "touchcontroller.screen.options.widget.dpad.property.extra_button.sneak": "Extra button: Sneak",
 
   "touchcontroller.screen.options.widget.joystick.property.size": "Panel size",
   "touchcontroller.screen.options.widget.joystick.property.stick_size": "Stick size"

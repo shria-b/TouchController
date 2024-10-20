@@ -3,6 +3,7 @@ package top.fifthlight.touchcontroller.layout
 import net.minecraft.util.Colors
 import top.fifthlight.touchcontroller.asset.Textures
 import top.fifthlight.touchcontroller.config.control.DPadConfig
+import top.fifthlight.touchcontroller.config.control.DPadExtraButton
 
 fun Context.DPad(config: DPadConfig) {
     val buttonSize = config.buttonSize()
@@ -67,6 +68,38 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(true, true) -> Texture(id = Textures.DPAD_RIGHT_CLASSIC, color = Colors.WHITE)
                 Pair(false, false) -> Texture(id = Textures.DPAD_RIGHT)
                 Pair(false, true) -> Texture(id = Textures.DPAD_RIGHT_ACTIVE)
+            }
+        }
+    }
+
+    withRect(
+        x = buttonSize.width + config.padding,
+        y = buttonSize.height + config.padding,
+        width = buttonSize.width,
+        height = buttonSize.height
+    ) {
+        when (config.extraButton) {
+            DPadExtraButton.NONE -> {}
+            DPadExtraButton.SNEAK -> {
+                status.sneak = Button(id = "sneak") { clicked ->
+                    when (Pair(config.classic, clicked)) {
+                        Pair(true, false) -> Texture(id = Textures.SNEAK_CLASSIC)
+                        Pair(true, true) -> Texture(id = Textures.SNEAK_CLASSIC, color = Colors.WHITE)
+                        Pair(false, false) -> Texture(id = Textures.SNEAK)
+                        Pair(false, true) -> Texture(id = Textures.SNEAK_ACTIVE)
+                    }
+                }
+            }
+
+            DPadExtraButton.JUMP -> {
+                status.jump = Button(id = "jump") { clicked ->
+                    when (Pair(config.classic, clicked)) {
+                        Pair(true, false) -> Texture(id = Textures.JUMP_CLASSIC)
+                        Pair(true, true) -> Texture(id = Textures.JUMP_CLASSIC, color = Colors.WHITE)
+                        Pair(false, false) -> Texture(id = Textures.JUMP)
+                        Pair(false, true) -> Texture(id = Textures.JUMP_ACTIVE)
+                    }
+                }
             }
         }
     }

@@ -23,6 +23,6 @@ class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
         input.movementForward = input.movementForward.coerceIn(-1f, 1f)
         input.movementSideways = input.movementSideways.coerceIn(-1f, 1f)
         input.sneaking = input.sneaking || state.sneak
-
+        input.jumping = input.jumping || state.jump
     }
 }

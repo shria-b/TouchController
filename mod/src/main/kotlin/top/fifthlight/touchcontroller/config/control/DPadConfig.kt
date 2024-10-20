@@ -14,17 +14,33 @@ import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 import kotlin.math.round
 
+enum class DPadExtraButton {
+    NONE,
+    SNEAK,
+    JUMP
+}
+
 @Serializable
 data class DPadConfig(
     val classic: Boolean = true,
     val size: Float = 1f,
     val padding: Int = 4,
+    val extraButton: DPadExtraButton = DPadExtraButton.SNEAK,
     override val align: Align = Align.LEFT_BOTTOM,
     override val offset: IntOffset = IntOffset.ZERO,
     override val opacity: Float = 1f
 ) : ControllerWidgetConfig() {
     companion object {
         private val _properties = persistentListOf<Property<DPadConfig, *, *>>(
+            EnumProperty(
+                getValue = { it.extraButton },
+                setValue = { config, value -> config.copy(extraButton = value) },
+                items = listOf(
+                    DPadExtraButton.NONE to Texts.OPTIONS_WIDGET_DPAD_PROPERTY_EXTRA_BUTTON_NONE,
+                    DPadExtraButton.SNEAK to Texts.OPTIONS_WIDGET_DPAD_PROPERTY_EXTRA_BUTTON_JUMP,
+                    DPadExtraButton.JUMP to Texts.OPTIONS_WIDGET_DPAD_PROPERTY_EXTRA_BUTTON_SNEAK,
+                ),
+            ),
             FloatProperty(
                 getValue = { it.size },
                 setValue = { config, value -> config.copy(size = value) },
