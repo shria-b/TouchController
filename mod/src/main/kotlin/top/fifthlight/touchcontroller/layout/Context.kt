@@ -23,6 +23,8 @@ data class ContextResult(
 data class ContextStatus(
     var dpadLeftForwardShown: Boolean = false,
     var dpadRightForwardShown: Boolean = false,
+    var dpadLeftBackwardShown: Boolean = false,
+    var dpadRightBackwardShown: Boolean = false,
     var sneakLocked: Boolean = false
 )
 

@@ -24,6 +24,12 @@ object Textures {
     val DPAD_UP_RIGHT = texture("textures/gui/dpad/up_right.png")
     val DPAD_UP_RIGHT_ACTIVE = texture("textures/gui/dpad/up_right_active.png")
     val DPAD_UP_RIGHT_CLASSIC = texture("textures/gui/dpad/up_right_classic.png")
+    val DPAD_DOWN_LEFT = texture("textures/gui/dpad/down_left.png")
+    val DPAD_DOWN_LEFT_ACTIVE = texture("textures/gui/dpad/down_left_active.png")
+    val DPAD_DOWN_LEFT_CLASSIC = texture("textures/gui/dpad/down_left_classic.png")
+    val DPAD_DOWN_RIGHT = texture("textures/gui/dpad/down_right.png")
+    val DPAD_DOWN_RIGHT_ACTIVE = texture("textures/gui/dpad/down_right_active.png")
+    val DPAD_DOWN_RIGHT_CLASSIC = texture("textures/gui/dpad/down_right_classic.png")
 
     val SNEAK_CLASSIC = texture("textures/gui/dpad/sneak_classic.png")
     val SNEAK_CLASSIC_ACTIVE = texture("textures/gui/dpad/sneak_classic_active.png")
