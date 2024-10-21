@@ -12,6 +12,7 @@ import top.fifthlight.touchcontroller.proxy.data.IntOffset
 data class TouchControllerConfig(
     val disableMouse: Boolean = true,
     val disableMouseLock: Boolean = true,
+    val disableCrosshair: Boolean = true,
     val enableTouchEmulation: Boolean = false,
 )
 

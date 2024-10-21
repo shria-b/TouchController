@@ -24,14 +24,21 @@ fun openConfigScreen(parent: Screen): Screen {
                 name(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_TITLE)
                 description(OptionDescription.of(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_DESCRIPTION))
                 controller(textSwitch())
-                binding(false, { config.disableMouse }, { config = config.copy(disableMouse = it) })
+                binding(true, { config.disableMouse }, { config = config.copy(disableMouse = it) })
             }
 
             val disableMouseLock by rootOptions.registering {
                 name(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_LOCK_TITLE)
                 description(OptionDescription.of(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_LOCK_DESCRIPTION))
                 controller(textSwitch())
-                binding(false, { config.disableMouseLock }, { config = config.copy(disableMouseLock = it) })
+                binding(true, { config.disableMouseLock }, { config = config.copy(disableMouseLock = it) })
+            }
+
+            val disableCrosshair by rootOptions.registering {
+                name(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_CROSSHAIR_TITLE)
+                description(OptionDescription.of(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_CROSSHAIR_DESCRIPTION))
+                controller(textSwitch())
+                binding(true, { config.disableCrosshair }, { config = config.copy(disableCrosshair = it) })
             }
 
             val enableTouchEmulation by rootOptions.registering {

@@ -22,6 +22,10 @@ object Texts {
     val OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_LOCK_DESCRIPTION =
         translatable("screen.options.category.global.disable_cursor_lock.description")
 
+    val OPTIONS_CATEGORY_GLOBAL_DISABLE_CROSSHAIR_TITLE = translatable("screen.options.category.global.disable_crosshair.title")
+    val OPTIONS_CATEGORY_GLOBAL_DISABLE_CROSSHAIR_DESCRIPTION =
+        translatable("screen.options.category.global.disable_crosshair.description")
+
     val OPTIONS_CATEGORY_GLOBAL_ENABLE_TOUCH_EMULATION_TITLE = translatable("screen.options.category.global.enable_touch_emulation.title")
     val OPTIONS_CATEGORY_GLOBAL_ENABLE_TOUCH_EMULATION_DESCRIPTION =
         translatable("screen.options.category.global.enable_touch_emulation.description")
