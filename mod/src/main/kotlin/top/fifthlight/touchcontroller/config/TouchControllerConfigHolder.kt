@@ -40,7 +40,7 @@ class TouchControllerConfigHolder : KoinComponent {
                 withContext(Dispatchers.IO) {
                     try {
                         _config.value = json.decodeFromString(configFile.readText())
-                        _layout.value = json.decodeFromString(layoutFile.readText())
+                        _layout.value = json.decodeFromString(TouchControllerLayoutSerializer(), layoutFile.readText())
                     } catch (ex: Exception) {
                         logger.warn("Failed to read config: ", ex)
                     }

@@ -3,6 +3,7 @@ package top.fifthlight.touchcontroller.config.control
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.plus
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import net.minecraft.text.Text
@@ -21,6 +22,7 @@ enum class DPadExtraButton {
 }
 
 @Serializable
+@SerialName("dpad")
 data class DPadConfig(
     val classic: Boolean = true,
     val size: Float = 2f,

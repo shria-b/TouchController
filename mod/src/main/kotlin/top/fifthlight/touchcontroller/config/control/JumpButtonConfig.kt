@@ -3,6 +3,7 @@ package top.fifthlight.touchcontroller.config.control
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.plus
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import net.minecraft.text.Text
@@ -16,6 +17,7 @@ import top.fifthlight.touchcontroller.proxy.data.IntSize
 import kotlin.math.round
 
 @Serializable
+@SerialName("jump_button")
 data class JumpButtonConfig(
     val size: Float = 2f,
     val classic: Boolean = true,
