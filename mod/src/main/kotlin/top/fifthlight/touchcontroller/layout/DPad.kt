@@ -13,6 +13,7 @@ fun Context.DPad(config: DPadConfig) {
     } else {
         config.largeDisplaySize()
     }
+    val offset = (largeDisplaySize - smallDisplaySize) / 2
 
     val forward = withRect(
         x = buttonSize.width,
@@ -113,7 +114,8 @@ fun Context.DPad(config: DPadConfig) {
             SwipeButton(id = "dpad_left_forward") { clicked ->
                 withAlign(
                     align = Align.RIGHT_BOTTOM,
-                    size = smallDisplaySize
+                    size = smallDisplaySize,
+                    offset = offset,
                 ) {
                     when (Pair(config.classic, clicked)) {
                         Pair(true, false) -> Texture(id = Textures.DPAD_UP_LEFT_CLASSIC)
@@ -138,7 +140,8 @@ fun Context.DPad(config: DPadConfig) {
             SwipeButton(id = "dpad_right_forward") { clicked ->
                 withAlign(
                     align = Align.LEFT_BOTTOM,
-                    size = smallDisplaySize
+                    size = smallDisplaySize,
+                    offset = offset,
                 ) {
                     when (Pair(config.classic, clicked)) {
                         Pair(true, false) -> Texture(id = Textures.DPAD_UP_RIGHT_CLASSIC)
@@ -163,7 +166,8 @@ fun Context.DPad(config: DPadConfig) {
             SwipeButton(id = "dpad_left_backward") { clicked ->
                 withAlign(
                     align = Align.RIGHT_TOP,
-                    size = smallDisplaySize
+                    size = smallDisplaySize,
+                    offset = offset,
                 ) {
                     if (clicked) {
                         Texture(id = Textures.DPAD_DOWN_LEFT_ACTIVE)
@@ -187,7 +191,8 @@ fun Context.DPad(config: DPadConfig) {
             SwipeButton(id = "dpad_right_backward") { clicked ->
                 withAlign(
                     align = Align.LEFT_TOP,
-                    size = smallDisplaySize
+                    size = smallDisplaySize,
+                    offset = offset,
                 ) {
                     if (clicked) {
                         Texture(id = Textures.DPAD_DOWN_RIGHT_ACTIVE)
