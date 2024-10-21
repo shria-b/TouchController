@@ -41,8 +41,13 @@ sealed class ControllerWidgetConfig {
                 setValue = { config, value -> config.cloneBase(align = value) },
                 items = listOf(
                     Align.LEFT_TOP to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_TOP_LEFT,
+                    Align.LEFT_CENTER to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_CENTER_LEFT,
                     Align.LEFT_BOTTOM to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_BOTTOM_LEFT,
+                    Align.CENTER_TOP to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_TOP_CENTER,
+                    Align.CENTER_CENTER to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_CENTER_CENTER,
+                    Align.CENTER_BOTTOM to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_BOTTOM_CENTER,
                     Align.RIGHT_TOP to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_TOP_RIGHT,
+                    Align.RIGHT_CENTER to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_CENTER_RIGHT,
                     Align.RIGHT_BOTTOM to Texts.OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_BOTTOM_RIGHT,
                 ),
             ),
