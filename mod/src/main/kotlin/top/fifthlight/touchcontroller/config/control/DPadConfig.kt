@@ -71,10 +71,11 @@ data class DPadConfig(
     @Transient
     override val properties = super.properties + _properties as PersistentList<Property<ControllerWidgetConfig, *, *>>
 
-    fun buttonSize(): IntSize = IntSize((22f * size).toInt(), (22f * size).toInt())
-    fun buttonPadding(): Int = (padding * size).toInt()
+    fun buttonSize() = IntSize(((22 + padding) * size).toInt())
+    fun largeDisplaySize() = IntSize((22 * size).toInt())
+    fun smallDisplaySize() = IntSize((18 * size).toInt())
 
-    override fun size(): IntSize = buttonSize() * 3 + buttonPadding() * 2
+    override fun size(): IntSize = buttonSize() * 3
 
     override fun render(context: Context) = context.DPad(this@DPadConfig)
 

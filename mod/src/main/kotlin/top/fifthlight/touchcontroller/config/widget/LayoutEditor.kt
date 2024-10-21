@@ -86,17 +86,17 @@ class LayoutEditor(
         val config = selectedConfig.value ?: return
         val dragPosition = Offset(mouseX.toFloat(), mouseY.toFloat()) - dragStart
         val newOffset = when (config.align) {
-            LEFT_TOP -> IntOffset(
+            LEFT_TOP, LEFT_CENTER, CENTER_TOP, CENTER_CENTER -> IntOffset(
                 x = origOffset.x + dragPosition.x.toInt(),
                 y = origOffset.y + dragPosition.y.toInt()
             )
 
-            RIGHT_TOP -> IntOffset(
+            RIGHT_TOP, RIGHT_CENTER -> IntOffset(
                 x = origOffset.x - dragPosition.x.toInt(),
                 y = origOffset.y + dragPosition.y.toInt()
             )
 
-            LEFT_BOTTOM -> IntOffset(
+            LEFT_BOTTOM, CENTER_BOTTOM -> IntOffset(
                 x = origOffset.x + dragPosition.x.toInt(),
                 y = origOffset.y - dragPosition.y.toInt()
             )

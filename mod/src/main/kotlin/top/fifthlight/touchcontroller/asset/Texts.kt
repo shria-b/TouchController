@@ -43,8 +43,13 @@ object Texts {
     val OPTIONS_REMOVE_TOOLTIP = translatable("screen.options.remove.tooltip")
 
     val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_TOP_LEFT = translatable("screen.options.widget.general.property.top.left")
+    val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_TOP_CENTER = translatable("screen.options.widget.general.property.top.center")
     val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_TOP_RIGHT = translatable("screen.options.widget.general.property.top.right")
+    val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_CENTER_LEFT = translatable("screen.options.widget.general.property.center.left")
+    val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_CENTER_CENTER = translatable("screen.options.widget.general.property.center.center")
+    val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_CENTER_RIGHT = translatable("screen.options.widget.general.property.center.right")
     val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_BOTTOM_LEFT = translatable("screen.options.widget.general.property.bottom.left")
+    val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_BOTTOM_CENTER = translatable("screen.options.widget.general.property.bottom.center")
     val OPTIONS_WIDGET_GENERAL_PROPERTY_ALIGN_BOTTOM_RIGHT = translatable("screen.options.widget.general.property.bottom.right")
     val OPTIONS_WIDGET_GENERAL_PROPERTY_OPACITY = key("screen.options.widget.general.property.opacity")
 

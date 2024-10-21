@@ -21,6 +21,8 @@ data class ContextResult(
 )
 
 data class ContextStatus(
+    var dpadLeftForwardShown: Boolean = false,
+    var dpadRightForwardShown: Boolean = false,
     var sneakLocked: Boolean = false
 )
 
