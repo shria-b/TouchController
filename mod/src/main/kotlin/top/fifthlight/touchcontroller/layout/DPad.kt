@@ -73,6 +73,63 @@ fun Context.DPad(config: DPadConfig) {
         }.clicked
     }
 
+    val showLeftForward = forward || left || status.dpadLeftForwardShown
+    val showRightForward = forward || right || status.dpadRightForwardShown
+    Pair(showLeftForward, showRightForward)
+
+    val leftForward = if (showLeftForward) {
+        withRect(
+            x = 0,
+            y = 0,
+            width = buttonSize.width,
+            height = buttonSize.height
+        ) {
+            SwipeButton(id = "left_top") { clicked ->
+                when (Pair(config.classic, clicked)) {
+                    Pair(true, false) -> Texture(id = Textures.DPAD_UP_LEFT_CLASSIC)
+                    Pair(true, true) -> Texture(id = Textures.DPAD_UP_LEFT_CLASSIC, color = Colors.WHITE)
+                    Pair(false, false) -> Texture(id = Textures.DPAD_UP_LEFT)
+                    Pair(false, true) -> Texture(id = Textures.DPAD_UP_LEFT_ACTIVE)
+                }
+            }.clicked
+        }
+    } else {
+        false
+    }
+
+    val rightForward = if (showRightForward) {
+        withRect(
+            x = (buttonSize.width + padding) * 2,
+            y = 0,
+            width = buttonSize.width,
+            height = buttonSize.height
+        ) {
+            SwipeButton(id = "right_top") { clicked ->
+                when (Pair(config.classic, clicked)) {
+                    Pair(true, false) -> Texture(id = Textures.DPAD_UP_RIGHT_CLASSIC)
+                    Pair(true, true) -> Texture(id = Textures.DPAD_UP_RIGHT_CLASSIC, color = Colors.WHITE)
+                    Pair(false, false) -> Texture(id = Textures.DPAD_UP_RIGHT)
+                    Pair(false, true) -> Texture(id = Textures.DPAD_UP_RIGHT_ACTIVE)
+                }
+            }.clicked
+        }
+    } else {
+        false
+    }
+
+    status.dpadLeftForwardShown = left || forward || leftForward
+    status.dpadRightForwardShown = right || forward || rightForward
+
+    when (Pair(forward || leftForward || rightForward, backward)) {
+        Pair(true, false) -> result.forward = 1f
+        Pair(false, true) -> result.forward = -1f
+    }
+
+    when (Pair(left || leftForward, right || rightForward)) {
+        Pair(true, false) -> result.left = 1f
+        Pair(false, true) -> result.left = -1f
+    }
+
     val centerOffset = (if (config.classic) {
         22 - 18
     } else {
@@ -89,15 +146,5 @@ fun Context.DPad(config: DPadConfig) {
             DPadExtraButton.SNEAK -> RawSneakButton(dpad = true, classic = config.classic)
             DPadExtraButton.JUMP -> RawJumpButton(classic = config.classic)
         }
-    }
-
-    when (Pair(forward, backward)) {
-        Pair(true, false) -> result.forward = 1f
-        Pair(false, true) -> result.forward = -1f
-    }
-
-    when (Pair(left, right)) {
-        Pair(true, false) -> result.left = 1f
-        Pair(false, true) -> result.left = -1f
     }
 }
