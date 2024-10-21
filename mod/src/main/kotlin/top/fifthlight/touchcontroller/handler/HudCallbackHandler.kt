@@ -23,12 +23,14 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
     private val client: MinecraftClient by inject()
 
     override fun onHudRender(drawContext: DrawContext, tickCounter: RenderTickCounter) {
-        val status = Context(
+        val result = Context(
             drawContext = drawContext,
             size = drawContext.scaledWindowSize,
             screenOffset = IntOffset.ZERO,
             scale = client.window.scaleFactor.toFloat(),
-            pointers = touchStateModel.pointers
+            pointers = touchStateModel.pointers,
+            status = controllerHudModel.status,
+            timer = controllerHudModel.timer
         ).run {
             Hud(
                 widgets = configHolder.layout.value,
@@ -37,8 +39,8 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
                     client.player?.changeLookDirection(x.toDouble(), y.toDouble())
                 }
             )
-            status
+            result
         }
-        controllerHudModel.state = status
+        controllerHudModel.result = result
     }
 }

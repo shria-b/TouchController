@@ -7,9 +7,10 @@ import top.fifthlight.touchcontroller.config.control.DPadExtraButton
 
 fun Context.DPad(config: DPadConfig) {
     val buttonSize = config.buttonSize()
+    val padding = config.buttonPadding()
 
     val forward = withRect(
-        x = buttonSize.width + config.padding,
+        x = buttonSize.width + padding,
         y = 0,
         width = buttonSize.width,
         height = buttonSize.height
@@ -21,12 +22,12 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(false, false) -> Texture(id = Textures.DPAD_UP)
                 Pair(false, true) -> Texture(id = Textures.DPAD_UP_ACTIVE)
             }
-        }
+        }.clicked
     }
 
     val backward = withRect(
-        x = buttonSize.width + config.padding,
-        y = (buttonSize.height + config.padding) * 2,
+        x = buttonSize.width + padding,
+        y = (buttonSize.height + padding) * 2,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
@@ -37,12 +38,12 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(false, false) -> Texture(id = Textures.DPAD_DOWN)
                 Pair(false, true) -> Texture(id = Textures.DPAD_DOWN_ACTIVE)
             }
-        }
+        }.clicked
     }
 
     val left = withRect(
         x = 0,
-        y = buttonSize.height + config.padding,
+        y = buttonSize.height + padding,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
@@ -53,12 +54,12 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(false, false) -> Texture(id = Textures.DPAD_LEFT)
                 Pair(false, true) -> Texture(id = Textures.DPAD_LEFT_ACTIVE)
             }
-        }
+        }.clicked
     }
 
     val right = withRect(
-        x = (buttonSize.width + config.padding) * 2,
-        y = buttonSize.height + config.padding,
+        x = (buttonSize.width + padding) * 2,
+        y = buttonSize.height + padding,
         width = buttonSize.width,
         height = buttonSize.height
     ) {
@@ -69,48 +70,34 @@ fun Context.DPad(config: DPadConfig) {
                 Pair(false, false) -> Texture(id = Textures.DPAD_RIGHT)
                 Pair(false, true) -> Texture(id = Textures.DPAD_RIGHT_ACTIVE)
             }
-        }
+        }.clicked
     }
 
+    val centerOffset = (if (config.classic) {
+        22 - 18
+    } else {
+        0
+    }) / 2
     withRect(
-        x = buttonSize.width + config.padding,
-        y = buttonSize.height + config.padding,
-        width = buttonSize.width,
-        height = buttonSize.height
+        x = buttonSize.width + padding + centerOffset,
+        y = buttonSize.height + padding + centerOffset,
+        width = buttonSize.width - centerOffset * 2,
+        height = buttonSize.height - centerOffset * 2
     ) {
         when (config.extraButton) {
             DPadExtraButton.NONE -> {}
-            DPadExtraButton.SNEAK -> {
-                status.sneak = Button(id = "sneak") { clicked ->
-                    when (Pair(config.classic, clicked)) {
-                        Pair(true, false) -> Texture(id = Textures.SNEAK_CLASSIC)
-                        Pair(true, true) -> Texture(id = Textures.SNEAK_CLASSIC, color = Colors.WHITE)
-                        Pair(false, false) -> Texture(id = Textures.SNEAK)
-                        Pair(false, true) -> Texture(id = Textures.SNEAK_ACTIVE)
-                    }
-                }
-            }
-
-            DPadExtraButton.JUMP -> {
-                status.jump = Button(id = "jump") { clicked ->
-                    when (Pair(config.classic, clicked)) {
-                        Pair(true, false) -> Texture(id = Textures.JUMP_CLASSIC)
-                        Pair(true, true) -> Texture(id = Textures.JUMP_CLASSIC, color = Colors.WHITE)
-                        Pair(false, false) -> Texture(id = Textures.JUMP)
-                        Pair(false, true) -> Texture(id = Textures.JUMP_ACTIVE)
-                    }
-                }
-            }
+            DPadExtraButton.SNEAK -> RawSneakButton(dpad = true, classic = config.classic)
+            DPadExtraButton.JUMP -> RawJumpButton(classic = config.classic)
         }
     }
 
     when (Pair(forward, backward)) {
-        Pair(true, false) -> status.forward = 1f
-        Pair(false, true) -> status.forward = -1f
+        Pair(true, false) -> result.forward = 1f
+        Pair(false, true) -> result.forward = -1f
     }
 
     when (Pair(left, right)) {
-        Pair(true, false) -> status.left = 1f
-        Pair(false, true) -> status.left = -1f
+        Pair(true, false) -> result.left = 1f
+        Pair(false, true) -> result.left = -1f
     }
 }

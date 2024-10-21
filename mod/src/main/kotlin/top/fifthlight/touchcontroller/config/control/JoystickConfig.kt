@@ -28,7 +28,7 @@ data class JoystickConfig(
                 getValue = { it.size },
                 setValue = { config, value -> config.copy(size = value) },
                 startValue = .5f,
-                endValue = 2f,
+                endValue = 4f,
                 messageFormatter = {
                     Text.translatable(
                         Texts.OPTIONS_WIDGET_JOYSTICK_SIZE,
@@ -40,7 +40,7 @@ data class JoystickConfig(
                 getValue = { it.stickSize },
                 setValue = { config, value -> config.copy(stickSize = value) },
                 startValue = .5f,
-                endValue = 2f,
+                endValue = 4f,
                 messageFormatter = {
                     Text.translatable(
                         Texts.OPTIONS_WIDGET_JOYSTICK_STICK_SIZE,

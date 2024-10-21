@@ -41,6 +41,12 @@
   "touchcontroller.screen.options.widget.dpad.property.extra_button.jump": "附加按钮：跳跃",
   "touchcontroller.screen.options.widget.dpad.property.extra_button.sneak": "附加按钮：潜行",
 
+  "touchcontroller.screen.options.widget.sneak_button.property.size": "按键大小: %s%%",
+  "touchcontroller.screen.options.widget.sneak_button.property.classic": "经典外观",
+
+  "touchcontroller.screen.options.widget.jump_button.property.size": "按键大小: %s%%",
+  "touchcontroller.screen.options.widget.jump_button.property.classic": "经典外观",
+
   "touchcontroller.screen.options.widget.joystick.property.size": "面板大小: %s%%",
   "touchcontroller.screen.options.widget.joystick.property.stick_size": "手柄大小: %s%%"
 }

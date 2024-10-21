@@ -18,7 +18,7 @@ import top.fifthlight.touchcontroller.config.replaceItem
 import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.layout.Align.*
 import top.fifthlight.touchcontroller.layout.Context
-import top.fifthlight.touchcontroller.layout.ContextStatus
+import top.fifthlight.touchcontroller.layout.ContextResult
 import top.fifthlight.touchcontroller.layout.withAlign
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
@@ -42,7 +42,7 @@ class LayoutEditor(
             screenOffset = IntOffset(x, y),
             scale = client.window.scaleFactor.toFloat(),
             pointers = emptyMap(),
-            status = ContextStatus()
+            result = ContextResult()
         )
         drawContext.withTranslate(x.toFloat(), y.toFloat()) {
             layoutConfig.value.forEach { config ->

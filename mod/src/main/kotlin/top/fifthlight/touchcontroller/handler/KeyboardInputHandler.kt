@@ -16,13 +16,17 @@ class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
             return
         }
 
-        val state = controllerHudModel.state
+        val result = controllerHudModel.result
+        val status = controllerHudModel.status
+        val timer = controllerHudModel.timer
 
-        input.movementForward += state.forward
-        input.movementSideways += state.left
+        input.movementForward += result.forward
+        input.movementSideways += result.left
         input.movementForward = input.movementForward.coerceIn(-1f, 1f)
         input.movementSideways = input.movementSideways.coerceIn(-1f, 1f)
-        input.sneaking = input.sneaking || state.sneak
-        input.jumping = input.jumping || state.jump
+        input.sneaking = input.sneaking || status.sneakLocked
+        input.jumping = input.jumping || result.jump
+
+        timer.tick()
     }
 }
