@@ -1,10 +1,12 @@
 package top.fifthlight.touchcontroller.proxy.data
 
+import kotlin.math.sqrt
+
 data class Offset(
     val x: Float,
     val y: Float
 ) {
-    constructor(offset: Float): this(offset, offset)
+    constructor(offset: Float) : this(offset, offset)
 
     val left
         get() = x
@@ -23,4 +25,7 @@ data class Offset(
     operator fun minus(offset: Offset) = Offset(x = x - offset.x, y = y - offset.y)
     operator fun minus(size: Size) = Offset(x = x - size.width, y = y - size.height)
     operator fun times(size: IntSize) = Offset(x = x * size.width.toFloat(), y = y * size.height.toFloat())
+
+    val squaredLength by lazy { x * x + y * y }
+    val length by lazy { sqrt(squaredLength) }
 }

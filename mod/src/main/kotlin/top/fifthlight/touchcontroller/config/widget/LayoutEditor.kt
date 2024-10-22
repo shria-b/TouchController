@@ -41,7 +41,7 @@ class LayoutEditor(
             size = IntSize(width, height),
             screenOffset = IntOffset(x, y),
             scale = client.window.scaleFactor.toFloat(),
-            pointers = emptyMap(),
+            pointers = mutableMapOf(),
             result = ContextResult()
         )
         drawContext.withTranslate(x.toFloat(), y.toFloat()) {

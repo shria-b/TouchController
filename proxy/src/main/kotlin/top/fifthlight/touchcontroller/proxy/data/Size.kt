@@ -1,5 +1,7 @@
 package top.fifthlight.touchcontroller.proxy.data
 
+import kotlin.math.sqrt
+
 data class Size(
     val width: Float,
     val height: Float,
@@ -22,5 +24,10 @@ data class Size(
     operator fun times(num: Float) = Size(width = width * num, height = height * num)
     operator fun div(num: Float) = Size(width = width / num, height = height / num)
 
+    val squaredLength by lazy { width * width + height * height }
+    val length by lazy { sqrt(squaredLength) }
+
     fun toIntSize() = IntSize(width = width.toInt(), height = height.toInt())
 }
+
+operator fun Float.div(size: Size) = Size(width = this / size.width, height = this / size.height)

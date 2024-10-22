@@ -82,7 +82,7 @@ class WidgetList(
                 size = widgetSize,
                 screenOffset = offset,
                 scale = client.window.scaleFactor.toFloat() * componentScaleFactor,
-                pointers = emptyMap(),
+                pointers = mutableMapOf(),
                 result = ContextResult()
             )
             drawContext.withTranslate(offset.toOffset()) {

@@ -14,10 +14,31 @@ import top.fifthlight.touchcontroller.proxy.data.IntSize
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.state.Pointer
 
+data class ClickCounter(
+    private var counter: Int = 0
+) {
+    fun add() {
+        counter++
+    }
+
+    fun active(): Boolean = counter > 0
+
+    fun consume(): Boolean {
+        return if (counter > 0) {
+            counter--
+            true
+        } else {
+            false
+        }
+    }
+}
+
 data class ContextResult(
     var forward: Float = 0f,
     var left: Float = 0f,
     var jump: Boolean = false,
+    val attack: ClickCounter = ClickCounter(),
+    val itemUse: ClickCounter = ClickCounter(),
 )
 
 data class ContextStatus(
@@ -29,9 +50,11 @@ data class ContextStatus(
 )
 
 data class ContextCounter(
-    var sneak: Int = 0
+    var tick: Int = 0,
+    var sneak: Int = 0,
 ) {
     fun tick() {
+        tick++
         if (sneak > 0) {
             sneak--
         }
@@ -43,7 +66,7 @@ data class Context(
     val size: IntSize,
     val screenOffset: IntOffset,
     val scale: Float,
-    val pointers: Map<Int, Pointer>,
+    val pointers: MutableMap<Int, Pointer>,
     val result: ContextResult = ContextResult(),
     val status: ContextStatus = ContextStatus(),
     val timer: ContextCounter = ContextCounter(),
