@@ -2,10 +2,10 @@ package top.fifthlight.touchcontroller.layout
 
 import net.minecraft.util.Colors
 import top.fifthlight.touchcontroller.asset.Textures
-import top.fifthlight.touchcontroller.config.control.DPadConfig
-import top.fifthlight.touchcontroller.config.control.DPadExtraButton
+import top.fifthlight.touchcontroller.control.DPad
+import top.fifthlight.touchcontroller.control.DPadExtraButton
 
-fun Context.DPad(config: DPadConfig) {
+fun Context.DPad(config: DPad) {
     val buttonSize = config.buttonSize()
     val largeDisplaySize = config.largeDisplaySize()
     val smallDisplaySize = if (config.classic) {

@@ -3,8 +3,8 @@ package top.fifthlight.touchcontroller.config
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.serialization.Serializable
-import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
-import top.fifthlight.touchcontroller.config.control.DPadConfig
+import top.fifthlight.touchcontroller.control.ControllerWidget
+import top.fifthlight.touchcontroller.control.DPad
 import top.fifthlight.touchcontroller.layout.Align
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 
@@ -16,10 +16,10 @@ data class TouchControllerConfig(
     val enableTouchEmulation: Boolean = false,
 )
 
-typealias TouchControllerLayout = PersistentList<ControllerWidgetConfig>
+typealias TouchControllerLayout = PersistentList<ControllerWidget>
 
 val defaultTouchControllerLayout: TouchControllerLayout = persistentListOf(
-    DPadConfig(
+    DPad(
         align = Align.LEFT_BOTTOM,
         offset = IntOffset(8, 8)
     )

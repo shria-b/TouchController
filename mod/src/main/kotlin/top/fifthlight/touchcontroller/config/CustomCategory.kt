@@ -18,7 +18,7 @@ import net.minecraft.text.Text
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import top.fifthlight.touchcontroller.asset.Texts
-import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
+import top.fifthlight.touchcontroller.control.ControllerWidget
 import top.fifthlight.touchcontroller.config.widget.BorderLayout
 import top.fifthlight.touchcontroller.config.widget.LayoutEditor
 import top.fifthlight.touchcontroller.config.widget.PropertiesPanel
@@ -40,14 +40,14 @@ class ObservableValue<Value>(value: Value) {
 }
 
 fun ObservableValue<TouchControllerLayout>.replaceItem(
-    oldItem: ControllerWidgetConfig,
-    newItem: ControllerWidgetConfig
+    oldItem: ControllerWidget,
+    newItem: ControllerWidget
 ) {
     val index = value.indexOf(oldItem).takeIf { it >= 0 } ?: return
     value = value.set(index, newItem)
 }
 
-fun ObservableValue<TouchControllerLayout>.removeItem(item: ControllerWidgetConfig) {
+fun ObservableValue<TouchControllerLayout>.removeItem(item: ControllerWidget) {
     value -= item
 }
 
@@ -58,7 +58,7 @@ private class CustomTab(
     private val screen: YACLScreen,
     layoutConfig: ObservableValue<TouchControllerLayout>
 ) : Tab, KoinComponent {
-    private val selectedConfig = ObservableValue<ControllerWidgetConfig?>(null)
+    private val selectedConfig = ObservableValue<ControllerWidget?>(null)
 
     override fun getTitle(): Text = title
 

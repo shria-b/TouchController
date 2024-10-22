@@ -18,6 +18,7 @@ data class Offset(
     }
 
     operator fun plus(length: Float) = Offset(x = x + length, y = y + length)
+    operator fun plus(offset: Offset) = Offset(x = x + offset.x, y = y + offset.y)
     operator fun minus(length: Float) = Offset(x = x - length, y = y - length)
     operator fun div(num: Float) = Offset(x = x / num, y = y / num)
     operator fun times(num: Float): Offset = Offset(x = x * num, y = y * num)

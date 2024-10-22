@@ -62,7 +62,7 @@ data class ContextCounter(
 }
 
 data class Context(
-    val drawContext: DrawContext,
+    val drawQueue: DrawQueue = DrawQueue(),
     val size: IntSize,
     val screenOffset: IntOffset,
     val scale: Float,
@@ -75,13 +75,34 @@ data class Context(
     val window: Window
         get() = client.window
 
-    inline fun <reified T> withOffset(offset: IntOffset, crossinline block: Context.() -> T): T =
-        drawContext.withTranslate(offset.x.toFloat(), offset.y.toFloat()) {
-            copy(
-                screenOffset = offset + offset,
-                size = size - offset
-            ).block()
+    inline fun <reified T> transformDrawQueue(
+        crossinline drawTransform: DrawContext.(block: () -> Unit) -> Unit,
+        crossinline contextTransform: Context.(DrawQueue) -> Context,
+        crossinline block: Context.() -> T
+    ): T {
+        val newQueue = DrawQueue()
+        val newContext = contextTransform(this, newQueue)
+        val result = newContext.block()
+        drawQueue.enqueue { drawContext ->
+            drawContext.drawTransform {
+                newQueue.execute(drawContext)
+            }
         }
+        return result
+    }
+
+    inline fun <reified T> withOffset(offset: IntOffset, crossinline block: Context.() -> T): T =
+        transformDrawQueue(
+            drawTransform = { withTranslate(offset.x.toFloat(), offset.y.toFloat(), it) },
+            contextTransform = { newQueue ->
+                copy(
+                    screenOffset = screenOffset + offset,
+                    size = size - offset,
+                    drawQueue = newQueue
+                )
+            },
+            block
+        )
 
     inline fun <reified T> withOffset(x: Int, y: Int, crossinline block: Context.() -> T): T =
         withOffset(IntOffset(x, y), block)
@@ -89,20 +110,30 @@ data class Context(
     inline fun <reified T> withSize(size: IntSize, crossinline block: Context.() -> T): T = copy(size = size).block()
 
     inline fun <reified T> withRect(x: Int, y: Int, width: Int, height: Int, crossinline block: Context.() -> T): T =
-        drawContext.withTranslate(x.toFloat(), y.toFloat()) {
-            copy(
-                screenOffset = screenOffset + IntOffset(x, y),
-                size = IntSize(width, height)
-            ).block()
-        }
+        transformDrawQueue(
+            drawTransform = { withTranslate(x.toFloat(), y.toFloat(), it) },
+            contextTransform = { newQueue ->
+                copy(
+                    screenOffset = screenOffset + IntOffset(x, y),
+                    size = IntSize(width, height),
+                    drawQueue = newQueue
+                )
+            },
+            block
+        )
 
     inline fun <reified T> withRect(offset: IntOffset, size: IntSize, crossinline block: Context.() -> T): T =
-        drawContext.withTranslate(offset.x.toFloat(), offset.y.toFloat()) {
-            copy(
-                screenOffset = screenOffset + offset,
-                size = size
-            ).block()
-        }
+        transformDrawQueue(
+            drawTransform = { withTranslate(offset.x.toFloat(), offset.y.toFloat(), it) },
+            contextTransform = { newQueue ->
+                copy(
+                    screenOffset = screenOffset + offset,
+                    size = size,
+                    drawQueue = newQueue
+                )
+            },
+            block
+        )
 
     inline fun <reified T> withRect(rect: IntRect, crossinline block: Context.() -> T): T =
         withRect(rect.offset, rect.size, block)

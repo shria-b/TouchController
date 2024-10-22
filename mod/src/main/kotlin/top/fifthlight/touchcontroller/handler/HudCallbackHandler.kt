@@ -9,6 +9,7 @@ import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.ext.scaledWindowSize
 import top.fifthlight.touchcontroller.layout.Context
+import top.fifthlight.touchcontroller.layout.DrawQueue
 import top.fifthlight.touchcontroller.layout.Hud
 import top.fifthlight.touchcontroller.model.ControllerHudModel
 import top.fifthlight.touchcontroller.model.CrosshairStateModel
@@ -23,8 +24,9 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
     private val client: MinecraftClient by inject()
 
     override fun onHudRender(drawContext: DrawContext, tickCounter: RenderTickCounter) {
+        val drawQueue = DrawQueue()
         val result = Context(
-            drawContext = drawContext,
+            drawQueue = drawQueue,
             size = drawContext.scaledWindowSize,
             screenOffset = IntOffset.ZERO,
             scale = client.window.scaleFactor.toFloat(),
@@ -42,5 +44,6 @@ class HudCallbackHandler : HudRenderCallback, KoinComponent {
             result
         }
         controllerHudModel.result = result
+        drawQueue.execute(drawContext)
     }
 }

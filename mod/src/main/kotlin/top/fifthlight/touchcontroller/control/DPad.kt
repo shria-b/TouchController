@@ -1,4 +1,4 @@
-package top.fifthlight.touchcontroller.config.control
+package top.fifthlight.touchcontroller.control
 
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -23,7 +23,7 @@ enum class DPadExtraButton {
 
 @Serializable
 @SerialName("dpad")
-data class DPadConfig(
+data class DPad(
     val classic: Boolean = true,
     val size: Float = 2f,
     val padding: Int = if (classic) 4 else -1,
@@ -31,9 +31,9 @@ data class DPadConfig(
     override val align: Align = Align.LEFT_BOTTOM,
     override val offset: IntOffset = IntOffset.ZERO,
     override val opacity: Float = 1f
-) : ControllerWidgetConfig() {
+) : ControllerWidget() {
     companion object {
-        private val _properties = persistentListOf<Property<DPadConfig, *, *>>(
+        private val _properties = persistentListOf<Property<DPad, *, *>>(
             EnumProperty(
                 getValue = { it.extraButton },
                 setValue = { config, value -> config.copy(extraButton = value) },
@@ -71,7 +71,7 @@ data class DPadConfig(
 
     @Suppress("UNCHECKED_CAST")
     @Transient
-    override val properties = super.properties + _properties as PersistentList<Property<ControllerWidgetConfig, *, *>>
+    override val properties = super.properties + _properties as PersistentList<Property<ControllerWidget, *, *>>
 
     fun buttonSize() = IntSize(((22 + padding) * size).toInt())
     fun largeDisplaySize() = IntSize((22 * size).toInt())
@@ -79,7 +79,7 @@ data class DPadConfig(
 
     override fun size(): IntSize = buttonSize() * 3
 
-    override fun render(context: Context) = context.DPad(this@DPadConfig)
+    override fun layout(context: Context) = context.DPad(this@DPad)
 
     override fun cloneBase(align: Align, offset: IntOffset, opacity: Float) = copy(
         align = align,

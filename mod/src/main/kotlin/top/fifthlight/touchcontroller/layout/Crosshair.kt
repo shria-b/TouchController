@@ -73,17 +73,19 @@ fun Context.Crosshair(state: CrosshairState) {
         return
     }
 
-    drawContext.withTranslate(status.position * window.scaledSize) {
-        withBlend {
-            withBlendFunction(
-                srcFactor = GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR,
-                dstFactor = GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR,
-                srcAlpha = GlStateManager.SrcFactor.ONE,
-                dstAlpha = GlStateManager.DstFactor.ZERO
-            ) {
-                renderOuter(drawContext, config)
-                if (status.breakPercent > 0f) {
-                    renderInner(drawContext, config, status)
+    drawQueue.enqueue { drawContext ->
+        drawContext.withTranslate(status.position * window.scaledSize) {
+            withBlend {
+                withBlendFunction(
+                    srcFactor = GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR,
+                    dstFactor = GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR,
+                    srcAlpha = GlStateManager.SrcFactor.ONE,
+                    dstAlpha = GlStateManager.DstFactor.ZERO
+                ) {
+                    renderOuter(drawContext, config)
+                    if (status.breakPercent > 0f) {
+                        renderInner(drawContext, config, status)
+                    }
                 }
             }
         }

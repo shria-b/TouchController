@@ -1,7 +1,7 @@
 package top.fifthlight.touchcontroller.layout
 
 import top.fifthlight.touchcontroller.asset.Textures
-import top.fifthlight.touchcontroller.config.control.JumpButtonConfig
+import top.fifthlight.touchcontroller.control.JumpButton
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 
 fun Context.RawJumpButton(classic: Boolean = true, size: IntSize = this.size) {
@@ -19,6 +19,6 @@ fun Context.RawJumpButton(classic: Boolean = true, size: IntSize = this.size) {
     result.jump = result.jump || clicked
 }
 
-fun Context.JumpButton(config: JumpButtonConfig) {
+fun Context.JumpButton(config: JumpButton) {
     RawJumpButton(classic = config.classic)
 }

@@ -1,4 +1,4 @@
-package top.fifthlight.touchcontroller.config.control
+package top.fifthlight.touchcontroller.control
 
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -7,7 +7,6 @@ import kotlinx.serialization.Transient
 import net.minecraft.client.gui.widget.ClickableWidget
 import net.minecraft.text.Text
 import top.fifthlight.touchcontroller.asset.Texts
-import top.fifthlight.touchcontroller.ext.TouchControllerLayoutSerializer
 import top.fifthlight.touchcontroller.layout.Align
 import top.fifthlight.touchcontroller.layout.Context
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
@@ -15,7 +14,7 @@ import top.fifthlight.touchcontroller.proxy.data.IntSize
 import kotlin.math.round
 
 @Serializable
-sealed class ControllerWidgetConfig {
+sealed class ControllerWidget {
     abstract val align: Align
     abstract val offset: IntOffset
     abstract val opacity: Float
@@ -25,17 +24,17 @@ sealed class ControllerWidgetConfig {
         fun newConfig(config: Config)
     }
 
-    interface Property<Config : ControllerWidgetConfig, Value, Widget : ClickableWidget> {
+    interface Property<Config : ControllerWidget, Value, Widget : ClickableWidget> {
         fun createController(editProvider: PropertyEditProvider<Config>): PropertyWidget<Config, Widget>
     }
 
-    interface PropertyWidget<Config : ControllerWidgetConfig, Widget : ClickableWidget> {
+    interface PropertyWidget<Config : ControllerWidget, Widget : ClickableWidget> {
         fun createWidget(initialConfig: Config, size: IntSize): Widget
         fun updateWidget(config: Config, widget: Widget)
     }
 
     companion object {
-        private val _properties = persistentListOf<Property<ControllerWidgetConfig, *, *>>(
+        private val _properties = persistentListOf<Property<ControllerWidget, *, *>>(
             EnumProperty(
                 getValue = { it.align },
                 setValue = { config, value -> config.cloneBase(align = value) },
@@ -65,15 +64,15 @@ sealed class ControllerWidgetConfig {
     }
 
     @Transient
-    open val properties: PersistentList<Property<ControllerWidgetConfig, *, *>> = _properties
+    open val properties: PersistentList<Property<ControllerWidget, *, *>> = _properties
 
     abstract fun size(): IntSize
 
-    abstract fun render(context: Context)
+    abstract fun layout(context: Context)
 
     abstract fun cloneBase(
         align: Align = this.align,
         offset: IntOffset = this.offset,
         opacity: Float = this.opacity,
-    ): ControllerWidgetConfig
+    ): ControllerWidget
 }

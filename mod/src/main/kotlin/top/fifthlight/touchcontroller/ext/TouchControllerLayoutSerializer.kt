@@ -10,15 +10,15 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.serializer
 import top.fifthlight.touchcontroller.config.TouchControllerLayout
-import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
+import top.fifthlight.touchcontroller.control.ControllerWidget
 
 @OptIn(ExperimentalSerializationApi::class)
 class TouchControllerLayoutSerializer : KSerializer<TouchControllerLayout> {
-    private class PersistentListDescriptor : SerialDescriptor by serialDescriptor<List<ControllerWidgetConfig>>() {
+    private class PersistentListDescriptor : SerialDescriptor by serialDescriptor<List<ControllerWidget>>() {
         override val serialName: String = "top.fifthlight.touchcontroller.config.TouchControllerLayout"
     }
 
-    private val itemSerializer = serializer<ControllerWidgetConfig>()
+    private val itemSerializer = serializer<ControllerWidget>()
 
     override val descriptor: SerialDescriptor = PersistentListDescriptor()
 

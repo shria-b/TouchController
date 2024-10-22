@@ -13,12 +13,13 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.config.ObservableValue
 import top.fifthlight.touchcontroller.config.TouchControllerLayout
-import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
 import top.fifthlight.touchcontroller.config.replaceItem
+import top.fifthlight.touchcontroller.control.ControllerWidget
 import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.layout.Align.*
 import top.fifthlight.touchcontroller.layout.Context
 import top.fifthlight.touchcontroller.layout.ContextResult
+import top.fifthlight.touchcontroller.layout.DrawQueue
 import top.fifthlight.touchcontroller.layout.withAlign
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
@@ -31,34 +32,39 @@ class LayoutEditor(
     height: Int = 0,
     message: Text? = null,
     private val layoutConfig: ObservableValue<TouchControllerLayout>,
-    private val selectedConfig: ObservableValue<ControllerWidgetConfig?>,
+    private val selectedConfig: ObservableValue<ControllerWidget?>,
 ) : ClickableWidget(x, y, width, height, message), KoinComponent {
     private val client: MinecraftClient by inject()
 
     override fun renderWidget(drawContext: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
-        val context = Context(
-            drawContext = drawContext,
-            size = IntSize(width, height),
-            screenOffset = IntOffset(x, y),
-            scale = client.window.scaleFactor.toFloat(),
-            pointers = mutableMapOf(),
-            result = ContextResult()
-        )
         drawContext.withTranslate(x.toFloat(), y.toFloat()) {
             layoutConfig.value.forEach { config ->
+                val drawQueue = DrawQueue()
+                val context = Context(
+                    drawQueue = drawQueue,
+                    size = IntSize(width, height),
+                    screenOffset = IntOffset(0, 0),
+                    scale = client.window.scaleFactor.toFloat(),
+                    pointers = mutableMapOf(),
+                    result = ContextResult()
+                )
                 context.withAlign(
                     align = config.align,
                     offset = config.offset,
                     size = config.size()
                 ) {
-                    config.render(this)
+                    config.layout(this)
                     if (selectedConfig.value == config) {
-                        context.drawContext.drawBorder(0, 0, size.width, size.height, Colors.WHITE)
+                        this.drawQueue.enqueue { drawContext ->
+                            drawContext.drawBorder(0, 0, size.width, size.height, Colors.WHITE)
+                        }
                     }
                 }
+                drawQueue.execute(drawContext)
             }
         }
     }
+
 
     private var dragStart = Offset.ZERO
     private var origOffset = IntOffset.ZERO

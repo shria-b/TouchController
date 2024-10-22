@@ -1,7 +1,7 @@
 package top.fifthlight.touchcontroller.layout
 
 import top.fifthlight.touchcontroller.asset.Textures
-import top.fifthlight.touchcontroller.config.control.SneakButtonConfig
+import top.fifthlight.touchcontroller.control.SneakButton
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 
 fun Context.RawSneakButton(
@@ -32,6 +32,6 @@ fun Context.RawSneakButton(
     }
 }
 
-fun Context.SneakButton(config: SneakButtonConfig) {
+fun Context.SneakButton(config: SneakButton) {
     RawSneakButton(classic = config.classic, dpad = false)
 }

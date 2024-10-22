@@ -9,17 +9,17 @@ import net.minecraft.client.gui.widget.ClickableWidget
 import net.minecraft.client.gui.widget.ElementListWidget
 import top.fifthlight.touchcontroller.config.ObservableValue
 import top.fifthlight.touchcontroller.config.TouchControllerLayout
-import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig
-import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig.Property
-import top.fifthlight.touchcontroller.config.control.ControllerWidgetConfig.PropertyWidget
+import top.fifthlight.touchcontroller.control.ControllerWidget
+import top.fifthlight.touchcontroller.control.ControllerWidget.Property
+import top.fifthlight.touchcontroller.control.ControllerWidget.PropertyWidget
 import top.fifthlight.touchcontroller.config.replaceItem
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 
-class PropertiesPanelEntry<Property : ControllerWidgetConfig.Property<Config, *, Widget>, Widget : ClickableWidget, Config : ControllerWidgetConfig>(
+class PropertiesPanelEntry<Property : ControllerWidget.Property<Config, *, Widget>, Widget : ClickableWidget, Config : ControllerWidget>(
     initialConfig: Config,
     widgetSize: IntSize,
     property: Property,
-    private val propertyEditProvider: ControllerWidgetConfig.PropertyEditProvider<Config>,
+    private val propertyEditProvider: ControllerWidget.PropertyEditProvider<Config>,
 ) : ElementListWidget.Entry<PropertiesPanelEntry<*, *, *>>() {
     private val propertyWidget: PropertyWidget<Config, Widget> = property.createController(propertyEditProvider)
     private val widget: Widget = propertyWidget.createWidget(initialConfig, widgetSize)
@@ -58,16 +58,16 @@ class PropertiesPanel(
     itemHeight: Int,
     private val itemPadding: Int,
     private val layoutConfig: ObservableValue<TouchControllerLayout>,
-    private val selectedConfig: ObservableValue<ControllerWidgetConfig?>,
+    private val selectedConfig: ObservableValue<ControllerWidget?>,
 ) : ElementListWidget<PropertiesPanelEntry<*, *, *>>(
     client, width, height, y, itemHeight,
 ) {
-    private fun <Config : ControllerWidgetConfig, Widget: ClickableWidget> createEntry(config: Config, property: Property<Config, *, Widget>) =
+    private fun <Config : ControllerWidget, Widget: ClickableWidget> createEntry(config: Config, property: Property<Config, *, Widget>) =
         PropertiesPanelEntry(
             initialConfig = config,
             widgetSize = IntSize(rowWidth, itemHeight),
             property = property,
-            propertyEditProvider = object : ControllerWidgetConfig.PropertyEditProvider<Config> {
+            propertyEditProvider = object : ControllerWidget.PropertyEditProvider<Config> {
                 @Suppress("UNCHECKED_CAST")
                 override val currentConfig
                     get() = selectedConfig.value as Config
@@ -79,7 +79,7 @@ class PropertiesPanel(
             }
         )
 
-    private var selectedProperties: PersistentList<Property<ControllerWidgetConfig, *, *>>? = null
+    private var selectedProperties: PersistentList<Property<ControllerWidget, *, *>>? = null
 
     init {
         selectedConfig.addListener { newConfig ->

@@ -8,11 +8,12 @@ import net.minecraft.client.gui.widget.ElementListWidget
 import net.minecraft.util.Colors
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import top.fifthlight.touchcontroller.config.control.*
+import top.fifthlight.touchcontroller.control.*
 import top.fifthlight.touchcontroller.ext.withScale
 import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.layout.Context
 import top.fifthlight.touchcontroller.layout.ContextResult
+import top.fifthlight.touchcontroller.layout.DrawQueue
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 
@@ -23,16 +24,16 @@ class WidgetList(
     y: Int = 0,
     itemHeight: Int,
     private val itemPadding: Int,
-    onWidgetAdd: (ControllerWidgetConfig) -> Unit,
+    onWidgetAdd: (ControllerWidget) -> Unit,
 ) : ElementListWidget<WidgetList.Entry>(
     client, width, height, y, itemHeight
 ) {
     companion object {
         private val DEFAULT_CONFIGS = listOf(
-            DPadConfig(),
-            JoystickConfig(),
-            SneakButtonConfig(),
-            JumpButtonConfig()
+            DPad(),
+            Joystick(),
+            SneakButton(),
+            JumpButton()
         )
     }
 
@@ -48,7 +49,7 @@ class WidgetList(
     override fun getRowWidth(): Int = width - itemPadding
 
     class Entry(
-        private val config: ControllerWidgetConfig,
+        private val config: ControllerWidget,
         private val onClicked: () -> Unit
     ) : ElementListWidget.Entry<Entry>(), KoinComponent {
         private val client: MinecraftClient = get()
@@ -77,17 +78,20 @@ class WidgetList(
             val displaySize = (widgetSize.toSize() * componentScaleFactor).toIntSize()
             val offset = IntOffset(x, y) + (entrySize - displaySize) / 2
 
+            val drawQueue = DrawQueue()
             val context = Context(
-                drawContext = drawContext,
+                drawQueue = drawQueue,
                 size = widgetSize,
                 screenOffset = offset,
                 scale = client.window.scaleFactor.toFloat() * componentScaleFactor,
                 pointers = mutableMapOf(),
                 result = ContextResult()
             )
+            config.layout(context)
+
             drawContext.withTranslate(offset.toOffset()) {
                 drawContext.withScale(componentScaleFactor) {
-                    config.render(context)
+                    drawQueue.execute(drawContext)
                 }
             }
 
