@@ -37,8 +37,8 @@ data class ContextResult(
     var forward: Float = 0f,
     var left: Float = 0f,
     var jump: Boolean = false,
-    val attack: ClickCounter = ClickCounter(),
-    val itemUse: ClickCounter = ClickCounter(),
+    var lookDirection: Offset? = null,
+    var crosshairStatus: CrosshairStatus? = null,
 )
 
 data class ContextStatus(
@@ -46,7 +46,9 @@ data class ContextStatus(
     var dpadRightForwardShown: Boolean = false,
     var dpadLeftBackwardShown: Boolean = false,
     var dpadRightBackwardShown: Boolean = false,
-    var sneakLocked: Boolean = false
+    var sneakLocked: Boolean = false,
+    val attack: ClickCounter = ClickCounter(),
+    val itemUse: ClickCounter = ClickCounter(),
 )
 
 data class ContextCounter(

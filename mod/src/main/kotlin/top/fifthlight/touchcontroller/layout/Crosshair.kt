@@ -4,14 +4,17 @@ import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.*
 import net.minecraft.util.Colors
+import top.fifthlight.touchcontroller.config.CrosshairConfig
 import top.fifthlight.touchcontroller.ext.*
 import top.fifthlight.touchcontroller.proxy.data.Offset
-import top.fifthlight.touchcontroller.state.CrosshairConfig
-import top.fifthlight.touchcontroller.state.CrosshairState
-import top.fifthlight.touchcontroller.state.CrosshairStatus
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
+
+data class CrosshairStatus(
+    val position: Offset,
+    val breakPercent: Float,
+)
 
 private const val CROSSHAIR_CIRCLE_PARTS = 24
 private const val CROSSHAIR_CIRCLE_ANGLE = 2 * PI.toFloat() / CROSSHAIR_CIRCLE_PARTS
@@ -65,13 +68,8 @@ private fun renderInner(drawContext: DrawContext, config: CrosshairConfig, state
     }
 }
 
-fun Context.Crosshair(state: CrosshairState) {
-    val status = state.status
-    val config = state.config
-
-    if (status == null) {
-        return
-    }
+fun Context.Crosshair(config: CrosshairConfig) {
+    val status = result.crosshairStatus ?: return
 
     drawQueue.enqueue { drawContext ->
         drawContext.withTranslate(status.position * window.scaledSize) {

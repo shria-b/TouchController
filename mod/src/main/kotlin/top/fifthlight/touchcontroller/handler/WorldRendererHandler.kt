@@ -12,7 +12,7 @@ import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.SocketProxyHolder
 import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.event.HudRenderCallback
-import top.fifthlight.touchcontroller.model.CrosshairStateModel
+import top.fifthlight.touchcontroller.model.ControllerHudModel
 import top.fifthlight.touchcontroller.model.GlobalStateModel
 import top.fifthlight.touchcontroller.model.TouchStateModel
 import top.fifthlight.touchcontroller.proxy.data.Offset
@@ -24,12 +24,12 @@ class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRen
     private val handler: SocketProxyHolder by inject()
     private val touchStateModel: TouchStateModel by inject()
     private val globalStateModel: GlobalStateModel by inject()
-    private val crosshairStateModel: CrosshairStateModel by inject()
+    private val controllerHudModel: ControllerHudModel by inject()
     private val configHolder: TouchControllerConfigHolder by inject()
     private val client: MinecraftClient by inject()
 
     override fun beforeBlockOutline(context: WorldRenderContext, hitResult: HitResult?): Boolean =
-        crosshairStateModel.state.status != null
+        controllerHudModel.result.crosshairStatus != null
 
     override fun onCrosshairRender(drawContext: DrawContext, tickCounter: RenderTickCounter): Boolean =
         !configHolder.config.value.disableCrosshair

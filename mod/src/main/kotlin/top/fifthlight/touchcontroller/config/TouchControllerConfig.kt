@@ -14,6 +14,13 @@ data class TouchControllerConfig(
     val disableMouseLock: Boolean = true,
     val disableCrosshair: Boolean = true,
     val enableTouchEmulation: Boolean = false,
+    val crosshair: CrosshairConfig = CrosshairConfig()
+)
+
+@Serializable
+data class CrosshairConfig(
+    val radius: Int = 36,
+    val outerRadius: Int = 2,
 )
 
 typealias TouchControllerLayout = PersistentList<ControllerWidget>

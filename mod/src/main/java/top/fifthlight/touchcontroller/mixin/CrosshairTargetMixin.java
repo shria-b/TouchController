@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import top.fifthlight.touchcontroller.model.CrosshairStateModel;
+import top.fifthlight.touchcontroller.model.ControllerHudModel;
 
 @Mixin(GameRenderer.class)
 public abstract class CrosshairTargetMixin {
@@ -67,8 +67,8 @@ public abstract class CrosshairTargetMixin {
 
     @Inject(method = "findCrosshairTarget", at = @At("HEAD"), cancellable = true)
     private void findCrosshairTarget(Entity camera, double blockInteractionRange, double entityInteractionRange, float tickDelta, CallbackInfoReturnable<HitResult> cir) {
-        var crosshairModel = (CrosshairStateModel) KoinJavaComponent.get(CrosshairStateModel.class);
-        var crosshairStatus = crosshairModel.getState().getStatus();
+        var controllerHudModel = (ControllerHudModel) KoinJavaComponent.get(ControllerHudModel.class);
+        var crosshairStatus = controllerHudModel.getResult().getCrosshairStatus();
         if (crosshairStatus == null) {
             return;
         }

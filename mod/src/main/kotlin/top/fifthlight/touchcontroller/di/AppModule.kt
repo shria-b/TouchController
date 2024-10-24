@@ -10,12 +10,13 @@ import org.koin.dsl.binds
 import org.koin.dsl.module
 import top.fifthlight.touchcontroller.SocketProxyHolder
 import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
+import top.fifthlight.touchcontroller.event.ClientRenderEvents
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
+import top.fifthlight.touchcontroller.handler.ClientRenderHandler
 import top.fifthlight.touchcontroller.handler.HudCallbackHandler
 import top.fifthlight.touchcontroller.handler.KeyboardInputHandler
 import top.fifthlight.touchcontroller.handler.WorldRendererHandler
 import top.fifthlight.touchcontroller.model.ControllerHudModel
-import top.fifthlight.touchcontroller.model.CrosshairStateModel
 import top.fifthlight.touchcontroller.model.GlobalStateModel
 import top.fifthlight.touchcontroller.model.TouchStateModel
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback as FabricHudRenderCallback
@@ -43,8 +44,8 @@ val appModule = module {
         TouchControllerHudRenderCallback.CrosshairRender::class,
         WorldRenderEvents.Start::class
     )
+    single<ClientRenderEvents.StartRenderTick> { ClientRenderHandler() }
     single { GlobalStateModel() }
     single { ControllerHudModel() }
     single { TouchStateModel() }
-    single { CrosshairStateModel() }
 }
