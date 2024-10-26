@@ -42,4 +42,7 @@ object Textures {
 
     val JOYSTICK_PAD = texture("textures/gui/joystick/pad.png")
     val JOYSTICK_STICK = texture("textures/gui/joystick/stick.png")
+
+    val PAUSE = texture("textures/gui/pause/pause.png")
+    val PAUSE_CLASSIC = texture("textures/gui/pause/pause_classic.png")
 }
