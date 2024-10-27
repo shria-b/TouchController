@@ -7,7 +7,8 @@ sealed class PointerState {
     data class View(
         val initialPosition: Offset,
         val lastPosition: Offset,
-        val moveTriggered: Boolean = false,
+        val moving: Boolean = false,
+        val destroyTriggered: Boolean = false,
         val consumed: Boolean = false,
         val pressTime: Int,
     ) : PointerState()

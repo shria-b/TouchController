@@ -12,6 +12,7 @@ import org.koin.logger.slf4jLogger
 import org.slf4j.LoggerFactory
 import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.di.appModule
+import top.fifthlight.touchcontroller.event.ClientHandleInputEvents
 import top.fifthlight.touchcontroller.event.ClientRenderEvents
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
 import top.fifthlight.touchcontroller.proxy.LauncherSocketProxy
@@ -23,44 +24,45 @@ import top.fifthlight.touchcontroller.event.HudRenderCallback as TouchController
 private val controllerLogger = LoggerFactory.getLogger("TouchController")
 
 data class SocketProxyHolder(
-	var socketProxy: LauncherSocketProxy? = null
+    var socketProxy: LauncherSocketProxy? = null
 )
 
 object TouchController : ClientModInitializer {
-	const val NAMESPACE = "touchcontroller"
+    const val NAMESPACE = "touchcontroller"
 
-	override fun onInitializeClient() {
-		controllerLogger.info("Loading TouchController…")
+    override fun onInitializeClient() {
+        controllerLogger.info("Loading TouchController…")
 
-		val app = startKoin {
-			slf4jLogger()
-			modules(appModule)
-		}
+        val app = startKoin {
+            slf4jLogger()
+            modules(appModule)
+        }
 
-		val socketProxyHolder: SocketProxyHolder = app.koin.get()
-		createClientProxy()?.apply {
-			socketProxyHolder.socketProxy = this
-			runBlocking {
-				send(VersionMessage("1.0.0"))
-			}
-			@OptIn(DelicateCoroutinesApi::class)
-			GlobalScope.launch {
-				start()
-			}
-		}
+        val socketProxyHolder: SocketProxyHolder = app.koin.get()
+        createClientProxy()?.apply {
+            socketProxyHolder.socketProxy = this
+            runBlocking {
+                send(VersionMessage("1.0.0"))
+            }
+            @OptIn(DelicateCoroutinesApi::class)
+            GlobalScope.launch {
+                start()
+            }
+        }
 
-		app.koin.initialize()
-	}
+        app.koin.initialize()
+    }
 
-	private fun Koin.initialize() {
-		controllerLogger.info("Client proxy set, initialize mod")
-		val configHolder: TouchControllerConfigHolder = get()
-		configHolder.load()
-		FabricHudRenderCallback.EVENT.register(get())
-		TouchControllerHudRenderCallback.CROSSHAIR.register(get())
-		WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register(get())
-		WorldRenderEvents.START.register(get())
-		KeyboardInputEvents.END_INPUT_TICK.register(get())
-		ClientRenderEvents.START_TICK.register(get())
-	}
+    private fun Koin.initialize() {
+        controllerLogger.info("Client proxy set, initialize mod")
+        val configHolder: TouchControllerConfigHolder = get()
+        configHolder.load()
+        FabricHudRenderCallback.EVENT.register(get())
+        TouchControllerHudRenderCallback.CROSSHAIR.register(get())
+        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register(get())
+        WorldRenderEvents.START.register(get())
+        KeyboardInputEvents.END_INPUT_TICK.register(get())
+        ClientRenderEvents.START_TICK.register(get())
+        ClientHandleInputEvents.HANDLE_INPUT.register(get())
+    }
 }
