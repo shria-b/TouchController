@@ -3,21 +3,34 @@ package top.fifthlight.touchcontroller.layout
 import net.minecraft.util.hit.HitResult.Type.*
 import top.fifthlight.touchcontroller.ext.size
 import top.fifthlight.touchcontroller.mixin.ClientPlayerInteractionManagerAccessor
-import top.fifthlight.touchcontroller.proxy.data.div
 import top.fifthlight.touchcontroller.state.PointerState
 
 fun Context.View() {
+    var releasedView = false
     for (key in pointers.keys.toList()) {
         val state = pointers[key]!!.state
         if (state is PointerState.Released) {
-            if (state.previousState is PointerState.View) {
+            if (!releasedView && state.previousState is PointerState.View) {
+                releasedView = true
                 val previousState = state.previousState
                 val pressTime = timer.tick - previousState.pressTime
-                if (pressTime < 10 && !previousState.moveTriggered) {
+                if (pressTime < 5 && !previousState.moving) {
                     val crosshairTarget = client.crosshairTarget ?: break
                     when (crosshairTarget.type) {
-                        BLOCK -> status.itemUse.add()
-                        ENTITY -> status.attack.add()
+                        BLOCK -> {
+                            result.crosshairStatus = CrosshairStatus(
+                                position = state.previousPosition,
+                                breakPercent = 0f
+                            )
+                            status.itemUse.add()
+                        }
+                        ENTITY -> {
+                            result.crosshairStatus = CrosshairStatus(
+                                position = state.previousPosition,
+                                breakPercent = 0f
+                            )
+                            status.attack.add()
+                        }
                         MISS, null -> {}
                     }
                 }
@@ -39,26 +52,29 @@ fun Context.View() {
             }
         }
 
-        var moveTriggered = state.moveTriggered
-        if (!state.moveTriggered) {
+        var moving = state.moving
+        if (!state.moving) {
             val delta = (pointer.rawOffset - state.initialPosition).squaredLength
-            val threshold = (8f / client.window.size.toSize()).squaredLength
+            val threshold = (client.window.size.toSize() * 0.02f).squaredLength
             if (delta > threshold) {
-                moveTriggered = true
+                moving = true
             }
         }
+        result.lookDirection = pointer.rawOffset - state.lastPosition
 
         if (state.consumed) {
-            pointer.state = state.copy(lastPosition = pointer.rawOffset, moveTriggered = moveTriggered)
+            pointer.state = state.copy(lastPosition = pointer.rawOffset, moving = moving)
             return@let
         }
 
         var consumed = false
         val pressTime = timer.tick - state.pressTime
-        if (pressTime >= 10) {
-            val crosshairTarget = client.crosshairTarget
+        var destroyTriggered = state.destroyTriggered
+        val crosshairTarget = client.crosshairTarget
+        if (pressTime == 5 && !moving) {
             when (crosshairTarget?.type) {
-                BLOCK -> status.attack.add()
+                BLOCK -> destroyTriggered = true
+
                 ENTITY -> {
                     status.itemUse.add()
                     consumed = true
@@ -67,11 +83,13 @@ fun Context.View() {
                 MISS, null -> {}
             }
         }
-
-        if (moveTriggered) {
-            result.lookDirection = pointer.rawOffset - state.lastPosition
+        if (!consumed && destroyTriggered && crosshairTarget?.type == BLOCK) {
+            status.attack.add()
         }
-        pointer.state = state.copy(lastPosition = pointer.rawOffset, moveTriggered = moveTriggered, consumed = consumed)
+
+        pointer.state = state.copy(
+            lastPosition = pointer.rawOffset, moving = moving, destroyTriggered = destroyTriggered, consumed = consumed
+        )
     } ?: run {
         pointers.values.forEach {
             when (it.state) {
@@ -80,9 +98,7 @@ fun Context.View() {
                         it.state = PointerState.Invalid
                     } else {
                         it.state = PointerState.View(
-                            initialPosition = it.rawOffset,
-                            lastPosition = it.rawOffset,
-                            pressTime = timer.tick
+                            initialPosition = it.rawOffset, lastPosition = it.rawOffset, pressTime = timer.tick
                         )
                         currentViewPointer = it
                     }

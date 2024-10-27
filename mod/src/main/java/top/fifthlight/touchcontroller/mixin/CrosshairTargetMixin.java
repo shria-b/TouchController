@@ -15,14 +15,8 @@ import org.joml.Vector2d;
 import org.joml.Vector3d;
 import org.joml.Vector4d;
 import org.koin.java.KoinJavaComponent;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.gen.Invoker;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.fifthlight.touchcontroller.model.ControllerHudModel;
 
 @Mixin(GameRenderer.class)
@@ -65,16 +59,22 @@ public abstract class CrosshairTargetMixin {
         return ensureTargetInRange(hitResult, position, blockInteractionRange);
     }
 
-    @Inject(method = "findCrosshairTarget", at = @At("HEAD"), cancellable = true)
-    private void findCrosshairTarget(Entity camera, double blockInteractionRange, double entityInteractionRange, float tickDelta, CallbackInfoReturnable<HitResult> cir) {
+    /**
+     * @author fifth_light
+     * @reason Overwrite the findCrosshairTarget to change the crosshair target to touch crosshair
+     */
+    @Overwrite
+    private HitResult findCrosshairTarget(Entity camera, double blockInteractionRange, double entityInteractionRange, float tickDelta) {
         var controllerHudModel = (ControllerHudModel) KoinJavaComponent.get(ControllerHudModel.class);
         var crosshairStatus = controllerHudModel.getResult().getCrosshairStatus();
-        if (crosshairStatus == null) {
-            return;
-        }
 
-        var screen = new Vector2d(crosshairStatus.getPosition().getX(), crosshairStatus.getPosition().getY());
-        var ndc = new Vector4d(2 * screen.x - 1, 1 - 2 * screen.y, -1f, 1f);
+        Vector4d ndc;
+        if (crosshairStatus == null) {
+            ndc = new Vector4d(0, 0, -1f, 1f);
+        } else {
+            var screen = new Vector2d(crosshairStatus.getPosition().getX(), crosshairStatus.getPosition().getY());
+            ndc = new Vector4d(2 * screen.x - 1, 1 - 2 * screen.y, -1f, 1f);
+        }
         var fov = getFov(this.camera, tickDelta, true);
 
         var inverseProjectionMatrix = getBasicProjectionMatrix(fov).invert();
@@ -86,7 +86,6 @@ public abstract class CrosshairTargetMixin {
         var normalizedDirection = direction.rotateX(cameraPitch).rotateY(-cameraYaw);
 
         var finalDirection = new Vec3d(normalizedDirection.x, normalizedDirection.y, normalizedDirection.z);
-        var target = findTargetWithDirection(camera, finalDirection, blockInteractionRange, entityInteractionRange, tickDelta);
-        cir.setReturnValue(target);
+        return findTargetWithDirection(camera, finalDirection, blockInteractionRange, entityInteractionRange, tickDelta);
     }
 }

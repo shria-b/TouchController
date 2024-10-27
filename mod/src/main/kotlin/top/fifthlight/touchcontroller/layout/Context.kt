@@ -31,6 +31,10 @@ data class ClickCounter(
             false
         }
     }
+
+    fun clear() {
+        counter = 0
+    }
 }
 
 data class ContextResult(

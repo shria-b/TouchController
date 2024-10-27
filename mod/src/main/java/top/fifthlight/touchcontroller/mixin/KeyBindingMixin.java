@@ -1,7 +1,6 @@
 package top.fifthlight.touchcontroller.mixin;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.koin.java.KoinJavaComponent;

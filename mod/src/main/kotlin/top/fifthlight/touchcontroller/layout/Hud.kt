@@ -14,6 +14,8 @@ fun Context.Hud(widgets: List<ControllerWidget>, crosshairConfig: CrosshairConfi
         }
     }
 
-    View()
-    Crosshair(crosshairConfig)
+    if (client.currentScreen == null) {
+        View()
+        Crosshair(crosshairConfig)
+    }
 }
