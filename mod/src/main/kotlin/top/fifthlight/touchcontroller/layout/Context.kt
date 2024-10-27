@@ -38,6 +38,7 @@ data class ContextResult(
     var left: Float = 0f,
     var jump: Boolean = false,
     var pause: Boolean = false,
+    var chat: Boolean = false,
     var lookDirection: Offset? = null,
     var crosshairStatus: CrosshairStatus? = null,
 )

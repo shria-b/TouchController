@@ -34,7 +34,8 @@ class WidgetList(
             Joystick(),
             SneakButton(),
             JumpButton(),
-            PauseButton()
+            PauseButton(),
+            ChatButton()
         )
     }
 

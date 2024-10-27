@@ -53,5 +53,8 @@
   "touchcontroller.screen.options.widget.joystick.property.stick_size": "手柄大小: %s%%",
 
   "touchcontroller.screen.options.widget.pause_button.property.size": "按键大小: %s%%",
-  "touchcontroller.screen.options.widget.pause_button.property.classic": "经典外观"
+  "touchcontroller.screen.options.widget.pause_button.property.classic": "经典外观",
+
+  "touchcontroller.screen.options.widget.chat_button.property.size": "按键大小: %s%%",
+  "touchcontroller.screen.options.widget.chat_button.property.classic": "经典外观"
 }

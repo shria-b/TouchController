@@ -45,4 +45,7 @@ object Textures {
 
     val PAUSE = texture("textures/gui/pause/pause.png")
     val PAUSE_CLASSIC = texture("textures/gui/pause/pause_classic.png")
+
+    val CHAT = texture("textures/gui/chat/chat.png")
+    val CHAT_CLASSIC = texture("textures/gui/chat/chat_classic.png")
 }

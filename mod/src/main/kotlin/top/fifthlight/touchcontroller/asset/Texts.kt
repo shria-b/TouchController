@@ -75,4 +75,7 @@ object Texts {
 
     val OPTIONS_WIDGET_PAUSE_BUTTON_PROPERTY_SIZE = key("screen.options.widget.pause_button.property.size")
     val OPTIONS_WIDGET_PAUSE_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.pause_button.property.classic")
+
+    val OPTIONS_WIDGET_CHAT_BUTTON_PROPERTY_SIZE = key("screen.options.widget.chat_button.property.size")
+    val OPTIONS_WIDGET_CHAT_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.chat_button.property.classic")
 }
