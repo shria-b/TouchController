@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(MinecraftClient.class)
-public interface ClientOpenChatScreenMixin {
+public interface ClientOpenChatScreenInvoker {
     @Invoker("openChatScreen")
-    void openChatScreen(String text);
+    void callOpenChatScreen(String text);
 }

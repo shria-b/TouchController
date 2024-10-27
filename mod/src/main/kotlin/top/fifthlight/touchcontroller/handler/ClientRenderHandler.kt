@@ -9,7 +9,7 @@ import top.fifthlight.touchcontroller.ext.scaledSize
 import top.fifthlight.touchcontroller.layout.Context
 import top.fifthlight.touchcontroller.layout.DrawQueue
 import top.fifthlight.touchcontroller.layout.Hud
-import top.fifthlight.touchcontroller.mixin.ClientOpenChatScreenMixin
+import top.fifthlight.touchcontroller.mixin.ClientOpenChatScreenInvoker
 import top.fifthlight.touchcontroller.model.ControllerHudModel
 import top.fifthlight.touchcontroller.model.TouchStateModel
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
@@ -43,7 +43,7 @@ class ClientRenderHandler : ClientRenderEvents.StartRenderTick, KoinComponent {
         controllerHudModel.pendingDrawQueue = drawQueue
 
         if (result.chat) {
-            (client as ClientOpenChatScreenMixin).openChatScreen("")
+            (client as ClientOpenChatScreenInvoker).callOpenChatScreen("")
         }
         if (result.pause) {
             client.openGameMenu(false)
