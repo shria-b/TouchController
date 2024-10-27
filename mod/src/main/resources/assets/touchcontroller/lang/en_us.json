@@ -50,5 +50,8 @@
   "touchcontroller.screen.options.widget.jump_button.property.classic": "Classic look",
 
   "touchcontroller.screen.options.widget.joystick.property.size": "Panel size",
-  "touchcontroller.screen.options.widget.joystick.property.stick_size": "Stick size"
+  "touchcontroller.screen.options.widget.joystick.property.stick_size": "Stick size",
+
+  "touchcontroller.screen.options.widget.pause_button.property.size": "Button size",
+  "touchcontroller.screen.options.widget.pause_button.property.classic": "Classic look"
 }

@@ -41,6 +41,9 @@ class ClientRenderHandler : ClientRenderEvents.StartRenderTick, KoinComponent {
         controllerHudModel.result = result
         controllerHudModel.pendingDrawQueue = drawQueue
 
+        if (result.pause) {
+            client.openGameMenu(false)
+        }
         result.lookDirection?.let { (x, y) ->
             client.player?.changeLookDirection(x.toDouble(), y.toDouble())
         }

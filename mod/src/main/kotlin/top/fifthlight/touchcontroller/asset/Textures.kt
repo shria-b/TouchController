@@ -29,17 +29,20 @@ object Textures {
     val DPAD_DOWN_RIGHT = texture("textures/gui/dpad/down_right.png")
     val DPAD_DOWN_RIGHT_ACTIVE = texture("textures/gui/dpad/down_right_active.png")
 
-    val SNEAK_CLASSIC = texture("textures/gui/dpad/sneak_classic.png")
-    val SNEAK_CLASSIC_ACTIVE = texture("textures/gui/dpad/sneak_classic_active.png")
-    val SNEAK = texture("textures/gui/dpad/sneak.png")
-    val SNEAK_ACTIVE = texture("textures/gui/dpad/sneak_active.png")
-    val SNEAK_DPAD = texture("textures/gui/dpad/sneak_dpad.png")
-    val SNEAK_DPAD_ACTIVE = texture("textures/gui/dpad/sneak_dpad_active.png")
+    val SNEAK_CLASSIC = texture("textures/gui/sneak/sneak_classic.png")
+    val SNEAK_CLASSIC_ACTIVE = texture("textures/gui/sneak/sneak_classic_active.png")
+    val SNEAK = texture("textures/gui/sneak/sneak.png")
+    val SNEAK_ACTIVE = texture("textures/gui/sneak/sneak_active.png")
+    val SNEAK_DPAD = texture("textures/gui/sneak/sneak_dpad.png")
+    val SNEAK_DPAD_ACTIVE = texture("textures/gui/sneak/sneak_dpad_active.png")
 
-    val JUMP_CLASSIC = texture("textures/gui/dpad/jump_classic.png")
-    val JUMP = texture("textures/gui/dpad/jump.png")
-    val JUMP_ACTIVE = texture("textures/gui/dpad/jump_active.png")
+    val JUMP_CLASSIC = texture("textures/gui/jump/jump_classic.png")
+    val JUMP = texture("textures/gui/jump/jump.png")
+    val JUMP_ACTIVE = texture("textures/gui/jump/jump_active.png")
 
     val JOYSTICK_PAD = texture("textures/gui/joystick/pad.png")
     val JOYSTICK_STICK = texture("textures/gui/joystick/stick.png")
+
+    val PAUSE = texture("textures/gui/pause/pause.png")
+    val PAUSE_CLASSIC = texture("textures/gui/pause/pause_classic.png")
 }

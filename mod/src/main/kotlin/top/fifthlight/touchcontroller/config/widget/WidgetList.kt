@@ -33,7 +33,8 @@ class WidgetList(
             DPad(),
             Joystick(),
             SneakButton(),
-            JumpButton()
+            JumpButton(),
+            PauseButton()
         )
     }
 

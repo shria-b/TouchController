@@ -41,6 +41,7 @@ data class ContextResult(
     var forward: Float = 0f,
     var left: Float = 0f,
     var jump: Boolean = false,
+    var pause: Boolean = false,
     var lookDirection: Offset? = null,
     var crosshairStatus: CrosshairStatus? = null,
 )
