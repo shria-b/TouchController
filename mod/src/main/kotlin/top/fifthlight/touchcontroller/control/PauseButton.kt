@@ -18,7 +18,7 @@ import kotlin.math.round
 @Serializable
 @SerialName("pause_button")
 data class PauseButton(
-    val size: Float = 2f,
+    val size: Float = 1f,
     val classic: Boolean = true,
     override val align: Align = Align.CENTER_TOP,
     override val offset: IntOffset = IntOffset.ZERO,

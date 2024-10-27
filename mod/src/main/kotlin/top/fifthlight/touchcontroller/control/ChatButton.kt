@@ -17,7 +17,7 @@ import kotlin.math.round
 @Serializable
 @SerialName("chat_button")
 data class ChatButton (
-    val size: Float = 2f,
+    val size: Float = 1f,
     val classic: Boolean = true,
     override val align: Align = Align.CENTER_TOP,
     override val offset: IntOffset = IntOffset.ZERO,

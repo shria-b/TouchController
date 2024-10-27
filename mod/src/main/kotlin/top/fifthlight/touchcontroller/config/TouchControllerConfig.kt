@@ -3,8 +3,7 @@ package top.fifthlight.touchcontroller.config
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.serialization.Serializable
-import top.fifthlight.touchcontroller.control.ControllerWidget
-import top.fifthlight.touchcontroller.control.DPad
+import top.fifthlight.touchcontroller.control.*
 import top.fifthlight.touchcontroller.layout.Align
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 
@@ -29,5 +28,17 @@ val defaultTouchControllerLayout: TouchControllerLayout = persistentListOf(
     DPad(
         align = Align.LEFT_BOTTOM,
         offset = IntOffset(8, 8)
+    ),
+    JumpButton(
+        align = Align.RIGHT_BOTTOM,
+        offset = IntOffset(42, 42)
+    ),
+    PauseButton(
+        align = Align.CENTER_TOP,
+        offset = IntOffset(-9, 0)
+    ),
+    ChatButton(
+        align = Align.CENTER_TOP,
+        offset = IntOffset(9, 0)
     )
 )
