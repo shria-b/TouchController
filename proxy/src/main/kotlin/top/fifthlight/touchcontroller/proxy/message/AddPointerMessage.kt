@@ -10,25 +10,25 @@ data class AddPointerMessage(
     override val type: Int = 1
 
     override fun encode(buffer: ByteBuffer) {
+        super.encode(buffer)
         buffer.putInt(index)
         buffer.putFloat(position.x)
         buffer.putFloat(position.y)
     }
 
     private class Decoder: ProxyMessageDecoder() {
-        override fun decode(payload: ByteArray): AddPointerMessage {
-            if (payload.size != 8) {
+        override fun decode(payload: ByteBuffer): AddPointerMessage {
+            if (payload.remaining() != 12) {
                 throw BadMessageLengthException(
-                    expected = 8,
-                    actual = payload.size
+                    expected = 12,
+                    actual = payload.remaining()
                 )
             }
-            val buffer = ByteBuffer.wrap(payload)
             return AddPointerMessage(
-                index = buffer.getInt(),
+                index = payload.getInt(),
                 position = Offset(
-                    x = buffer.getFloat(),
-                    y = buffer.getFloat()
+                    x = payload.getFloat(),
+                    y = payload.getFloat()
                 )
             )
         }

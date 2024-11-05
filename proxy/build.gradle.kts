@@ -14,4 +14,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.core)
     compileOnly(libs.slf4j.api)
+    testImplementation(libs.logback.classic)
+    testImplementation(libs.slf4j.api)
+    testImplementation(kotlin("test"))
 }

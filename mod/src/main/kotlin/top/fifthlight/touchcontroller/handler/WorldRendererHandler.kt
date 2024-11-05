@@ -1,5 +1,6 @@
 package top.fifthlight.touchcontroller.handler
 
+import kotlinx.coroutines.runBlocking
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents.BeforeBlockOutline
@@ -38,14 +39,16 @@ class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRen
         globalStateModel.update(client)
 
         handler.socketProxy?.let { proxy ->
-            proxy.receive { message ->
-                when (message) {
-                    is VersionMessage -> {}
-                    is AddPointerMessage -> {
-                        touchStateModel.addPointer(
-                            index = message.index,
-                            position = message.position
-                        )
+            runBlocking {
+                proxy.receive { message ->
+                    when (message) {
+                        is VersionMessage -> {}
+                        is AddPointerMessage -> {
+                            touchStateModel.addPointer(
+                                index = message.index,
+                                position = message.position
+                            )
+                        }
                     }
                 }
             }
