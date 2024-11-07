@@ -18,6 +18,8 @@ import top.fifthlight.touchcontroller.model.GlobalStateModel
 import top.fifthlight.touchcontroller.model.TouchStateModel
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.proxy.message.AddPointerMessage
+import top.fifthlight.touchcontroller.proxy.message.ClearPointerMessage
+import top.fifthlight.touchcontroller.proxy.message.RemovePointerMessage
 import top.fifthlight.touchcontroller.proxy.message.VersionMessage
 
 class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRenderCallback.CrosshairRender,
@@ -49,6 +51,10 @@ class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRen
                                 position = message.position
                             )
                         }
+                        is RemovePointerMessage -> {
+                            touchStateModel.removePointer(message.index)
+                        }
+                        ClearPointerMessage -> touchStateModel.clearPointer()
                     }
                 }
             }
