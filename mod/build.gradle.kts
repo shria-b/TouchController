@@ -38,7 +38,8 @@ dependencies {
     modImplementation(libs.modmenu)
     modImplementation(libs.yacl)
 
-    includeAndImplementation(project(":proxy"))
+    includeAndImplementation(project(":proxy-client"))
+    includeAndImplementation(project(":proxy-server"))
     includeAndImplementation(libs.koin.core)
     includeAndImplementation(libs.koin.logger.slf4j)
     includeAndImplementation(libs.kotlinx.collections.immutable)

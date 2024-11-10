@@ -1,24 +1,22 @@
 package top.fifthlight.touchcontroller.proxy
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 import top.fifthlight.touchcontroller.proxy.message.MessageDecodeException
 import top.fifthlight.touchcontroller.proxy.message.ProxyMessage
 import top.fifthlight.touchcontroller.proxy.message.VersionMessage
 import top.fifthlight.touchcontroller.proxy.message.decodeMessage
 import java.io.IOException
-import java.net.StandardProtocolFamily
-import java.net.UnixDomainSocketAddress
 import java.nio.ByteBuffer
 import java.nio.channels.ClosedByInterruptException
-import java.nio.channels.ServerSocketChannel
-import java.nio.channels.SocketChannel
-import java.nio.file.Path
 
 private val logger = LoggerFactory.getLogger(LauncherSocketProxy::class.java)
 
@@ -29,17 +27,19 @@ abstract class LauncherSocketProxy {
     val connected = _connected.asStateFlow()
     protected val sendQueue = MutableSharedFlow<ProxyMessage>(0, 256)
 
-    protected suspend fun receiveChannel(channel: SocketChannel) {
+    protected suspend fun receiveChannel(receiver: (ByteBuffer) -> Int) {
         withContext(Dispatchers.IO.limitedParallelism(1)) {
             val buffer = ByteBuffer.allocate(1024)
             while (true) {
                 buffer.clear()
                 val length = try {
-                    runInterruptible { channel.read(buffer) }
-                } catch (ex: ClosedByInterruptException) {
-                    throw CancellationException()
+                    runInterruptible { receiver(buffer) }
+                } catch (_: ClosedByInterruptException) {
+                    throw kotlin.coroutines.cancellation.CancellationException()
+                } catch (_: IOException) {
+                    break
                 }
-                if (length == -1) {
+                if (length <= 0) {
                     break
                 }
                 buffer.flip()
@@ -88,54 +88,33 @@ abstract class LauncherSocketProxy {
     abstract suspend fun start()
 }
 
-private class ClientLauncherSocketProxy(
-    private val channel: SocketChannel
-): LauncherSocketProxy() {
-    private suspend fun startSend() {
-        sendQueue.collect { message ->
-            val buffer = ByteBuffer.allocate(1024)
-            message.encode(buffer)
-            buffer.flip()
-
-            withContext(Dispatchers.IO.limitedParallelism(1)) {
-                runInterruptible { channel.write(buffer) }
-            }
-        }
-    }
-
-    override suspend fun start() {
-        coroutineScope {
-            launch {
-                logger.info("Client send started")
-                startSend()
-            }
-            launch {
-                _connected.value = true
-                logger.info("Client receive started")
-                receiveChannel(channel)
-            }
-        }
-    }
+interface ServerSocket: AutoCloseable {
+    fun accept(): Socket
 }
 
-fun createClientProxy(path: Path? = null): LauncherSocketProxy? {
-    val socketPath = path ?: System.getenv("TOUCH_CONTROLLER_PROXY")?.let {Path.of(it)} ?: return null
-    val socketAddress = UnixDomainSocketAddress.of(socketPath)
-    val socket = try {
-        SocketChannel.open(socketAddress)
-    } catch (ex: IOException) {
-        logger.warn("Failed to open unix socket at $socketPath", ex)
-        return null
-    }
-    return ClientLauncherSocketProxy(socket)
+interface Socket: AutoCloseable {
+    fun read(buffer: ByteBuffer): Int
+    fun write(buffer: ByteBuffer): Int
 }
 
-private class ServerLauncherSocketProxy(
-    private val channel: ServerSocketChannel
+fun Socket.writeAll(buffer: ByteBuffer): Int {
+    var written = 0
+    while (buffer.hasRemaining()) {
+        val len = write(buffer)
+        if (len <= 0) {
+            return len
+        }
+        written += len
+    }
+    return written
+}
+
+class ServerLauncherSocketProxy(
+    private val socket: ServerSocket
 ): LauncherSocketProxy() {
     override suspend fun start() {
-        withContext(Dispatchers.IO.limitedParallelism(16)) {
-            val clients = ArrayList<SocketChannel>()
+        withContext(Dispatchers.IO) {
+            val clients = ArrayList<Socket>()
             val clientLock = Mutex()
             logger.info("Server send started")
             launch {
@@ -144,19 +123,22 @@ private class ServerLauncherSocketProxy(
                     message.encode(buffer)
                     buffer.flip()
                     val len = buffer.limit()
+                    logger.trace("Send $len bytes to ${clients.size} client")
                     for (client in clients) {
                         runInterruptible { client.write(buffer) }
                         buffer.clear()
                         buffer.limit(len)
                     }
+                    logger.trace("Sent $len bytes to ${clients.size} client")
                 }
             }
             while (true) {
                 val client = try {
-                    runInterruptible { channel.accept() }
+                    runInterruptible { socket.accept() }
                 } catch (ex: ClosedByInterruptException) {
-                    throw CancellationException()
+                    throw kotlin.coroutines.cancellation.CancellationException()
                 }
+                logger.trace("Client connected")
                 launch {
                     clientLock.withLock {
                         if (clients.isEmpty()) {
@@ -165,7 +147,7 @@ private class ServerLauncherSocketProxy(
                         clients.add(client)
                     }
                     logger.info("Server receive started")
-                    receiveChannel(client)
+                    receiveChannel(client::read)
                     clientLock.withLock {
                         clients.remove(client)
                         if (clients.isEmpty()) {
@@ -176,11 +158,4 @@ private class ServerLauncherSocketProxy(
             }
         }
     }
-}
-
-fun createServerProxy(path: Path): LauncherSocketProxy {
-    val socketAddress = UnixDomainSocketAddress.of(path)
-    val socket = ServerSocketChannel.open(StandardProtocolFamily.UNIX)
-    socket.bind(socketAddress)
-    return ServerLauncherSocketProxy(socket)
 }

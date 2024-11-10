@@ -16,7 +16,7 @@ import top.fifthlight.touchcontroller.event.ClientHandleInputEvents
 import top.fifthlight.touchcontroller.event.ClientRenderEvents
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
 import top.fifthlight.touchcontroller.proxy.LauncherSocketProxy
-import top.fifthlight.touchcontroller.proxy.createClientProxy
+import top.fifthlight.touchcontroller.proxy.client.unixSocketClientLauncherSocketProxy
 import top.fifthlight.touchcontroller.proxy.message.VersionMessage
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback as FabricHudRenderCallback
 import top.fifthlight.touchcontroller.event.HudRenderCallback as TouchControllerHudRenderCallback
@@ -39,7 +39,7 @@ object TouchController : ClientModInitializer {
         }
 
         val socketProxyHolder: SocketProxyHolder = app.koin.get()
-        createClientProxy()?.apply {
+        unixSocketClientLauncherSocketProxy()?.apply {
             socketProxyHolder.socketProxy = this
             runBlocking {
                 send(VersionMessage("1.0.0"))

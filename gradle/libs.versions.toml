@@ -17,6 +17,11 @@ fabric-language-kotlin = "1.12.2+kotlin.2.0.20"
 modmenu = "11.0.2"
 yacl = "3.5.0+1.21-fabric"
 
+# Android
+agp = "8.7.2"
+core = "1.15.0"
+lifecycle = "2.8.7"
+
 [libraries]
 minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
 fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }
@@ -25,7 +30,7 @@ kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "collections-immutable" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-logger-slf4j = { group = "io.insert-koin", name = "koin-logger-slf4j", version.ref = "koin"}
+koin-logger-slf4j = { group = "io.insert-koin", name = "koin-logger-slf4j", version.ref = "koin" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 # Minecraft Mods
@@ -34,7 +39,16 @@ fabric-language-kotlin = { group = "net.fabricmc", name = "fabric-language-kotli
 modmenu = { group = "com.terraformersmc", name = "modmenu", version.ref = "modmenu" }
 yacl = { group = "dev.isxander", name = "yet-another-config-lib", version.ref = "yacl" }
 
+# Android
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+
 [plugins]
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 fabric-loom = { id = "fabric-loom", version.ref = "loom" }
+
+# Android
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }

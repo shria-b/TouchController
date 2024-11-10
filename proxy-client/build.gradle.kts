@@ -1,20 +1,23 @@
 plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm)
-    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 version = "0.0.1"
-group = "top.fifthlight.touchcontroller"
+group = "top.fifthlight.touchcontroller.proxy.client"
 
 base {
-    archivesName = "TouchContoller-Proxy"
+    archivesName = "TouchContoller-Proxy-Client"
 }
 
 dependencies {
+    implementation(project(":proxy-server"))
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization.core)
     compileOnly(libs.slf4j.api)
     testImplementation(libs.logback.classic)
     testImplementation(libs.slf4j.api)
     testImplementation(kotlin("test"))
+}
+
+kotlin {
+    jvmToolchain(21)
 }
