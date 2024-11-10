@@ -1,4 +1,6 @@
 {
+  "touchcontroller.warning.proxy_not_connected": "Warning: No proxy connected. TouchController will be disabled.",
+
   "touchcontroller.screen.options": "Touch Settings...",
   "touchcontroller.screen.options.title": "Touch Settings",
 
@@ -38,23 +40,23 @@
 
   "touchcontroller.screen.options.widget.dpad.property.classic": "Classic look",
   "touchcontroller.screen.options.widget.dpad.property.size": "Button size: %s%%",
-  "touchcontroller.screen.options.widget.dpad.property.padding": "Button margin: %s%%",
+  "touchcontroller.screen.options.widget.dpad.property.padding": "Button margin: %d",
   "touchcontroller.screen.options.widget.dpad.property.extra_button.none": "Extra button: None",
   "touchcontroller.screen.options.widget.dpad.property.extra_button.jump": "Extra button: Jump",
   "touchcontroller.screen.options.widget.dpad.property.extra_button.sneak": "Extra button: Sneak",
 
-  "touchcontroller.screen.options.widget.sneak_button.property.size": "Button size",
+  "touchcontroller.screen.options.widget.sneak_button.property.size": "Button size: %s%%",
   "touchcontroller.screen.options.widget.sneak_button.property.classic": "Classic look",
 
-  "touchcontroller.screen.options.widget.jump_button.property.size": "Button size",
+  "touchcontroller.screen.options.widget.jump_button.property.size": "Button size: %s%%",
   "touchcontroller.screen.options.widget.jump_button.property.classic": "Classic look",
 
-  "touchcontroller.screen.options.widget.joystick.property.size": "Panel size",
+  "touchcontroller.screen.options.widget.joystick.property.size": "Panel size: %s%%",
   "touchcontroller.screen.options.widget.joystick.property.stick_size": "Stick size",
 
-  "touchcontroller.screen.options.widget.pause_button.property.size": "Button size",
+  "touchcontroller.screen.options.widget.pause_button.property.size": "Button size: %s%%",
   "touchcontroller.screen.options.widget.pause_button.property.classic": "Classic look",
 
-  "touchcontroller.screen.options.widget.chat_button.property.size": "Button size",
+  "touchcontroller.screen.options.widget.chat_button.property.size": "Button size: %s%%",
   "touchcontroller.screen.options.widget.chat_button.property.classic": "Classic look"
 }

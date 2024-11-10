@@ -2,6 +2,7 @@ package top.fifthlight.touchcontroller.di
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents.BeforeBlockOutline
 import net.fabricmc.loader.api.FabricLoader
@@ -44,6 +45,7 @@ val appModule = module {
     )
     single<ClientRenderEvents.StartRenderTick> { ClientRenderHandler() }
     single<ClientHandleInputEvents.HandleInput> { ClientInputHandler() }
+    single<ClientPlayConnectionEvents.Join> { ClientPlayConnectionHandler() }
     single { GlobalStateModel() }
     single { ControllerHudModel() }
     single { TouchStateModel() }

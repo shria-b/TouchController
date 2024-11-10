@@ -1,4 +1,6 @@
 {
+  "touchcontroller.warning.proxy_not_connected": "警告：代理未连接。TouchController 将被禁用。",
+
   "touchcontroller.screen.options": "触摸设置…",
   "touchcontroller.screen.options.title": "触摸设置",
 

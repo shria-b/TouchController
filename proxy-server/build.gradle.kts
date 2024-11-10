@@ -1,21 +1,30 @@
 plugins {
+    `maven-publish`
     alias(libs.plugins.jetbrains.kotlin.jvm)
-    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 version = "0.0.1"
-group = "top.fifthlight.touchcontroller.proxy.server"
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            afterEvaluate {
+                from(components["java"])
+            }
+        }
+    }
+}
 
 base {
-    archivesName = "TouchContoller-Proxy-Server"
+    archivesName = "TouchController-Proxy-Server"
 }
 
 dependencies {
+    implementation(project(":proxy-client"))
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization.core)
-    compileOnly(libs.slf4j.api)
+    testImplementation(kotlin("test"))
 }
 
 kotlin {
-    jvmToolchain(8)
+    jvmToolchain(21)
 }

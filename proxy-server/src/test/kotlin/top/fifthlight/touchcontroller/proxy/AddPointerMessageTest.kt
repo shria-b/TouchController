@@ -1,10 +1,7 @@
 package top.fifthlight.touchcontroller.proxy
 
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.proxy.message.AddPointerMessage
@@ -21,15 +18,14 @@ class AddPointerMessageTest: MessageTest() {
                 launch { server.start() }
                 launch { client.start() }
 
-                client.connected.first { it }
-                server.connected.first { it }
+                server.listening.first { it }
 
                 val index = 0x12345678
                 val position = Offset(
                     x = 0.1f,
                     y = 0.2f,
                 )
-                server.send(
+                client.send(
                     AddPointerMessage(
                         index = index,
                         position = position
@@ -38,17 +34,22 @@ class AddPointerMessageTest: MessageTest() {
 
                 var message: AddPointerMessage? = null
                 while (message == null) {
-                    client.receive { msg ->
+                    server.receive { msg ->
+                        println("OK")
                         assertTrue(msg is AddPointerMessage)
                         assertNull(message)
                         message = msg
                     }
+                    yield()
                 }
 
                 val addPointerMessage = message!!
                 assertEquals(index, addPointerMessage.index)
                 assertEquals(position, addPointerMessage.position)
+
                 cancel()
+                server.close()
+                client.close()
             }
         } catch (_: CancellationException) {}
     }

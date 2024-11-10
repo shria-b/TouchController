@@ -20,7 +20,6 @@ import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.proxy.message.AddPointerMessage
 import top.fifthlight.touchcontroller.proxy.message.ClearPointerMessage
 import top.fifthlight.touchcontroller.proxy.message.RemovePointerMessage
-import top.fifthlight.touchcontroller.proxy.message.VersionMessage
 
 class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRenderCallback.CrosshairRender,
     KoinComponent {
@@ -44,7 +43,6 @@ class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRen
             runBlocking {
                 proxy.receive { message ->
                     when (message) {
-                        is VersionMessage -> {}
                         is AddPointerMessage -> {
                             touchStateModel.addPointer(
                                 index = message.index,

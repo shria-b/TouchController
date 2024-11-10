@@ -3,8 +3,8 @@ package top.fifthlight.touchcontroller
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
@@ -15,23 +15,22 @@ import top.fifthlight.touchcontroller.di.appModule
 import top.fifthlight.touchcontroller.event.ClientHandleInputEvents
 import top.fifthlight.touchcontroller.event.ClientRenderEvents
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
-import top.fifthlight.touchcontroller.proxy.LauncherSocketProxy
-import top.fifthlight.touchcontroller.proxy.client.unixSocketClientLauncherSocketProxy
-import top.fifthlight.touchcontroller.proxy.message.VersionMessage
+import top.fifthlight.touchcontroller.proxy.server.LauncherSocketProxyServer
+import top.fifthlight.touchcontroller.proxy.server.localhostLauncherSocketProxyServer
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback as FabricHudRenderCallback
 import top.fifthlight.touchcontroller.event.HudRenderCallback as TouchControllerHudRenderCallback
 
-private val controllerLogger = LoggerFactory.getLogger("TouchController")
+private val logger = LoggerFactory.getLogger(TouchController::class.java)
 
 data class SocketProxyHolder(
-    var socketProxy: LauncherSocketProxy? = null
+    var socketProxy: LauncherSocketProxyServer? = null
 )
 
 object TouchController : ClientModInitializer {
     const val NAMESPACE = "touchcontroller"
 
     override fun onInitializeClient() {
-        controllerLogger.info("Loading TouchController…")
+        logger.info("Loading TouchController…")
 
         val app = startKoin {
             slf4jLogger()
@@ -39,11 +38,9 @@ object TouchController : ClientModInitializer {
         }
 
         val socketProxyHolder: SocketProxyHolder = app.koin.get()
-        unixSocketClientLauncherSocketProxy()?.apply {
+        val socketPort = System.getenv("TOUCH_CONTROLLER_PROXY")?.toIntOrNull()
+        socketPort?.let { localhostLauncherSocketProxyServer(it) }?.apply {
             socketProxyHolder.socketProxy = this
-            runBlocking {
-                send(VersionMessage("1.0.0"))
-            }
             @OptIn(DelicateCoroutinesApi::class)
             GlobalScope.launch {
                 start()
@@ -54,7 +51,7 @@ object TouchController : ClientModInitializer {
     }
 
     private fun Koin.initialize() {
-        controllerLogger.info("Client proxy set, initialize mod")
+        top.fifthlight.touchcontroller.logger.info("Client proxy set, initialize mod")
         val configHolder: TouchControllerConfigHolder = get()
         configHolder.load()
         FabricHudRenderCallback.EVENT.register(get())
@@ -64,5 +61,6 @@ object TouchController : ClientModInitializer {
         KeyboardInputEvents.END_INPUT_TICK.register(get())
         ClientRenderEvents.START_TICK.register(get())
         ClientHandleInputEvents.HANDLE_INPUT.register(get())
+        ClientPlayConnectionEvents.JOIN.register(get())
     }
 }

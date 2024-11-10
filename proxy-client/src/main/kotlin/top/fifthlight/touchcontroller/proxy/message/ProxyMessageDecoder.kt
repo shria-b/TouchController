@@ -12,7 +12,6 @@ class BadMessageLengthException(expected: Int, actual: Int) :
     MessageDecodeException("Bad message length: expected $expected bytes, but got $actual bytes")
 
 fun decodeMessage(type: Int, payload: ByteBuffer): ProxyMessage = when (type) {
-    0 -> VersionMessage.DECODER
     1 -> AddPointerMessage.DECODER
     2 -> RemovePointerMessage.DECODER
     3 -> ClearPointerMessage.DECODER

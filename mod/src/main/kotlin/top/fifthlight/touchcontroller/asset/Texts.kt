@@ -8,6 +8,8 @@ object Texts {
     private fun key(id: String) = "${TouchController.NAMESPACE}.$id"
     private fun translatable(id: String): MutableText = Text.translatable(key(id))
 
+    val WARNING_PROXY_NOT_CONNECTED = translatable("warning.proxy_not_connected")
+
     val OPTIONS_SCREEN = translatable("screen.options")
     val OPTIONS_SCREEN_TITLE = translatable("screen.options.title")
 

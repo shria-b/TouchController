@@ -1,10 +1,7 @@
 package top.fifthlight.touchcontroller.proxy
 
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import top.fifthlight.touchcontroller.proxy.message.ClearPointerMessage
 import kotlin.test.assertNull
@@ -19,18 +16,25 @@ class ClearPointerMessageTest: MessageTest() {
                 launch { server.start() }
                 launch { client.start() }
 
-                client.connected.first { it }
-                server.connected.first { it }
+                server.listening.first { it }
 
-                server.send(ClearPointerMessage)
+                client.send(ClearPointerMessage)
 
-                val message: ClearPointerMessage? = null
-                client.receive { msg ->
-                    assertTrue(msg is ClearPointerMessage)
-                    assertNull(message)
+                var message: ClearPointerMessage? = null
+                while (message == null) {
+                    server.receive { msg ->
+                        println("OK")
+                        assertTrue(msg is ClearPointerMessage)
+                        assertNull(message)
+                        message = msg
+                    }
+                    yield()
                 }
+                println("CLOSED")
 
                 cancel()
+                server.close()
+                client.close()
             }
         } catch (_: CancellationException) {}
     }

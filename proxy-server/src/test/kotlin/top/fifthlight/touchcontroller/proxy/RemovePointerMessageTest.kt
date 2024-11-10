@@ -1,10 +1,7 @@
 package top.fifthlight.touchcontroller.proxy
 
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import top.fifthlight.touchcontroller.proxy.message.RemovePointerMessage
 import kotlin.test.assertEquals
@@ -20,11 +17,10 @@ class RemovePointerMessageTest: MessageTest() {
                 launch { server.start() }
                 launch { client.start() }
 
-                client.connected.first { it }
-                server.connected.first { it }
+                server.listening.first { it }
 
                 val index = 0x12345678
-                server.send(
+                client.send(
                     RemovePointerMessage(
                         index = index,
                     )
@@ -32,16 +28,21 @@ class RemovePointerMessageTest: MessageTest() {
 
                 var message: RemovePointerMessage? = null
                 while (message == null) {
-                    client.receive { msg ->
+                    server.receive { msg ->
+                        println("OK")
                         assertTrue(msg is RemovePointerMessage)
                         assertNull(message)
                         message = msg
                     }
+                    yield()
                 }
 
                 val removePointerMessage = message!!
                 assertEquals(index, removePointerMessage.index)
+
                 cancel()
+                server.close()
+                client.close()
             }
         } catch (_: CancellationException) {}
     }

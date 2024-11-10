@@ -6,6 +6,8 @@ plugins {
 }
 
 subprojects {
+    group = "top.fifthlight.touchcontroller"
+
     repositories {
         mavenCentral()
         google()
