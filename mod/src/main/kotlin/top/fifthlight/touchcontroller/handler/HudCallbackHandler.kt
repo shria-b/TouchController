@@ -6,17 +6,16 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.RenderTickCounter
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.model.ControllerHudModel
-import top.fifthlight.touchcontroller.model.TouchStateModel
 
 class HudCallbackHandler : HudRenderCallback, KoinComponent {
+    private val client: MinecraftClient by inject()
     private val controllerHudModel: ControllerHudModel by inject()
 
     override fun onHudRender(drawContext: DrawContext, tickCounter: RenderTickCounter) {
         val queue = controllerHudModel.pendingDrawQueue
         queue?.let {
-            queue.execute(drawContext)
+            queue.execute(drawContext, client.textRenderer)
             controllerHudModel.pendingDrawQueue = null
         }
     }

@@ -5,6 +5,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.util.Window
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import top.fifthlight.touchcontroller.config.TouchControllerConfig
 import top.fifthlight.touchcontroller.ext.scaledSize
 import top.fifthlight.touchcontroller.ext.size
 import top.fifthlight.touchcontroller.ext.withTranslate
@@ -74,10 +75,11 @@ data class Context(
     val size: IntSize,
     val screenOffset: IntOffset,
     val scale: Float,
-    val pointers: MutableMap<Int, Pointer>,
+    val pointers: MutableMap<Int, Pointer> = mutableMapOf(),
     val result: ContextResult = ContextResult(),
     val status: ContextStatus = ContextStatus(),
     val timer: ContextCounter = ContextCounter(),
+    val config: TouchControllerConfig
 ) : KoinComponent {
     val client: MinecraftClient by inject()
     val window: Window
@@ -91,9 +93,9 @@ data class Context(
         val newQueue = DrawQueue()
         val newContext = contextTransform(this, newQueue)
         val result = newContext.block()
-        drawQueue.enqueue { drawContext ->
+        drawQueue.enqueue { drawContext, textRenderer ->
             drawContext.drawTransform {
-                newQueue.execute(drawContext)
+                newQueue.execute(drawContext, textRenderer)
             }
         }
         return result

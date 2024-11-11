@@ -8,6 +8,8 @@ import net.minecraft.client.gui.widget.ElementListWidget
 import net.minecraft.util.Colors
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import org.koin.core.component.inject
+import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.control.*
 import top.fifthlight.touchcontroller.ext.withScale
 import top.fifthlight.touchcontroller.ext.withTranslate
@@ -42,7 +44,7 @@ class WidgetList(
     init {
         DEFAULT_CONFIGS.forEach {
             addEntry(Entry(
-                config = it,
+                widgetConfig = it,
                 onClicked = { onWidgetAdd(it) }
             ))
         }
@@ -51,10 +53,12 @@ class WidgetList(
     override fun getRowWidth(): Int = width - itemPadding
 
     class Entry(
-        private val config: ControllerWidget,
+        private val widgetConfig: ControllerWidget,
         private val onClicked: () -> Unit
     ) : ElementListWidget.Entry<Entry>(), KoinComponent {
         private val client: MinecraftClient = get()
+        private val config: TouchControllerConfigHolder by inject()
+
         override fun render(
             drawContext: DrawContext,
             index: Int,
@@ -67,7 +71,7 @@ class WidgetList(
             hovered: Boolean,
             tickDelta: Float
         ) {
-            val widgetSize = config.size()
+            val widgetSize = widgetConfig.size()
             val entrySize = IntSize(entryWidth, entryHeight)
 
             val widthFactor = if (widgetSize.width > entrySize.width) {
@@ -87,13 +91,14 @@ class WidgetList(
                 screenOffset = offset,
                 scale = client.window.scaleFactor.toFloat() * componentScaleFactor,
                 pointers = mutableMapOf(),
-                result = ContextResult()
+                result = ContextResult(),
+                config = config.config.value
             )
-            config.layout(context)
+            widgetConfig.layout(context)
 
             drawContext.withTranslate(offset.toOffset()) {
                 drawContext.withScale(componentScaleFactor) {
-                    drawQueue.execute(drawContext)
+                    drawQueue.execute(drawContext, client.textRenderer)
                 }
             }
 

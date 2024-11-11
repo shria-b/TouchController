@@ -20,9 +20,6 @@ class ClientRenderHandler : ClientRenderEvents.StartRenderTick, KoinComponent {
     private val touchStateModel: TouchStateModel by inject()
 
     override fun onStartTick(client: MinecraftClient, tick: Boolean) {
-        val config = configHolder.config.value
-        val layout = configHolder.layout.value
-
         val drawQueue = DrawQueue()
         val result = Context(
             drawQueue = drawQueue,
@@ -31,11 +28,11 @@ class ClientRenderHandler : ClientRenderEvents.StartRenderTick, KoinComponent {
             scale = client.window.scaleFactor.toFloat(),
             pointers = touchStateModel.pointers,
             status = controllerHudModel.status,
-            timer = controllerHudModel.timer
+            timer = controllerHudModel.timer,
+            config = configHolder.config.value
         ).run {
             Hud(
-                widgets = layout,
-                crosshairConfig = config.crosshair
+                widgets = configHolder.layout.value,
             )
             result
         }

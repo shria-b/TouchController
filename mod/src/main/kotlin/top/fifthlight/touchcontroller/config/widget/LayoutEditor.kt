@@ -12,6 +12,7 @@ import net.minecraft.util.Colors
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.config.ObservableValue
+import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.config.TouchControllerLayout
 import top.fifthlight.touchcontroller.config.replaceItem
 import top.fifthlight.touchcontroller.control.ControllerWidget
@@ -35,10 +36,12 @@ class LayoutEditor(
     private val selectedConfig: ObservableValue<ControllerWidget?>,
 ) : ClickableWidget(x, y, width, height, message), KoinComponent {
     private val client: MinecraftClient by inject()
+    private val config: TouchControllerConfigHolder by inject()
 
     override fun renderWidget(drawContext: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        val config = config.config.value
         drawContext.withTranslate(x.toFloat(), y.toFloat()) {
-            layoutConfig.value.forEach { config ->
+            layoutConfig.value.forEach { widgetConfig ->
                 val drawQueue = DrawQueue()
                 val context = Context(
                     drawQueue = drawQueue,
@@ -46,21 +49,22 @@ class LayoutEditor(
                     screenOffset = IntOffset(0, 0),
                     scale = client.window.scaleFactor.toFloat(),
                     pointers = mutableMapOf(),
+                    config = config,
                     result = ContextResult()
                 )
                 context.withAlign(
-                    align = config.align,
-                    offset = config.offset,
-                    size = config.size()
+                    align = widgetConfig.align,
+                    offset = widgetConfig.offset,
+                    size = widgetConfig.size()
                 ) {
-                    config.layout(this)
-                    if (selectedConfig.value == config) {
-                        this.drawQueue.enqueue { drawContext ->
+                    widgetConfig.layout(this)
+                    if (selectedConfig.value == widgetConfig) {
+                        this.drawQueue.enqueue { drawContext, _ ->
                             drawContext.drawBorder(0, 0, size.width, size.height, Colors.WHITE)
                         }
                     }
                 }
-                drawQueue.execute(drawContext)
+                drawQueue.execute(drawContext, client.textRenderer)
             }
         }
     }

@@ -5,7 +5,7 @@ import top.fifthlight.touchcontroller.ext.drawTexture
 import top.fifthlight.touchcontroller.proxy.data.Rect
 
 fun Context.Texture(id: Identifier, textureUv: Rect = Rect.ONE) {
-    drawQueue.enqueue { drawContext ->
+    drawQueue.enqueue { drawContext, _ ->
         drawContext.drawTexture(
             id = id,
             dstRect = Rect(size = size.toSize()),
@@ -15,7 +15,7 @@ fun Context.Texture(id: Identifier, textureUv: Rect = Rect.ONE) {
 }
 
 fun Context.Texture(id: Identifier, textureUv: Rect = Rect.ONE, color: Int) {
-    drawQueue.enqueue { drawContext ->
+    drawQueue.enqueue { drawContext, _ ->
         drawContext.drawTexture(
             id = id,
             dstRect = Rect(size = size.toSize()),

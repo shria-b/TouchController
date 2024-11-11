@@ -68,10 +68,10 @@ private fun renderInner(drawContext: DrawContext, config: CrosshairConfig, state
     }
 }
 
-fun Context.Crosshair(config: CrosshairConfig) {
+fun Context.Crosshair() {
     val status = result.crosshairStatus ?: return
 
-    drawQueue.enqueue { drawContext ->
+    drawQueue.enqueue { drawContext, _ ->
         drawContext.withTranslate(status.position * window.scaledSize) {
             withBlend {
                 withBlendFunction(
@@ -80,6 +80,7 @@ fun Context.Crosshair(config: CrosshairConfig) {
                     srcAlpha = GlStateManager.SrcFactor.ONE,
                     dstAlpha = GlStateManager.DstFactor.ZERO
                 ) {
+                    val config = config.crosshair
                     renderOuter(drawContext, config)
                     if (status.breakPercent > 0f) {
                         renderInner(drawContext, config, status)

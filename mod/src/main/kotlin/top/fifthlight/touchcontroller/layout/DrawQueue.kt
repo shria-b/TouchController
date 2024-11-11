@@ -1,9 +1,10 @@
 package top.fifthlight.touchcontroller.layout
 
+import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.gui.DrawContext
 
 
-typealias DrawCall = (DrawContext) -> Unit
+typealias DrawCall = (DrawContext, TextRenderer) -> Unit
 
 class DrawQueue {
     private val items = mutableListOf<DrawCall>()
@@ -12,7 +13,7 @@ class DrawQueue {
         items.add(block)
     }
 
-    fun execute(drawContext: DrawContext) {
-        items.forEach { it.invoke(drawContext) }
+    fun execute(drawContext: DrawContext, textRenderer: TextRenderer) {
+        items.forEach { it.invoke(drawContext, textRenderer) }
     }
 }

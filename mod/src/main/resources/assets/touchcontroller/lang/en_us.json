@@ -13,6 +13,8 @@
   "touchcontroller.screen.options.category.global.disable_cursor_lock.description": "Disable cursor lock in game, so the game will not grab the focus of your cursor. Enable this option on PojavLauncher.",
   "touchcontroller.screen.options.category.global.disable_crosshair.title": "Disable crosshair",
   "touchcontroller.screen.options.category.global.disable_crosshair.description": "Disable rendering of crosshair in game.",
+  "touchcontroller.screen.options.category.global.show_pointers.title": "Show pointers",
+  "touchcontroller.screen.options.category.global.show_pointers.description": "Show all pointers in game. Useful for debugging.",
   "touchcontroller.screen.options.category.global.enable_touch_emulation.title": "Enable touch emulation",
   "touchcontroller.screen.options.category.global.enable_touch_emulation.description": "Emulate mouse input as touch input. Only use this for debugging.",
 

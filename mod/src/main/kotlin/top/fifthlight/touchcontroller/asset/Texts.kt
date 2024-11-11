@@ -28,6 +28,9 @@ object Texts {
     val OPTIONS_CATEGORY_GLOBAL_DISABLE_CROSSHAIR_DESCRIPTION =
         translatable("screen.options.category.global.disable_crosshair.description")
 
+    val OPTIONS_CATEGORY_GLOBAL_SHOW_POINTERS_TITLE = translatable("screen.options.category.global.show_pointers.title")
+    val OPTIONS_CATEGORY_GLOBAL_SHOW_POINTERS_DESCRIPTION = translatable("screen.options.category.global.show_pointers.description")
+
     val OPTIONS_CATEGORY_GLOBAL_ENABLE_TOUCH_EMULATION_TITLE = translatable("screen.options.category.global.enable_touch_emulation.title")
     val OPTIONS_CATEGORY_GLOBAL_ENABLE_TOUCH_EMULATION_DESCRIPTION =
         translatable("screen.options.category.global.enable_touch_emulation.description")

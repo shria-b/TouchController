@@ -50,7 +50,7 @@ fun Context.Joystick(layout: Joystick) {
         }
     }
 
-    drawQueue.enqueue { drawContext ->
+    drawQueue.enqueue { drawContext, _ ->
         drawContext.drawTexture(
             id = Textures.JOYSTICK_PAD,
             dstRect = Rect(size = size.toSize())

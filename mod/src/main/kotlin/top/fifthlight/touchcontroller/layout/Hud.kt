@@ -1,9 +1,8 @@
 package top.fifthlight.touchcontroller.layout
 
-import top.fifthlight.touchcontroller.config.CrosshairConfig
 import top.fifthlight.touchcontroller.control.ControllerWidget
 
-fun Context.Hud(widgets: List<ControllerWidget>, crosshairConfig: CrosshairConfig) {
+fun Context.Hud(widgets: List<ControllerWidget>) {
     widgets.forEach { widget ->
         withAlign(
             align = widget.align,
@@ -16,6 +15,9 @@ fun Context.Hud(widgets: List<ControllerWidget>, crosshairConfig: CrosshairConfi
 
     if (client.currentScreen == null) {
         View()
-        Crosshair(crosshairConfig)
+        Crosshair()
+        if (config.showPointers) {
+            Pointers()
+        }
     }
 }
