@@ -25,7 +25,10 @@ class TouchStateModel : KoinComponent {
 
     fun clearPointer() {
         pointers.forEach { (_, pointer) ->
-            pointer.state = PointerState.Released(previousPosition = pointer.position, previousState = pointer.state)
+            if (pointer.state !is PointerState.Released) {
+                pointer.state =
+                    PointerState.Released(previousPosition = pointer.position, previousState = pointer.state)
+            }
         }
     }
 }
