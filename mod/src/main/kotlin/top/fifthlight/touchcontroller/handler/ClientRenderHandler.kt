@@ -22,7 +22,7 @@ class ClientRenderHandler : ClientRenderEvents.StartRenderTick, KoinComponent {
 
     override fun onStartTick(client: MinecraftClient, tick: Boolean) {
         val state = client.player?.let { player ->
-            if (player.isSwimming) {
+            if (player.isSubmergedInWater) {
                 HudState.SWIMMING
             } else if (player.abilities.flying) {
                 HudState.FLYING
