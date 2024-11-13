@@ -50,6 +50,7 @@ class LayoutEditor(
                     scale = client.window.scaleFactor.toFloat(),
                     pointers = mutableMapOf(),
                     config = config,
+                    designMode = true,
                     result = ContextResult()
                 )
                 context.withAlign(

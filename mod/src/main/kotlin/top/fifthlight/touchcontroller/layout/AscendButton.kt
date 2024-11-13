@@ -4,7 +4,7 @@ import top.fifthlight.touchcontroller.asset.Textures
 import top.fifthlight.touchcontroller.control.AscendButton
 
 fun Context.AscendButton(config: AscendButton) {
-    if (state != HudState.NORMAL){
+    if (designMode || state != HudState.NORMAL){
         val (_, clicked) = Button(id = "ascend") {clicked->
             if (config.classic) {
                 Texture(id = Textures.ASCEND_CLASSIC)
@@ -17,6 +17,6 @@ fun Context.AscendButton(config: AscendButton) {
                 }
             }
         }
-        result.jump = clicked
+        result.jump = result.jump || clicked
     }
 }

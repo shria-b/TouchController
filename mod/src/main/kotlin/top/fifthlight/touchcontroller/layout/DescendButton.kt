@@ -4,7 +4,7 @@ import top.fifthlight.touchcontroller.asset.Textures
 import top.fifthlight.touchcontroller.control.DescendButton
 
 fun Context.DescendButton(config: DescendButton) {
-    if (state != HudState.NORMAL){
+    if (designMode || state != HudState.NORMAL){
         val (_, clicked) = Button(id = "descend") {clicked->
             if (config.classic) {
                 Texture(id = Textures.DESCEND_CLASSIC)
@@ -17,6 +17,6 @@ fun Context.DescendButton(config: DescendButton) {
                 }
             }
         }
-        result.sneaked = clicked
+        result.sneak = result.sneak || clicked
     }
 }

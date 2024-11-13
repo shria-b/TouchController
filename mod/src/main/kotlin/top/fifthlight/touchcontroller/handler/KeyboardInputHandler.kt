@@ -24,7 +24,7 @@ class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
         input.movementSideways += result.left
         input.movementForward = input.movementForward.coerceIn(-1f, 1f)
         input.movementSideways = input.movementSideways.coerceIn(-1f, 1f)
-        input.sneaking = input.sneaking || status.sneakLocked || result.sneaked
+        input.sneaking = input.sneaking || status.sneakLocked || result.sneak
         input.jumping = input.jumping || result.jump
 
         timer.tick()
