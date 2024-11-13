@@ -37,7 +37,11 @@ data class ClickCounter(
         counter = 0
     }
 }
-
+enum class HudState{
+    SWIMMING,
+    FLYING,
+    NORMAL
+}
 data class ContextResult(
     var forward: Float = 0f,
     var left: Float = 0f,
@@ -46,6 +50,7 @@ data class ContextResult(
     var chat: Boolean = false,
     var lookDirection: Offset? = null,
     var crosshairStatus: CrosshairStatus? = null,
+    var sneaked: Boolean = false
 )
 
 data class ContextStatus(
@@ -79,6 +84,7 @@ data class Context(
     val result: ContextResult = ContextResult(),
     val status: ContextStatus = ContextStatus(),
     val timer: ContextCounter = ContextCounter(),
+    val state: HudState = HudState.NORMAL,
     val config: TouchControllerConfig
 ) : KoinComponent {
     val client: MinecraftClient by inject()

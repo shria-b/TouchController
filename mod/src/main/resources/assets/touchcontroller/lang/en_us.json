@@ -60,5 +60,11 @@
   "touchcontroller.screen.options.widget.pause_button.property.classic": "Classic look",
 
   "touchcontroller.screen.options.widget.chat_button.property.size": "Button size: %s%%",
-  "touchcontroller.screen.options.widget.chat_button.property.classic": "Classic look"
+  "touchcontroller.screen.options.widget.chat_button.property.classic": "Classic look",
+
+  "touchcontroller.screen.options.widget.ascend_button.property.size": "Button size: %s%%",
+  "touchcontroller.screen.options.widget.ascend_button.property.classic": "Classic look",
+
+  "touchcontroller.screen.options.widget.descend_button.property.size": "Button size: %s%%",
+  "touchcontroller.screen.options.widget.descend_button.property.classic": "Classic look"
 }

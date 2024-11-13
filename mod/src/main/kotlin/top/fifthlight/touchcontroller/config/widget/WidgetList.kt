@@ -37,7 +37,9 @@ class WidgetList(
             SneakButton(),
             JumpButton(),
             PauseButton(),
-            ChatButton()
+            ChatButton(),
+            AscendButton(),
+            DescendButton()
         )
     }
 

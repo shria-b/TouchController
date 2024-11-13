@@ -48,4 +48,16 @@ object Textures {
 
     val CHAT = texture("textures/gui/chat/chat.png")
     val CHAT_CLASSIC = texture("textures/gui/chat/chat_classic.png")
+
+    val ASCEND_CLASSIC = texture("textures/gui/ascend/ascend_classic.png")
+    val WATER_ASCEND = texture("textures/gui/ascend/waterascend.png")
+    val WATER_ASCEND_ACTIVE = texture("textures/gui/ascend/waterascend_active.png")
+    val FLYING_ASCEND = texture("textures/gui/ascend/flyingascend.png")
+    val FLYING_ASCEND_ACTIVE = texture("textures/gui/ascend/flyingascend_active.png")
+
+    val DESCEND_CLASSIC = texture("textures/gui/descend/descend_classic.png")
+    val WATER_DESCEND = texture("textures/gui/descend/waterdescend.png")
+    val WATER_DESCEND_ACTIVE = texture("textures/gui/descend/waterdescend_active.png")
+    val FLYING_DESCEND = texture("textures/gui/descend/flyingdescend.png")
+    val FLYING_DESCEND_ACTIVE = texture("textures/gui/descend/flyingdescend_active.png")
 }

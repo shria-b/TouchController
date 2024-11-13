@@ -83,4 +83,10 @@ object Texts {
 
     val OPTIONS_WIDGET_CHAT_BUTTON_PROPERTY_SIZE = key("screen.options.widget.chat_button.property.size")
     val OPTIONS_WIDGET_CHAT_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.chat_button.property.classic")
+
+    val OPTIONS_WIDGET_ASCEND_BUTTON_PROPERTY_SIZE = key("screen.options.widget.ascend_button.property.size")
+    val OPTIONS_WIDGET_ASCEND_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.ascend_button.property.classic")
+
+    val OPTIONS_WIDGET_DESCEND_BUTTON_PROPERTY_SIZE = key("screen.options.widget.descend_button.property.size")
+    val OPTIONS_WIDGET_DESCEND_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.descend_button.property.classic")
 }
