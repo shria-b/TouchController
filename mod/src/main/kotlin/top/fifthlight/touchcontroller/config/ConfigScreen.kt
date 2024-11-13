@@ -45,7 +45,7 @@ fun openConfigScreen(parent: Screen): Screen {
                 name(Texts.OPTIONS_CATEGORY_GLOBAL_SHOW_POINTERS_TITLE)
                 description(OptionDescription.of(Texts.OPTIONS_CATEGORY_GLOBAL_SHOW_POINTERS_DESCRIPTION))
                 controller(textSwitch())
-                binding(true, { config.showPointers }, { config = config.copy(showPointers = it) })
+                binding(false, { config.showPointers }, { config = config.copy(showPointers = it) })
             }
 
             val enableTouchEmulation by rootOptions.registering {
