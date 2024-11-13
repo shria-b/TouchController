@@ -8,7 +8,9 @@ fun Context.AscendButton(config: AscendButton) {
         val (_, clicked) = Button(id = "ascend") {clicked->
             if (config.classic) {
                 Texture(id = Textures.ASCEND_CLASSIC)
-            } else {
+            } else if (designMode) {
+                Texture(id = Textures.FLYING_ASCEND)
+            } else{
                 when (Pair(state, clicked)) {
                     Pair(HudState.SWIMMING, false) -> Texture(id = Textures.WATER_ASCEND)
                     Pair(HudState.SWIMMING, true) -> Texture(id = Textures.WATER_ASCEND_ACTIVE)

@@ -8,6 +8,8 @@ fun Context.DescendButton(config: DescendButton) {
         val (_, clicked) = Button(id = "descend") {clicked->
             if (config.classic) {
                 Texture(id = Textures.DESCEND_CLASSIC)
+            } else if (designMode) {
+                Texture(id = Textures.FLYING_DESCEND)
             } else {
                 when (Pair(state, clicked)) {
                     Pair(HudState.SWIMMING, false) -> Texture(id = Textures.WATER_DESCEND)
