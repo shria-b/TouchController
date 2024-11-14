@@ -22,13 +22,8 @@ fun Context.RawSneakButton(
         }
     }
 
-    if (newPointer) {
-        if (timer.sneak > 0) {
-            status.sneakLocked = !status.sneakLocked
-            timer.sneak = 0
-        } else {
-            timer.sneak = 10
-        }
+    if (newPointer && status.sneakLocking.click(timer.tick)) {
+        status.sneakLocked = !status.sneakLocked
     }
 }
 

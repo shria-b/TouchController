@@ -47,12 +47,14 @@ class ClientRenderHandler : ClientRenderEvents.StartRenderTick, KoinComponent {
                 widgets = configHolder.layout.value,
             )
             result
-            
         }
         controllerHudModel.result = result
         if(state != HudState.NORMAL) controllerHudModel.status.sneakLocked = false
         controllerHudModel.pendingDrawQueue = drawQueue
 
+        if (result.cancelFlying) {
+            client.player?.abilities?.flying = false
+        }
         if (result.chat) {
             (client as ClientOpenChatScreenInvoker).callOpenChatScreen("")
         }

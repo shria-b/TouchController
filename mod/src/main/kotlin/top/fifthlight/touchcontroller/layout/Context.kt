@@ -38,6 +38,30 @@ data class ClickCounter(
     }
 }
 
+data class DoubleClickState(
+    private var lastClick: Int = -1
+) {
+    fun click(time: Int): Boolean {
+        if (lastClick == -1) {
+            lastClick = time
+            return false
+        }
+
+        val interval = time - lastClick
+        lastClick = time
+        val doubleClicked = interval < 7
+        if (doubleClicked) {
+            lastClick = -1
+        }
+
+        return doubleClicked
+    }
+
+    fun clear() {
+        this.lastClick = -1
+    }
+}
+
 enum class HudState {
     SWIMMING,
     FLYING,
@@ -52,7 +76,8 @@ data class ContextResult(
     var chat: Boolean = false,
     var lookDirection: Offset? = null,
     var crosshairStatus: CrosshairStatus? = null,
-    var sneak: Boolean = false
+    var sneak: Boolean = false,
+    var cancelFlying: Boolean = false
 )
 
 data class ContextStatus(
@@ -61,19 +86,17 @@ data class ContextStatus(
     var dpadLeftBackwardShown: Boolean = false,
     var dpadRightBackwardShown: Boolean = false,
     var sneakLocked: Boolean = false,
+    val cancelFlying: DoubleClickState = DoubleClickState(),
+    val sneakLocking: DoubleClickState = DoubleClickState(),
     val attack: ClickCounter = ClickCounter(),
     val itemUse: ClickCounter = ClickCounter(),
 )
 
 data class ContextCounter(
     var tick: Int = 0,
-    var sneak: Int = 0,
 ) {
     fun tick() {
         tick++
-        if (sneak > 0) {
-            sneak--
-        }
     }
 }
 
