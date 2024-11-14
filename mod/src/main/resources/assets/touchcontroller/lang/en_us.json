@@ -10,7 +10,7 @@
   "touchcontroller.screen.options.category.global.disable_mouse.title": "Disable mouse input",
   "touchcontroller.screen.options.category.global.disable_mouse.description": "Disable mouse input in game. Useful when your system maps touch input to mouse input.",
   "touchcontroller.screen.options.category.global.disable_cursor_lock.title": "Disable cursor lock",
-  "touchcontroller.screen.options.category.global.disable_cursor_lock.description": "Disable cursor lock in game, so the game will not grab the focus of your cursor. Enable this option on PojavLauncher.",
+  "touchcontroller.screen.options.category.global.disable_cursor_lock.description": "Disable cursor lock in game, so the game will not grab the focus of your cursor. Disable this option on PojavLauncher.",
   "touchcontroller.screen.options.category.global.disable_crosshair.title": "Disable crosshair",
   "touchcontroller.screen.options.category.global.disable_crosshair.description": "Disable rendering of crosshair in game.",
   "touchcontroller.screen.options.category.global.show_pointers.title": "Show pointers",
