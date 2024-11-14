@@ -5,18 +5,22 @@ import top.fifthlight.touchcontroller.control.JumpButton
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 
 fun Context.RawJumpButton(classic: Boolean = true, size: IntSize = this.size) {
-    val (_, clicked) = Button(id = "jump") { clicked ->
-        withAlign(align = Align.CENTER_CENTER, size = size) {
-            when (Pair(classic, clicked)) {
-                Pair(true, false) -> Texture(id = Textures.JUMP_CLASSIC)
-                Pair(true, true) -> Texture(id = Textures.JUMP_CLASSIC)
-                Pair(false, false) -> Texture(id = Textures.JUMP)
-                Pair(false, true) -> Texture(id = Textures.JUMP_ACTIVE)
+    if (classic) {
+        val (_, clicked) = Button(id = "jump") { clicked ->
+            withAlign(align = Align.CENTER_CENTER, size = size) {
+                if (state == HudState.NORMAL) Texture(id = Textures.JUMP_CLASSIC) else Texture(id = Textures.JUMP_FLYING)
             }
         }
+        result.jump = result.jump || clicked
+    } else if (state == HudState.NORMAL) {
+        val (_, clicked) = Button(id = "jump") { clicked ->
+            withAlign(align = Align.CENTER_CENTER, size = size) {
+                if (clicked) Texture(id = Textures.JUMP_ACTIVE) else Texture(id = Textures.JUMP)
+            }
+        }
+        result.jump = result.jump || clicked
     }
 
-    result.jump = result.jump || clicked
 }
 
 fun Context.JumpButton(config: JumpButton) {

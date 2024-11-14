@@ -39,6 +39,7 @@ object Textures {
     val JUMP_CLASSIC = texture("textures/gui/jump/jump_classic.png")
     val JUMP = texture("textures/gui/jump/jump.png")
     val JUMP_ACTIVE = texture("textures/gui/jump/jump_active.png")
+    val JUMP_FLYING = texture("textures/gui/jump/jump_flying.png")
 
     val JOYSTICK_PAD = texture("textures/gui/joystick/pad.png")
     val JOYSTICK_STICK = texture("textures/gui/joystick/stick.png")
