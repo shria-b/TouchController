@@ -238,8 +238,8 @@ class CustomCategory(
                         option.requestSet(it)
                     }
                 }
-                option.addListener { _, configs ->
-                    pendingConfig.value = configs
+                option.addEventListener { _, _ ->
+                    pendingConfig.value = option.pendingValue()
                 }
             })
         }.build()
