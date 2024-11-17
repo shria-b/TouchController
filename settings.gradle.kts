@@ -1,12 +1,5 @@
 pluginManagement {
 	repositories {
-		google {
-			content {
-				includeGroupByRegex("com\\.android.*")
-				includeGroupByRegex("com\\.google.*")
-				includeGroupByRegex("androidx.*")
-			}
-		}
 		maven {
 			name = "Fabric"
 			url = uri("https://maven.fabricmc.net/")

@@ -2,6 +2,7 @@ package top.fifthlight.touchcontroller.handler
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.input.KeyboardInput
+import net.minecraft.util.PlayerInput
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
@@ -24,8 +25,15 @@ class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
         input.movementSideways += result.left
         input.movementForward = input.movementForward.coerceIn(-1f, 1f)
         input.movementSideways = input.movementSideways.coerceIn(-1f, 1f)
-        input.sneaking = input.sneaking || status.sneakLocked || result.sneak
-        input.jumping = input.jumping || result.jump
+        input.playerInput = PlayerInput(
+            input.playerInput.forward(),
+            input.playerInput.backward(),
+            input.playerInput.left(),
+            input.playerInput.right(),
+            input.playerInput.jump() || result.jump,
+            input.playerInput.sneak() || status.sneakLocked || result.sneak,
+            input.playerInput.sprint()
+        )
 
         timer.tick()
     }

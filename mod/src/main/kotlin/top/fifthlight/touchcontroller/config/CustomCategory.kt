@@ -18,11 +18,11 @@ import net.minecraft.text.Text
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import top.fifthlight.touchcontroller.asset.Texts
-import top.fifthlight.touchcontroller.control.ControllerWidget
 import top.fifthlight.touchcontroller.config.widget.BorderLayout
 import top.fifthlight.touchcontroller.config.widget.LayoutEditor
 import top.fifthlight.touchcontroller.config.widget.PropertiesPanel
 import top.fifthlight.touchcontroller.config.widget.WidgetList
+import top.fifthlight.touchcontroller.control.ControllerWidget
 import java.util.function.Consumer
 
 class ObservableValue<Value>(value: Value) {
@@ -177,7 +177,7 @@ private class CustomTab(
 
     init {
         OptionUtils.forEachOptions(screen.config) { option ->
-            option.addListener { _, _ ->
+            option.addEventListener { _, _ ->
                 updateButtons()
             }
         }

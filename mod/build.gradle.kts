@@ -12,17 +12,6 @@ base {
     archivesName = modName
 }
 
-repositories {
-    maven {
-        name = "Terraformers"
-        url = uri("https://maven.terraformersmc.com/")
-    }
-    maven {
-        name = "Xander Maven"
-        url = uri("https://maven.isxander.dev/releases")
-    }
-}
-
 fun DependencyHandlerScope.includeAndImplementation(dependencyNotation: Any) {
     include(dependencyNotation)
     implementation(dependencyNotation)

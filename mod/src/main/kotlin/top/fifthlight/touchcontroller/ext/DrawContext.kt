@@ -1,8 +1,12 @@
 package top.fifthlight.touchcontroller.ext
 
 import com.mojang.blaze3d.systems.RenderSystem
+import net.minecraft.client.gl.ShaderProgramKeys
 import net.minecraft.client.gui.DrawContext
-import net.minecraft.client.render.*
+import net.minecraft.client.render.BufferRenderer
+import net.minecraft.client.render.Tessellator
+import net.minecraft.client.render.VertexFormat
+import net.minecraft.client.render.VertexFormats
 import net.minecraft.util.Identifier
 import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.proxy.data.Rect
@@ -30,7 +34,7 @@ inline fun <reified T> DrawContext.withScale(x: Float, y: Float, crossinline blo
 
 fun DrawContext.drawTexture(id: Identifier, dstRect: Rect, uvRect: Rect = Rect.ONE) {
     RenderSystem.setShaderTexture(0, id)
-    withShader(program = { GameRenderer.getPositionTexProgram()!! }) {
+    withShader(ShaderProgramKeys.POSITION_TEX) {
         val matrix = matrices.peek().positionMatrix
         val bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE)
         bufferBuilder.vertex(matrix, dstRect.left, dstRect.top, 0f).texture(uvRect.left, uvRect.top)
@@ -43,7 +47,7 @@ fun DrawContext.drawTexture(id: Identifier, dstRect: Rect, uvRect: Rect = Rect.O
 
 fun DrawContext.drawTexture(id: Identifier, dstRect: Rect, uvRect: Rect = Rect.ONE, color: Int) {
     RenderSystem.setShaderTexture(0, id)
-    withShader(program = { GameRenderer.getPositionTexColorProgram()!! }) {
+    withShader(ShaderProgramKeys.POSITION_TEX_COLOR) {
         val matrix = matrices.peek().positionMatrix
         val bufferBuilder =
             Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR)

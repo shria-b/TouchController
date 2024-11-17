@@ -1,8 +1,12 @@
 package top.fifthlight.touchcontroller.layout
 
 import com.mojang.blaze3d.platform.GlStateManager
+import net.minecraft.client.gl.ShaderProgramKeys
 import net.minecraft.client.gui.DrawContext
-import net.minecraft.client.render.*
+import net.minecraft.client.render.BufferRenderer
+import net.minecraft.client.render.Tessellator
+import net.minecraft.client.render.VertexFormat
+import net.minecraft.client.render.VertexFormats
 import net.minecraft.util.Colors
 import top.fifthlight.touchcontroller.config.CrosshairConfig
 import top.fifthlight.touchcontroller.ext.*
@@ -25,7 +29,7 @@ private fun point(angle: Float, radius: Float) = Offset(
 )
 
 private fun renderOuter(drawContext: DrawContext, config: CrosshairConfig) {
-    withShader({ GameRenderer.getPositionColorProgram()!! }) {
+    withShader(ShaderProgramKeys.POSITION_COLOR) {
         val matrix = drawContext.matrices.peek().positionMatrix
         val bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
         val innerRadius = config.radius.toFloat()
@@ -50,7 +54,7 @@ private fun renderOuter(drawContext: DrawContext, config: CrosshairConfig) {
 }
 
 private fun renderInner(drawContext: DrawContext, config: CrosshairConfig, state: CrosshairStatus) {
-    withShader({ GameRenderer.getPositionColorProgram()!! }) {
+    withShader(ShaderProgramKeys.POSITION_COLOR) {
         val matrix = drawContext.matrices.peek().positionMatrix
         val bufferBuilder =
             Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR)

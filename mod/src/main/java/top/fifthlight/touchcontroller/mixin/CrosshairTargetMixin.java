@@ -27,14 +27,14 @@ public abstract class CrosshairTargetMixin {
     }
 
     @Shadow
-    protected abstract double getFov(Camera camera, float tickDelta, boolean changingFov);
+    protected abstract float getFov(Camera camera, float tickDelta, boolean changingFov);
 
     @Shadow
     @Final
     private Camera camera;
 
     @Shadow
-    public abstract Matrix4f getBasicProjectionMatrix(double fov);
+    public abstract Matrix4f getBasicProjectionMatrix(float fov);
 
     @Unique
     private static HitResult findTargetWithDirection(Entity camera, Vec3d direction, double blockInteractionRange, double entityInteractionRange, float tickDelta) {
