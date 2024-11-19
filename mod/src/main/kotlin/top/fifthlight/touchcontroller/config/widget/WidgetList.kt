@@ -52,6 +52,8 @@ class WidgetList(
         }
     }
 
+    override fun getScrollbarX(): Int = x + width - 6
+
     override fun getRowWidth(): Int = width - itemPadding
 
     class Entry(
