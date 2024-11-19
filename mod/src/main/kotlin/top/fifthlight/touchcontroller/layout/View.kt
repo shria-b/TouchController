@@ -117,5 +117,11 @@ fun Context.View() {
             position = pointer.position,
             breakPercent = accessor.currentBreakingProgress,
         )
+    } ?: run {
+        if (status.attack.active() || status.itemUse.active()) {
+            result.crosshairStatus = status.lastCrosshairStatus
+        }
     }
+
+    status.lastCrosshairStatus = result.crosshairStatus
 }

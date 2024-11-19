@@ -90,6 +90,7 @@ data class ContextStatus(
     val sneakLocking: DoubleClickState = DoubleClickState(),
     val attack: ClickCounter = ClickCounter(),
     val itemUse: ClickCounter = ClickCounter(),
+    var lastCrosshairStatus: CrosshairStatus? = null,
 )
 
 data class ContextCounter(

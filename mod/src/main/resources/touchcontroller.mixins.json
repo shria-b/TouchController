@@ -7,6 +7,7 @@
   },
   "client": [
     "ClientHandleInputEventsMixin",
+    "ClientOpenChatScreenInvoker",
     "ClientPlayerInteractionManagerAccessor",
     "ClientRenderMixin",
     "ControlsOptionsScreenMixin",
@@ -15,10 +16,7 @@
     "DisableMouseDirectionMixin",
     "GameOptionsScreenAccessor",
     "InGameHudMixin",
+    "KeyBindingMixin",
     "KeyboardInputMixin"
-  ],
-  "mixins": [
-    "ClientOpenChatScreenInvoker",
-    "KeyBindingMixin"
   ]
 }

@@ -30,7 +30,7 @@ class ClientRenderHandler : ClientRenderEvents.StartRenderTick, KoinComponent {
                 HudState.NORMAL
             }
         } ?: HudState.NORMAL
-        if(state != HudState.NORMAL) controllerHudModel.status.sneakLocked=false
+        if (state != HudState.NORMAL) controllerHudModel.status.sneakLocked = false
         val drawQueue = DrawQueue()
         val result = Context(
             drawQueue = drawQueue,
@@ -49,7 +49,7 @@ class ClientRenderHandler : ClientRenderEvents.StartRenderTick, KoinComponent {
             result
         }
         controllerHudModel.result = result
-        if(state != HudState.NORMAL) controllerHudModel.status.sneakLocked = false
+        if (state != HudState.NORMAL) controllerHudModel.status.sneakLocked = false
         controllerHudModel.pendingDrawQueue = drawQueue
 
         if (result.cancelFlying) {
