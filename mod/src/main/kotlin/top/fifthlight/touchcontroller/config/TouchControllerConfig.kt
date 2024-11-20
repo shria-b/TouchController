@@ -31,6 +31,7 @@ data class TouchControllerConfig(
     val foodUsable: Boolean = true,
     val projectileUsable: Boolean = true,
     val rangedWeaponUsable: Boolean = true,
+    val equippableUsable: Boolean = true,
     val showPointers: Boolean = false,
     val crosshair: CrosshairConfig = CrosshairConfig()
 )

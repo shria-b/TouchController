@@ -56,6 +56,8 @@ public abstract class ClientHandleInputEventsMixin {
     @Unique
     private boolean attacked = false;
     @Unique
+    private boolean itemUsed = false;
+    @Unique
     private boolean hitEmptyBlockState = false;
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -70,9 +72,40 @@ public abstract class ClientHandleInputEventsMixin {
     )
     private void handleInputEvents(CallbackInfo ci) {
         ci.cancel();
+
         hitEmptyBlockState = false;
+        attacked = this.options.attackKey.isPressed() && mouse.isCursorLocked();
+        itemUsed = options.useKey.isPressed();
+
+        var context = new ClientHandleInputEvents.InputContext() {
+            @Override
+            public void hitEmptyBlockState() {
+                hitEmptyBlockState = true;
+            }
+
+            @Override
+            public void doItemUse() {
+                if (!player.isUsingItem()) {
+                    ClientHandleInputEventsMixin.this.doItemUse();
+                }
+                itemUsed = true;
+            }
+
+            @Override
+            public void doItemPick() {
+                ClientHandleInputEventsMixin.this.doItemPick();
+            }
+
+            @Override
+            public boolean doAttack() {
+                attacked = true;
+                return ClientHandleInputEventsMixin.this.doAttack();
+            }
+        };
+        ClientHandleInputEvents.INSTANCE.getHANDLE_INPUT().invoker().onHandleInput((MinecraftClient) (Object) this, context);
+
         if (player.isUsingItem()) {
-            if (!options.useKey.isPressed()) {
+            if (!itemUsed) {
                 interactionManager.stopUsingItem(this.player);
             }
             while (options.attackKey.wasPressed()) {
@@ -92,35 +125,10 @@ public abstract class ClientHandleInputEventsMixin {
                 doItemPick();
             }
         }
-        if (options.useKey.isPressed() && itemUseCooldown == 0 && !this.player.isUsingItem()) {
+
+        if (itemUsed && itemUseCooldown == 0 && !this.player.isUsingItem()) {
             doItemUse();
         }
-
-        attacked = this.options.attackKey.isPressed() && mouse.isCursorLocked();
-        var context = new ClientHandleInputEvents.InputContext() {
-            @Override
-            public void hitEmptyBlockState() {
-                hitEmptyBlockState = true;
-            }
-
-            @Override
-            public void doItemUse() {
-                ClientHandleInputEventsMixin.this.doItemUse();
-            }
-
-            @Override
-            public void doItemPick() {
-                ClientHandleInputEventsMixin.this.doItemPick();
-            }
-
-            @Override
-            public boolean doAttack() {
-                attacked = true;
-                return ClientHandleInputEventsMixin.this.doAttack();
-            }
-        };
-        ClientHandleInputEvents.INSTANCE.getHANDLE_INPUT().invoker().onHandleInput((MinecraftClient) (Object) this, context);
-
         handleBlockBreaking(currentScreen == null && !hitEmptyBlockState && attacked);
     }
 }

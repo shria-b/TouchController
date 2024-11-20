@@ -91,6 +91,12 @@ fun openConfigScreen(parent: Screen): Screen {
                 controller(textSwitch())
                 binding(true, { config.rangedWeaponUsable }, { config = config.copy(rangedWeaponUsable = it) })
             }
+
+            val equippableUsable by rootOptions.registering {
+                name(Text.literal("Equippable items usable"))
+                controller(textSwitch())
+                binding(true, { config.equippableUsable }, { config = config.copy(equippableUsable = it) })
+            }
         }
 
         categories.register(

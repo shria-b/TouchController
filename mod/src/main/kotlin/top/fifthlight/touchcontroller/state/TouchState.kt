@@ -8,7 +8,7 @@ sealed class PointerState {
         val initialPosition: Offset,
         val lastPosition: Offset,
         val moving: Boolean = false,
-        val destroyTriggered: Boolean = false,
+        val longPressTriggered: Boolean = false,
         val consumed: Boolean = false,
         val pressTime: Int,
     ) : PointerState()

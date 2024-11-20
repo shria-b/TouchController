@@ -1,9 +1,30 @@
 package top.fifthlight.touchcontroller.layout
 
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.item.Item
+import net.minecraft.item.ProjectileItem
+import net.minecraft.item.RangedWeaponItem
+import net.minecraft.util.Hand
 import net.minecraft.util.hit.HitResult.Type.*
+import top.fifthlight.touchcontroller.config.TouchControllerConfig
 import top.fifthlight.touchcontroller.ext.size
 import top.fifthlight.touchcontroller.mixin.ClientPlayerInteractionManagerAccessor
 import top.fifthlight.touchcontroller.state.PointerState
+
+private fun Item.isUsable(config: TouchControllerConfig): Boolean {
+    if (config.foodUsable && components.get(DataComponentTypes.FOOD) != null) {
+        return true
+    } else if (config.projectileUsable && this is ProjectileItem) {
+        return true
+    } else if (config.rangedWeaponUsable && this is RangedWeaponItem) {
+        return true
+    } else if (config.equippableUsable && components.get(DataComponentTypes.EQUIPPABLE) != null) {
+        return true
+    } else if (this in config.usableItems.items) {
+        return true
+    }
+    return false
+}
 
 fun Context.View() {
     var releasedView = false
@@ -24,6 +45,7 @@ fun Context.View() {
                             )
                             status.itemUse.add()
                         }
+
                         ENTITY -> {
                             result.crosshairStatus = CrosshairStatus(
                                 position = state.previousPosition,
@@ -31,6 +53,7 @@ fun Context.View() {
                             )
                             status.attack.add()
                         }
+
                         MISS, null -> {}
                     }
                 }
@@ -68,27 +91,52 @@ fun Context.View() {
         }
 
         var consumed = false
+        var itemUsable = false
+        val player = client.player
         val pressTime = timer.tick - state.pressTime
-        var destroyTriggered = state.destroyTriggered
+        var longPressTriggered = state.longPressTriggered
         val crosshairTarget = client.crosshairTarget
-        if (pressTime == 5 && !moving) {
-            when (crosshairTarget?.type) {
-                BLOCK -> destroyTriggered = true
 
-                ENTITY -> {
-                    status.itemUse.add()
-                    consumed = true
+        if (player != null) {
+            for (hand in Hand.entries) {
+                val stack = player.getStackInHand(hand)
+                if (stack.item.isUsable(config)) {
+                    itemUsable = true
+                    break
                 }
-
-                MISS, null -> {}
             }
         }
-        if (!consumed && destroyTriggered && crosshairTarget?.type == BLOCK) {
-            status.attack.add()
+
+        if (pressTime == 5 && !moving) {
+            if (itemUsable) {
+                longPressTriggered = true
+            } else {
+                when (crosshairTarget?.type) {
+                    BLOCK -> longPressTriggered = true
+
+                    ENTITY -> {
+                        status.itemUse.add()
+                        consumed = true
+                    }
+
+                    MISS, null -> {}
+                }
+            }
+        }
+
+        if (!consumed && longPressTriggered) {
+            if (itemUsable) {
+                status.itemUse.add()
+            } else if (crosshairTarget?.type == BLOCK) {
+                status.attack.add()
+            }
         }
 
         pointer.state = state.copy(
-            lastPosition = pointer.rawOffset, moving = moving, destroyTriggered = destroyTriggered, consumed = consumed
+            lastPosition = pointer.rawOffset,
+            moving = moving,
+            longPressTriggered = longPressTriggered,
+            consumed = consumed
         )
     } ?: run {
         pointers.values.forEach {
