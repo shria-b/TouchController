@@ -3,10 +3,15 @@ package top.fifthlight.touchcontroller.config
 import dev.isxander.yacl3.api.OptionDescription
 import dev.isxander.yacl3.dsl.YetAnotherConfigLib
 import dev.isxander.yacl3.dsl.textSwitch
+import kotlinx.collections.immutable.toPersistentList
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.item.Item
+import net.minecraft.text.Text
 import org.koin.core.context.GlobalContext
 import top.fifthlight.touchcontroller.TouchController
 import top.fifthlight.touchcontroller.asset.Texts
+import top.fifthlight.touchcontroller.config.widget.ItemsListController
+import top.fifthlight.touchcontroller.ext.ItemsList
 
 fun openConfigScreen(parent: Screen): Screen {
     val context = GlobalContext.get()
@@ -56,10 +61,44 @@ fun openConfigScreen(parent: Screen): Screen {
             }
         }
 
-        categories.register("custom", CustomCategory(
-            name = Texts.OPTIONS_CATEGORY_CUSTOM_TITLE,
-            tooltip = Texts.OPTIONS_CATEGORY_CUSTOM_TOOLTIP,
-        ))
+        val itemsCategory by categories.registering("items") {
+            name(Text.literal("Items"))
+
+            val usableItems by rootOptions.registering<List<Item>> {
+                name(Text.literal("Usable items"))
+                customController { ItemsListController(it) }
+                binding(
+                    defaultUsableItems,
+                    { config.usableItems.items },
+                    { config = config.copy(usableItems = ItemsList(it.toPersistentList())) }
+                )
+            }
+
+            val foodUsable by rootOptions.registering {
+                name(Text.literal("Food usable"))
+                controller(textSwitch())
+                binding(true, { config.foodUsable }, { config = config.copy(foodUsable = it) })
+            }
+
+            val projectileUsable by rootOptions.registering {
+                name(Text.literal("Projectile usable"))
+                controller(textSwitch())
+                binding(true, { config.projectileUsable }, { config = config.copy(projectileUsable = it) })
+            }
+
+            val rangedWeaponUsable by rootOptions.registering {
+                name(Text.literal("Ranged weapons usable"))
+                controller(textSwitch())
+                binding(true, { config.rangedWeaponUsable }, { config = config.copy(rangedWeaponUsable = it) })
+            }
+        }
+
+        categories.register(
+            "custom", CustomCategory(
+                name = Texts.OPTIONS_CATEGORY_CUSTOM_TITLE,
+                tooltip = Texts.OPTIONS_CATEGORY_CUSTOM_TOOLTIP,
+            )
+        )
 
         save {
             configHolder.saveConfig(config)

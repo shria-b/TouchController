@@ -3,9 +3,22 @@ package top.fifthlight.touchcontroller.config
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.serialization.Serializable
+import net.minecraft.item.Items
 import top.fifthlight.touchcontroller.control.*
+import top.fifthlight.touchcontroller.ext.ItemsList
+import top.fifthlight.touchcontroller.ext.ItemsListSerializer
 import top.fifthlight.touchcontroller.layout.Align
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
+
+val defaultUsableItems = persistentListOf(
+    Items.FISHING_ROD,
+    Items.SPYGLASS,
+    Items.MAP,
+    Items.SHIELD,
+    Items.KNOWLEDGE_BOOK,
+    Items.WRITABLE_BOOK,
+    Items.WRITTEN_BOOK,
+)
 
 @Serializable
 data class TouchControllerConfig(
@@ -13,6 +26,11 @@ data class TouchControllerConfig(
     val disableMouseLock: Boolean = false,
     val disableCrosshair: Boolean = true,
     val enableTouchEmulation: Boolean = false,
+    @Serializable(with = ItemsListSerializer::class)
+    val usableItems: ItemsList = ItemsList(defaultUsableItems),
+    val foodUsable: Boolean = true,
+    val projectileUsable: Boolean = true,
+    val rangedWeaponUsable: Boolean = true,
     val showPointers: Boolean = false,
     val crosshair: CrosshairConfig = CrosshairConfig()
 )

@@ -37,6 +37,7 @@ class ObservableValue<Value>(value: Value) {
         }
 
     fun addListener(listener: (Value) -> Unit) = listeners.add(listener)
+    fun removeListener(listener: (Value) -> Unit) = listeners.remove(listener)
 }
 
 fun ObservableValue<TouchControllerLayout>.replaceItem(
@@ -188,15 +189,15 @@ private class CustomTab(
 
         undoButton.active = pendingChanges
         if (pendingChanges) {
-            saveFinishedButton.setMessage(Texts.OPTIONS_SAVE_TITLE)
-            saveFinishedButton.setTooltip(Tooltip.of(Texts.OPTIONS_SAVE_TOOLTIP))
-            cancelResetButton.setMessage(Texts.OPTIONS_CANCEL_TITLE)
-            cancelResetButton.setTooltip(Tooltip.of(Texts.OPTIONS_CANCEL_TOOLTIP))
+            saveFinishedButton.message = Texts.OPTIONS_SAVE_TITLE
+            saveFinishedButton.tooltip = Tooltip.of(Texts.OPTIONS_SAVE_TOOLTIP)
+            cancelResetButton.message = Texts.OPTIONS_CANCEL_TITLE
+            cancelResetButton.tooltip = Tooltip.of(Texts.OPTIONS_CANCEL_TOOLTIP)
         } else {
-            saveFinishedButton.setMessage(Texts.OPTIONS_FINISH_TITLE)
-            saveFinishedButton.setTooltip(Tooltip.of(Texts.OPTIONS_FINISH_TOOLTIP))
-            cancelResetButton.setMessage(Texts.OPTIONS_RESET_TITLE)
-            cancelResetButton.setTooltip(Tooltip.of(Texts.OPTIONS_RESET_TOOLTIP))
+            saveFinishedButton.message = Texts.OPTIONS_FINISH_TITLE
+            saveFinishedButton.tooltip = Tooltip.of(Texts.OPTIONS_FINISH_TOOLTIP)
+            cancelResetButton.message = Texts.OPTIONS_RESET_TITLE
+            cancelResetButton.tooltip = Tooltip.of(Texts.OPTIONS_RESET_TOOLTIP)
         }
     }
 
