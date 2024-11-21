@@ -26,6 +26,8 @@ data class TouchControllerConfig(
     val disableMouseLock: Boolean = false,
     val disableCrosshair: Boolean = true,
     val enableTouchEmulation: Boolean = false,
+    val projectileShowCrosshair: Boolean = true,
+    val rangedWeaponShowCrosshair: Boolean = true,
     @Serializable(with = ItemsListSerializer::class)
     val usableItems: ItemsList = ItemsList(defaultUsableItems),
     val foodUsable: Boolean = true,

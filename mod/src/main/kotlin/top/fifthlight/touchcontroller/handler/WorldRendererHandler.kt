@@ -7,10 +7,15 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents.BeforeBlock
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.RenderTickCounter
+import net.minecraft.item.Item
+import net.minecraft.item.ProjectileItem
+import net.minecraft.item.RangedWeaponItem
+import net.minecraft.util.Hand
 import net.minecraft.util.hit.HitResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.SocketProxyHolder
+import top.fifthlight.touchcontroller.config.TouchControllerConfig
 import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.event.HudRenderCallback
 import top.fifthlight.touchcontroller.model.ControllerHudModel
@@ -20,6 +25,15 @@ import top.fifthlight.touchcontroller.proxy.data.Offset
 import top.fifthlight.touchcontroller.proxy.message.AddPointerMessage
 import top.fifthlight.touchcontroller.proxy.message.ClearPointerMessage
 import top.fifthlight.touchcontroller.proxy.message.RemovePointerMessage
+
+private fun Item.shouldShowCrosshair(config: TouchControllerConfig): Boolean {
+    if (config.projectileShowCrosshair && this is ProjectileItem) {
+        return true
+    } else if (config.rangedWeaponShowCrosshair && this is RangedWeaponItem) {
+        return true
+    }
+    return false
+}
 
 class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRenderCallback.CrosshairRender,
     KoinComponent {
@@ -33,8 +47,21 @@ class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRen
     override fun beforeBlockOutline(context: WorldRenderContext, hitResult: HitResult?): Boolean =
         controllerHudModel.result.crosshairStatus != null
 
-    override fun onCrosshairRender(drawContext: DrawContext, tickCounter: RenderTickCounter): Boolean =
-        !configHolder.config.value.disableCrosshair
+    override fun onCrosshairRender(drawContext: DrawContext, tickCounter: RenderTickCounter): Boolean {
+        val config = configHolder.config.value
+        if (!config.disableCrosshair) {
+            return true
+        }
+        return client.player?.let { player ->
+            for (hand in Hand.entries) {
+                val stack = player.getStackInHand(hand)
+                if (stack.item.shouldShowCrosshair(config)) {
+                    return@let true
+                }
+            }
+            false
+        } ?: false
+    }
 
     override fun onStart(context: WorldRenderContext) {
         globalStateModel.update(client)
