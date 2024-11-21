@@ -66,5 +66,19 @@
   "touchcontroller.screen.options.widget.ascend_button.property.classic": "经典外观",
 
   "touchcontroller.screen.options.widget.descend_button.property.size": "按键大小: %s%%",
-  "touchcontroller.screen.options.widget.descend_button.property.classic": "经典外观"
+  "touchcontroller.screen.options.widget.descend_button.property.classic": "经典外观",
+  "touchcontroller.config.controller.items_value.no_item": "没有物品",
+  "touchcontroller.config.controller.items_value.one_item": "一件物品",
+  "touchcontroller.config.controller.items_value.multiple_item": "多个物品",
+  "touchcontroller.screen.config.controller.config_screen.items": "物品",
+  "touchcontroller.screen.config.controller.config_screen.usable_items": "可使用的物品",
+  "touchcontroller.screen.config.controller.config_screen.food_usable": "让食物可使用",
+  "touchcontroller.screen.config.controller.config_screen.projectile_usable": "让可投掷物可使用",
+  "touchcontroller.screen.config.controller.config_screen.ranged_weapons_usable": "让瞄准类武器可使用",
+  "touchcontroller.screen.config.controller.config_screen.equippable_items_usable": "让装备可使用",
+  "touchcontroller.screen.config.controller.custom_category.finish": "结束",
+  "touchcontroller.screen.config.controller.custom_category.save": "保存",
+  "touchcontroller.screen.config.controller.items_list_screen.items": "物品",
+  "touchcontroller.screen.config.controller.items_list_screen.remove": "移除",
+  "touchcontroller.screen.config.controller.items_list_screen.Done": "完成"
 }

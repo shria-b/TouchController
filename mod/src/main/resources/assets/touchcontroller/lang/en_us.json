@@ -66,5 +66,20 @@
   "touchcontroller.screen.options.widget.ascend_button.property.classic": "Classic look",
 
   "touchcontroller.screen.options.widget.descend_button.property.size": "Button size: %s%%",
-  "touchcontroller.screen.options.widget.descend_button.property.classic": "Classic look"
+  "touchcontroller.screen.options.widget.descend_button.property.classic": "Classic look",
+  "touchcontroller.config.controller.items_value.no_item": "No Item",
+  "touchcontroller.config.controller.items_value.one_item": "One Item",
+  "touchcontroller.config.controller.items_value.multiple_item": "Multiple Item",
+  "touchcontroller.screen.config.controller.config_screen.items": "Items",
+  "touchcontroller.screen.config.controller.config_screen.usable_items": "Usable Items",
+  "touchcontroller.screen.config.controller.config_screen.food_usable": "Food usable",
+  "touchcontroller.screen.config.controller.config_screen.projectile_usable": "Projectile usable",
+  "touchcontroller.screen.config.controller.config_screen.ranged_weapons_usable": "Ranged weapons usable",
+  "touchcontroller.screen.config.controller.config_screen.equippable_items_usable": "Equippable items usable",
+  "touchcontroller.screen.config.controller.custom_category.finish": "Finish",
+  "touchcontroller.screen.config.controller.custom_category.save": "Save",
+  "touchcontroller.screen.config.controller.items_list_screen.items": "Items",
+  "touchcontroller.screen.config.controller.items_list_screen.remove": "Remove",
+  "touchcontroller.screen.config.controller.items_list_screen.Done": "Done"
+
 }

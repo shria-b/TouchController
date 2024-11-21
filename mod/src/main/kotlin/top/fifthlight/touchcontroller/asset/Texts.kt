@@ -89,4 +89,32 @@ object Texts {
 
     val OPTIONS_WIDGET_DESCEND_BUTTON_PROPERTY_SIZE = key("screen.options.widget.descend_button.property.size")
     val OPTIONS_WIDGET_DESCEND_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.descend_button.property.classic")
+
+    val CONFIG_CONTROLLER_ITEMS_LIST_VALUE_NO_ITEM = translatable("screen.config.controller.items_value.no_item")
+    val CONFIG_CONTROLLER_ITEMS_LIST_VALUE_ONE_ITEM = translatable("screen.config.controller.items_value.one_item")
+    val CONFIG_CONTROLLER_ITEMS_LIST_VALUE_MULTIPLE_ITEMS = key("screen.config.controller.items_value.multiple_items")
+
+    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_ITEMS = translatable("screen.config.controller.config_screen.items")
+    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_USABLE_ITEMS =
+        translatable("screen.config.controller.config_screen.usable_items")
+    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_FOOD_USABLE =
+        translatable("screen.config.controller.config_screen.food_usable")
+    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_PROJECTILE_USABLE =
+        translatable("screen.config.controller.config_screen.projectile_usable")
+    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_RANGED_WEAPONS_USABLE =
+        translatable("screen.config.controller.config_screen.ranged_weapons_usable")
+    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_EQUIPPABLE_ITEMS_USABLE =
+        translatable("screen.config.controller.config_screen.equippable_items_usable")
+
+    val CONFIG_CONTROLLER_CUSTOM_CATEGORY_VALUE_FINISH = translatable("screen.config.controller.custom_category.finish")
+    val CONFIG_CONTROLLER_CUSTOM_CATEGORY_VALUE_SAVE = translatable("screen.config.controller.custom_category.save")
+
+    val CONFIG_CONTROLLER_ITEMS_LIST_SCREEN_VALUE_ITEMS =
+        translatable("screen.config.controller.items_list_screen.items")
+    val CONFIG_CONTROLLER_ITEMS_LIST_SCREEN_VALUE_REMOVE =
+        translatable("screen.config.controller.items_list_screen.remove")
+    val CONFIG_CONTROLLER_ITEMS_LIST_SCREEN_VALUE_DONE = translatable("screen.config.controller.items_list_screen.done")
+
+
+
 }
