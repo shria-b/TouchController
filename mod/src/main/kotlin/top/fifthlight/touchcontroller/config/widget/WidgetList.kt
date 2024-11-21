@@ -96,7 +96,8 @@ class WidgetList(
                 scale = client.window.scaleFactor.toFloat() * componentScaleFactor,
                 pointers = mutableMapOf(),
                 result = ContextResult(),
-                config = config.config.value
+                config = config.config.value,
+                designMode = true
             )
             widgetConfig.layout(context)
 
