@@ -85,9 +85,7 @@ public abstract class ClientHandleInputEventsMixin {
 
             @Override
             public void doItemUse() {
-                if (!player.isUsingItem()) {
-                    ClientHandleInputEventsMixin.this.doItemUse();
-                }
+                ClientHandleInputEventsMixin.this.doItemUse();
                 itemUsed = true;
             }
 

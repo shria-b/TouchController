@@ -16,8 +16,17 @@ class ClientInputHandler: ClientHandleInputEvents.HandleInput, KoinComponent {
                 context.hitEmptyBlockState()
             }
         }
+        var usedItem = false
         while (status.itemUse.consume()) {
-            context.doItemUse()
+            client.player?.let { player ->
+                if ((status.startItemUse && !usedItem) || player.isUsingItem) {
+                    usedItem = true
+                    context.doItemUse()
+                }
+            } ?: run {
+                context.doItemUse()
+            }
         }
+        status.startItemUse = false
     }
 }

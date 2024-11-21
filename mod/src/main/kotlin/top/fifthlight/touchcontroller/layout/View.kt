@@ -39,18 +39,11 @@ fun Context.View() {
                     val crosshairTarget = client.crosshairTarget ?: break
                     when (crosshairTarget.type) {
                         BLOCK -> {
-                            result.crosshairStatus = CrosshairStatus(
-                                position = state.previousPosition,
-                                breakPercent = 0f
-                            )
+                            status.startItemUse = true
                             status.itemUse.add()
                         }
 
                         ENTITY -> {
-                            result.crosshairStatus = CrosshairStatus(
-                                position = state.previousPosition,
-                                breakPercent = 0f
-                            )
                             status.attack.add()
                         }
 
@@ -110,9 +103,13 @@ fun Context.View() {
         if (pressTime == 5 && !moving) {
             if (itemUsable) {
                 longPressTriggered = true
+                status.startItemUse = true
             } else {
                 when (crosshairTarget?.type) {
-                    BLOCK -> longPressTriggered = true
+                    BLOCK -> {
+                        longPressTriggered = true
+                        status.startItemUse = true
+                    }
 
                     ENTITY -> {
                         status.itemUse.add()

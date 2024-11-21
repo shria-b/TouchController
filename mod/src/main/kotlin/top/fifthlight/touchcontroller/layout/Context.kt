@@ -77,7 +77,7 @@ data class ContextResult(
     var lookDirection: Offset? = null,
     var crosshairStatus: CrosshairStatus? = null,
     var sneak: Boolean = false,
-    var cancelFlying: Boolean = false
+    var cancelFlying: Boolean = false,
 )
 
 data class ContextStatus(
@@ -91,6 +91,7 @@ data class ContextStatus(
     val attack: ClickCounter = ClickCounter(),
     val itemUse: ClickCounter = ClickCounter(),
     var lastCrosshairStatus: CrosshairStatus? = null,
+    var startItemUse: Boolean = false,
 )
 
 data class ContextCounter(
