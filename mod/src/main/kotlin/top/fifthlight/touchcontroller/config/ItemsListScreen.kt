@@ -4,6 +4,7 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.tooltip.Tooltip
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.DirectionalLayoutWidget
 import net.minecraft.client.gui.widget.ThreePartsLayoutWidget
@@ -11,6 +12,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.text.Text
+import top.fifthlight.touchcontroller.asset.Texts
 import top.fifthlight.touchcontroller.config.widget.BorderLayout
 import top.fifthlight.touchcontroller.config.widget.ItemStacksGrid
 import top.fifthlight.touchcontroller.config.widget.ItemsList
@@ -40,7 +42,7 @@ class ItemsListScreen(
         ItemStacksGrid(
             client = currentClient,
             width = ItemStacksGrid.ITEM_SIZE * 12,
-            message = Text.literal("Items"),
+            message = Texts.ITEMS_SCREEN_ITEMS_LIST_MESSAGE,
             itemStacks = Registries.ITEM.map { ItemStack(it) }.toPersistentList(),
             onStackClicked = {_, stack ->
                 if (stack.item !in items.value) {
@@ -65,10 +67,12 @@ class ItemsListScreen(
             addHeader(name, client!!.textRenderer)
             addBody(content)
             DirectionalLayoutWidget.horizontal().spacing(8).apply {
-                ButtonWidget.builder(Text.literal("Remove")) {
+                ButtonWidget.builder(Texts.ITEMS_REMOVE_TITLE) {
                     itemsList.selectedIndex.value?.let {
                         items.value = items.value.removeAt(it)
                     }
+                }.apply {
+                    tooltip(Tooltip.of(Texts.ITEMS_REMOVE_TOOLTIP))
                 }.build().apply {
                     active = false
                     itemsList.selectedIndex.addListener {
@@ -77,8 +81,10 @@ class ItemsListScreen(
                 }.also { button ->
                     add(button)
                 }
-                ButtonWidget.builder(Text.literal("Done")) {
+                ButtonWidget.builder(Texts.ITEMS_DONE_TITLE) {
                     close()
+                }.apply {
+                    tooltip(Tooltip.of(Texts.ITEMS_DONE_TOOLTIP))
                 }.build().also { button ->
                     add(button)
                 }

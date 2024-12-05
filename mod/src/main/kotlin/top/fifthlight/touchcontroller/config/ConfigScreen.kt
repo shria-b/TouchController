@@ -6,7 +6,6 @@ import dev.isxander.yacl3.dsl.textSwitch
 import kotlinx.collections.immutable.toPersistentList
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.item.Item
-import net.minecraft.text.Text
 import org.koin.core.context.GlobalContext
 import top.fifthlight.touchcontroller.TouchController
 import top.fifthlight.touchcontroller.asset.Texts
@@ -62,11 +61,12 @@ fun openConfigScreen(parent: Screen): Screen {
         }
 
         val itemsCategory by categories.registering("items") {
-            name(Text.literal("Items"))
+            name(Texts.OPTIONS_CATEGORY_ITEMS_TITLE)
+            tooltip(Texts.OPTIONS_CATEGORY_ITEMS_TOOLTIP)
 
             val usableItems by rootOptions.registering<List<Item>> {
-                name(Text.literal("Usable items"))
-                description(OptionDescription.of(Text.literal("Make items usable without select any block.")))
+                name(Texts.OPTIONS_CATEGORY_ITEMS_USABLE_ITEMS_TITLE)
+                description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_USABLE_ITEMS_DESCRIPTION))
                 customController { ItemsListController(it) }
                 binding(
                     defaultUsableItems,
@@ -76,43 +76,43 @@ fun openConfigScreen(parent: Screen): Screen {
             }
 
             val projectileShowCrosshair by rootOptions.registering {
-                name(Text.literal("Show crosshair when holding projectile items"))
-                description(OptionDescription.of(Text.literal("Help your aiming when holding projectile items like trident, egg, etc.")))
+                name(Texts.OPTIONS_CATEGORY_ITEMS_PROJECTILE_SHOW_CROSSHAIR_TITLE)
+                description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_PROJECTILE_SHOW_CROSSHAIR_DESCRIPTION))
                 controller(textSwitch())
                 binding(true, { config.projectileShowCrosshair }, { config = config.copy(projectileShowCrosshair = it) })
             }
 
             val rangedWeaponShowCrosshair by rootOptions.registering {
-                name(Text.literal("Show crosshair when holding projectile items"))
-                description(OptionDescription.of(Text.literal("Help your aiming when holding ranged weapon like bow, crossbow, etc.")))
+                name(Texts.OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_SHOW_CROSSHAIR_TITLE)
+                description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_SHOW_CROSSHAIR_DESCRIPTION))
                 controller(textSwitch())
                 binding(true, { config.rangedWeaponShowCrosshair }, { config = config.copy(rangedWeaponShowCrosshair = it) })
             }
 
             val foodUsable by rootOptions.registering {
-                name(Text.literal("Food usable"))
-                description(OptionDescription.of(Text.literal("Make food items usable without select any block.")))
+                name(Texts.OPTIONS_CATEGORY_ITEMS_FOOD_USABLE_TITLE)
+                description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_FOOD_USABLE_DESCRIPTION))
                 controller(textSwitch())
                 binding(true, { config.foodUsable }, { config = config.copy(foodUsable = it) })
             }
 
             val projectileUsable by rootOptions.registering {
-                name(Text.literal("Projectile usable"))
-                description(OptionDescription.of(Text.literal("Make projectile items such as egg and snow ball usable without select any block.")))
+                name(Texts.OPTIONS_CATEGORY_ITEMS_PROJECTILE_USABLE_TITLE)
+                description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_PROJECTILE_USABLE_DESCRIPTION))
                 controller(textSwitch())
                 binding(true, { config.projectileUsable }, { config = config.copy(projectileUsable = it) })
             }
 
             val rangedWeaponUsable by rootOptions.registering {
-                name(Text.literal("Ranged weapons usable"))
-                description(OptionDescription.of(Text.literal("Make ranged weapons such as bow and crossbow usable without select any block.")))
+                name(Texts.OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_USABLE_TITLE)
+                description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_USABLE_DESCRIPTION))
                 controller(textSwitch())
                 binding(true, { config.rangedWeaponUsable }, { config = config.copy(rangedWeaponUsable = it) })
             }
 
             val equippableUsable by rootOptions.registering {
-                name(Text.literal("Equippable items usable"))
-                description(OptionDescription.of(Text.literal("Make equippables items such as armors usable without select any block.")))
+                name(Texts.OPTIONS_CATEGORY_ITEMS_EQUIPPABLE_ITEMS_USABLE_TITLE)
+                description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_EQUIPPABLE_ITEMS_USABLE_DESCRIPTION))
                 controller(textSwitch())
                 binding(true, { config.equippableUsable }, { config = config.copy(equippableUsable = it) })
             }

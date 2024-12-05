@@ -4,6 +4,7 @@ import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import top.fifthlight.touchcontroller.TouchController
 
+// @formatter:off
 object Texts {
     private fun key(id: String) = "${TouchController.NAMESPACE}.$id"
     private fun translatable(id: String): MutableText = Text.translatable(key(id))
@@ -15,25 +16,16 @@ object Texts {
 
     val OPTIONS_CATEGORY_GLOBAL_TITLE = translatable("screen.options.category.global.title")
     val OPTIONS_CATEGORY_GLOBAL_TOOLTIP = translatable("screen.options.category.global.tooltip")
-
     val OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_TITLE = translatable("screen.options.category.global.disable_mouse.title")
-    val OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_DESCRIPTION =
-        translatable("screen.options.category.global.disable_mouse.description")
-
+    val OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_DESCRIPTION = translatable("screen.options.category.global.disable_mouse.description")
     val OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_LOCK_TITLE = translatable("screen.options.category.global.disable_cursor_lock.title")
-    val OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_LOCK_DESCRIPTION =
-        translatable("screen.options.category.global.disable_cursor_lock.description")
-
+    val OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_LOCK_DESCRIPTION = translatable("screen.options.category.global.disable_cursor_lock.description")
     val OPTIONS_CATEGORY_GLOBAL_DISABLE_CROSSHAIR_TITLE = translatable("screen.options.category.global.disable_crosshair.title")
-    val OPTIONS_CATEGORY_GLOBAL_DISABLE_CROSSHAIR_DESCRIPTION =
-        translatable("screen.options.category.global.disable_crosshair.description")
-
+    val OPTIONS_CATEGORY_GLOBAL_DISABLE_CROSSHAIR_DESCRIPTION = translatable("screen.options.category.global.disable_crosshair.description")
     val OPTIONS_CATEGORY_GLOBAL_SHOW_POINTERS_TITLE = translatable("screen.options.category.global.show_pointers.title")
     val OPTIONS_CATEGORY_GLOBAL_SHOW_POINTERS_DESCRIPTION = translatable("screen.options.category.global.show_pointers.description")
-
     val OPTIONS_CATEGORY_GLOBAL_ENABLE_TOUCH_EMULATION_TITLE = translatable("screen.options.category.global.enable_touch_emulation.title")
-    val OPTIONS_CATEGORY_GLOBAL_ENABLE_TOUCH_EMULATION_DESCRIPTION =
-        translatable("screen.options.category.global.enable_touch_emulation.description")
+    val OPTIONS_CATEGORY_GLOBAL_ENABLE_TOUCH_EMULATION_DESCRIPTION = translatable("screen.options.category.global.enable_touch_emulation.description")
 
     val OPTIONS_CATEGORY_CUSTOM_TITLE = translatable("screen.options.category.custom.title")
     val OPTIONS_CATEGORY_CUSTOM_TOOLTIP = translatable("screen.options.category.custom.tooltip")
@@ -90,31 +82,30 @@ object Texts {
     val OPTIONS_WIDGET_DESCEND_BUTTON_PROPERTY_SIZE = key("screen.options.widget.descend_button.property.size")
     val OPTIONS_WIDGET_DESCEND_BUTTON_PROPERTY_CLASSIC = translatable("screen.options.widget.descend_button.property.classic")
 
-    val CONFIG_CONTROLLER_ITEMS_LIST_VALUE_NO_ITEM = translatable("screen.config.controller.items_value.no_item")
-    val CONFIG_CONTROLLER_ITEMS_LIST_VALUE_ONE_ITEM = translatable("screen.config.controller.items_value.one_item")
-    val CONFIG_CONTROLLER_ITEMS_LIST_VALUE_MULTIPLE_ITEMS = key("screen.config.controller.items_value.multiple_items")
+    val CONFIG_CONTROLLER_ITEMS_LIST_VALUE_SINGLE = key("screen.config.controller.items.value.single")
+    val CONFIG_CONTROLLER_ITEMS_LIST_VALUE_MULTIPLE = key("screen.config.controller.items.value.multiple")
 
-    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_ITEMS = translatable("screen.config.controller.config_screen.items")
-    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_USABLE_ITEMS =
-        translatable("screen.config.controller.config_screen.usable_items")
-    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_FOOD_USABLE =
-        translatable("screen.config.controller.config_screen.food_usable")
-    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_PROJECTILE_USABLE =
-        translatable("screen.config.controller.config_screen.projectile_usable")
-    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_RANGED_WEAPONS_USABLE =
-        translatable("screen.config.controller.config_screen.ranged_weapons_usable")
-    val CONFIG_CONTROLLER_CONFIG_SCREEN_VALUE_EQUIPPABLE_ITEMS_USABLE =
-        translatable("screen.config.controller.config_screen.equippable_items_usable")
+    val OPTIONS_CATEGORY_ITEMS_TITLE = translatable("screen.options.category.items.title")
+    val OPTIONS_CATEGORY_ITEMS_TOOLTIP = translatable("screen.options.category.items.tooltip")
+    val OPTIONS_CATEGORY_ITEMS_USABLE_ITEMS_TITLE = translatable("screen.options.category.items.usable_items.title")
+    val OPTIONS_CATEGORY_ITEMS_USABLE_ITEMS_DESCRIPTION = translatable("screen.options.category.items.usable_items.description")
+    val OPTIONS_CATEGORY_ITEMS_PROJECTILE_SHOW_CROSSHAIR_TITLE = translatable("screen.options.category.items.projectile_show_crosshair.title")
+    val OPTIONS_CATEGORY_ITEMS_PROJECTILE_SHOW_CROSSHAIR_DESCRIPTION = translatable("screen.options.category.items.projectile_show_crosshair.description")
+    val OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_SHOW_CROSSHAIR_TITLE = translatable("screen.options.category.items.ranged_weapons_show_crosshair.title")
+    val OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_SHOW_CROSSHAIR_DESCRIPTION = translatable("screen.options.category.items.ranged_weapons_show_crosshair.description")
+    val OPTIONS_CATEGORY_ITEMS_FOOD_USABLE_TITLE = translatable("screen.options.category.items.food_usable.title")
+    val OPTIONS_CATEGORY_ITEMS_FOOD_USABLE_DESCRIPTION = translatable("screen.options.category.items.food_usable.description")
+    val OPTIONS_CATEGORY_ITEMS_PROJECTILE_USABLE_TITLE = translatable("screen.options.category.items.projectile_usable.title")
+    val OPTIONS_CATEGORY_ITEMS_PROJECTILE_USABLE_DESCRIPTION = translatable("screen.options.category.items.projectile_usable.description")
+    val OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_USABLE_TITLE = translatable("screen.options.category.items.ranged_weapons_usable.title")
+    val OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_USABLE_DESCRIPTION = translatable("screen.options.category.items.ranged_weapons_usable.description")
+    val OPTIONS_CATEGORY_ITEMS_EQUIPPABLE_ITEMS_USABLE_TITLE = translatable("screen.options.category.items.equippable_items_usable.title")
+    val OPTIONS_CATEGORY_ITEMS_EQUIPPABLE_ITEMS_USABLE_DESCRIPTION = translatable("screen.options.category.items.equippable_items_usable.description")
 
-    val CONFIG_CONTROLLER_CUSTOM_CATEGORY_VALUE_FINISH = translatable("screen.config.controller.custom_category.finish")
-    val CONFIG_CONTROLLER_CUSTOM_CATEGORY_VALUE_SAVE = translatable("screen.config.controller.custom_category.save")
+    val ITEMS_SCREEN_ITEMS_LIST_MESSAGE = translatable("screen.items.items_list.message")
 
-    val CONFIG_CONTROLLER_ITEMS_LIST_SCREEN_VALUE_ITEMS =
-        translatable("screen.config.controller.items_list_screen.items")
-    val CONFIG_CONTROLLER_ITEMS_LIST_SCREEN_VALUE_REMOVE =
-        translatable("screen.config.controller.items_list_screen.remove")
-    val CONFIG_CONTROLLER_ITEMS_LIST_SCREEN_VALUE_DONE = translatable("screen.config.controller.items_list_screen.done")
-
-
-
+    val ITEMS_DONE_TITLE = translatable("screen.items.done.title")
+    val ITEMS_DONE_TOOLTIP = translatable("screen.items.done.tooltip")
+    val ITEMS_REMOVE_TITLE = translatable("screen.items.remove.title")
+    val ITEMS_REMOVE_TOOLTIP = translatable("screen.items.remove.tooltip")
 }

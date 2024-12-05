@@ -67,18 +67,31 @@
 
   "touchcontroller.screen.options.widget.descend_button.property.size": "按键大小: %s%%",
   "touchcontroller.screen.options.widget.descend_button.property.classic": "经典外观",
-  "touchcontroller.config.controller.items_value.no_item": "没有物品",
-  "touchcontroller.config.controller.items_value.one_item": "一件物品",
-  "touchcontroller.config.controller.items_value.multiple_item": "多个物品",
-  "touchcontroller.screen.config.controller.config_screen.items": "物品",
-  "touchcontroller.screen.config.controller.config_screen.usable_items": "可使用的物品",
-  "touchcontroller.screen.config.controller.config_screen.food_usable": "让食物可使用",
-  "touchcontroller.screen.config.controller.config_screen.projectile_usable": "让可投掷物可使用",
-  "touchcontroller.screen.config.controller.config_screen.ranged_weapons_usable": "让瞄准类武器可使用",
-  "touchcontroller.screen.config.controller.config_screen.equippable_items_usable": "让装备可使用",
-  "touchcontroller.screen.config.controller.custom_category.finish": "结束",
-  "touchcontroller.screen.config.controller.custom_category.save": "保存",
-  "touchcontroller.screen.config.controller.items_list_screen.items": "物品",
-  "touchcontroller.screen.config.controller.items_list_screen.remove": "移除",
-  "touchcontroller.screen.config.controller.items_list_screen.Done": "完成"
+
+  "touchcontroller.screen.config.controller.items.value.single": "没有物品",
+  "touchcontroller.screen.config.controller.items.value.multiple": "%d 个物品",
+
+  "touchcontroller.screen.options.category.items.title": "物品",
+  "touchcontroller.screen.options.category.items.tooltip": "配置可使用的物品",
+
+  "touchcontroller.screen.options.category.items.usable_items.title": "可使用的物品",
+  "touchcontroller.screen.options.category.items.usable_items.description": "配置可使用的物品，让这些物品可以通过长按屏幕使用，而无需选择方块。",
+  "touchcontroller.screen.options.category.items.projectile_show_crosshair.title": "手持投射物时显示准星",
+  "touchcontroller.screen.options.category.items.projectile_show_crosshair.description": "持有投射物（如三叉戟、鸡蛋等）时帮助瞄准。",
+  "touchcontroller.screen.options.category.items.ranged_weapons_show_crosshair.title": "手持远程武器时显示准星",
+  "touchcontroller.screen.options.category.items.ranged_weapons_show_crosshair.description": "持有远程武器（如弓、弩等）时帮助瞄准。",
+  "touchcontroller.screen.options.category.items.food_usable.title": "让食品可使用",
+  "touchcontroller.screen.options.category.items.food_usable.description": "让食品可通过长按屏幕使用，而无需选择方块。",
+  "touchcontroller.screen.options.category.items.projectile_usable.title": "让投射物可使用",
+  "touchcontroller.screen.options.category.items.projectile_usable.description": "让投射物（如雪球和鸡蛋等）可通过长按屏幕使用，而无需选择方块。",
+  "touchcontroller.screen.options.category.items.ranged_weapons_usable.title": "让远程武器可使用",
+  "touchcontroller.screen.options.category.items.ranged_weapons_usable.description": "让远程武器（如弓、弩等）可通过长按屏幕使用，而无需选择方块。",
+  "touchcontroller.screen.options.category.items.equippable_items_usable.title": "让可装备物品可使用",
+  "touchcontroller.screen.options.category.items.equippable_items_usable.description": "让可装备物品（如护甲等）可通过长按屏幕使用，而无需选择方块。",
+
+  "touchcontroller.screen.items.items_list.message": "可添加的物品",
+  "touchcontroller.screen.items.done.title": "完成",
+  "touchcontroller.screen.items.done.tooltip": "保存更改并关闭此屏幕。",
+  "touchcontroller.screen.items.remove.title": "移除",
+  "touchcontroller.screen.items.remove.tooltip": "移除选中的物品。"
 }

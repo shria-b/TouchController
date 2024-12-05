@@ -5,6 +5,7 @@ import net.minecraft.client.gui.widget.CheckboxWidget
 import net.minecraft.text.Text
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import top.fifthlight.touchcontroller.annoations.DontTranslate
 import top.fifthlight.touchcontroller.config.widget.ConfigSliderWidget
 import top.fifthlight.touchcontroller.ext.setDimensions
 import top.fifthlight.touchcontroller.proxy.data.IntSize
@@ -41,7 +42,7 @@ class EnumProperty<Config : ControllerWidget, T>(
     private val items: List<Pair<T, Text>>,
 ) : ControllerWidget.Property<Config, T, ButtonWidget> {
     private fun getItemText(item: T): Text =
-        items.firstOrNull { it.first == item }?.second ?: Text.literal(item.toString())
+        items.firstOrNull { it.first == item }?.second ?: @DontTranslate Text.literal(item.toString())
 
     override fun createController(editProvider: ControllerWidget.PropertyEditProvider<Config>) =
         object : ControllerWidget.PropertyWidget<Config, ButtonWidget> {

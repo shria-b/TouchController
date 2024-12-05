@@ -18,8 +18,8 @@
   "touchcontroller.screen.options.category.global.enable_touch_emulation.title": "Enable touch emulation",
   "touchcontroller.screen.options.category.global.enable_touch_emulation.description": "Emulate mouse input as touch input. Only use this for debugging.",
 
-  "touchcontroller.screen.options.category.custom.title": "Custom",
-  "touchcontroller.screen.options.category.custom.tooltip": "Custom Layout",
+  "touchcontroller.screen.options.category.custom.title": "Customize",
+  "touchcontroller.screen.options.category.custom.tooltip": "Customize Layout",
 
   "touchcontroller.screen.options.save.title": "Save",
   "touchcontroller.screen.options.save.tooltip": "Save and apply pending changes.",
@@ -54,7 +54,7 @@
   "touchcontroller.screen.options.widget.jump_button.property.classic": "Classic look",
 
   "touchcontroller.screen.options.widget.joystick.property.size": "Panel size: %s%%",
-  "touchcontroller.screen.options.widget.joystick.property.stick_size": "Stick size",
+  "touchcontroller.screen.options.widget.joystick.property.stick_size": "Stick size: %s%%",
 
   "touchcontroller.screen.options.widget.pause_button.property.size": "Button size: %s%%",
   "touchcontroller.screen.options.widget.pause_button.property.classic": "Classic look",
@@ -67,19 +67,31 @@
 
   "touchcontroller.screen.options.widget.descend_button.property.size": "Button size: %s%%",
   "touchcontroller.screen.options.widget.descend_button.property.classic": "Classic look",
-  "touchcontroller.config.controller.items_value.no_item": "No Item",
-  "touchcontroller.config.controller.items_value.one_item": "One Item",
-  "touchcontroller.config.controller.items_value.multiple_item": "Multiple Item",
-  "touchcontroller.screen.config.controller.config_screen.items": "Items",
-  "touchcontroller.screen.config.controller.config_screen.usable_items": "Usable Items",
-  "touchcontroller.screen.config.controller.config_screen.food_usable": "Food usable",
-  "touchcontroller.screen.config.controller.config_screen.projectile_usable": "Projectile usable",
-  "touchcontroller.screen.config.controller.config_screen.ranged_weapons_usable": "Ranged weapons usable",
-  "touchcontroller.screen.config.controller.config_screen.equippable_items_usable": "Equippable items usable",
-  "touchcontroller.screen.config.controller.custom_category.finish": "Finish",
-  "touchcontroller.screen.config.controller.custom_category.save": "Save",
-  "touchcontroller.screen.config.controller.items_list_screen.items": "Items",
-  "touchcontroller.screen.config.controller.items_list_screen.remove": "Remove",
-  "touchcontroller.screen.config.controller.items_list_screen.Done": "Done"
 
+  "touchcontroller.screen.config.controller.items.value.single": "One item",
+  "touchcontroller.screen.config.controller.items.value.multiple": "%d items",
+
+  "touchcontroller.screen.options.category.items.title": "Items",
+  "touchcontroller.screen.options.category.items.tooltip": "Configuration of usable items",
+
+  "touchcontroller.screen.options.category.items.usable_items.title": "Usable Items",
+  "touchcontroller.screen.options.category.items.usable_items.description": "Items can be used by long pressing the screen without selecting blocks.",
+  "touchcontroller.screen.options.category.items.projectile_show_crosshair.title": "Show crosshair when holding projectile items",
+  "touchcontroller.screen.options.category.items.projectile_show_crosshair.description": "Help your aiming when holding projectile items like trident, egg, etc.",
+  "touchcontroller.screen.options.category.items.ranged_weapons_show_crosshair.title": "Show crosshair when holding projectile items",
+  "touchcontroller.screen.options.category.items.ranged_weapons_show_crosshair.description": "Help your aiming when holding ranged weapon like bow, crossbow, etc.",
+  "touchcontroller.screen.options.category.items.food_usable.title": "Food usable",
+  "touchcontroller.screen.options.category.items.food_usable.description": "Make foods usable by long pressing the screen without selecting blocks.",
+  "touchcontroller.screen.options.category.items.projectile_usable.title": "Projectiles usable",
+  "touchcontroller.screen.options.category.items.projectile_usable.description": "Make projectiles like snowballs and eggs usable by long pressing the screen without selecting blocks.",
+  "touchcontroller.screen.options.category.items.ranged_weapons_usable.title": "Ranged weapons usable",
+  "touchcontroller.screen.options.category.items.ranged_weapons_usable.description": "Make ranged weapons like bow and crossbow usable by long pressing the screen without selecting blocks.",
+  "touchcontroller.screen.options.category.items.equippable_items_usable.title": "Equippable items usable",
+  "touchcontroller.screen.options.category.items.equippable_items_usable.description": "Make equippable items like armors usable by long pressing the screen without selecting blocks.",
+
+  "touchcontroller.screen.items.items_list.message": "Available items",
+  "touchcontroller.screen.items.done.title": "Done",
+  "touchcontroller.screen.items.done.tooltip": "Save the changes the close this screen.",
+  "touchcontroller.screen.items.remove.title": "Remove",
+  "touchcontroller.screen.items.remove.tooltip": "Remove selected item."
 }

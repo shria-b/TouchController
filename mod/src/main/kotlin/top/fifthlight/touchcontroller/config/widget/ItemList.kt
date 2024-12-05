@@ -10,6 +10,7 @@ import kotlinx.collections.immutable.toPersistentList
 import net.minecraft.client.util.InputUtil
 import net.minecraft.item.Item
 import net.minecraft.text.Text
+import top.fifthlight.touchcontroller.asset.Texts
 import top.fifthlight.touchcontroller.config.ItemsListScreen
 import top.fifthlight.touchcontroller.config.ObservableValue
 
@@ -19,11 +20,12 @@ class ItemsListController(
     override fun option(): Option<List<Item>> = option
 
     override fun formatValue(): Text = option().pendingValue().let {
-        when (it.size) {
-            0 -> Text.literal("No item")
-            1 -> Text.literal("One item")
-            else -> Text.literal("${it.size} items")
-        }
+        Text.translatable(
+            when (it.size) {
+                0, 1 -> Texts.CONFIG_CONTROLLER_ITEMS_LIST_VALUE_SINGLE
+                else -> Texts.CONFIG_CONTROLLER_ITEMS_LIST_VALUE_MULTIPLE
+            }, it.size
+        )
     }
 
     override fun provideWidget(screen: YACLScreen, widgetDimension: Dimension<Int>?): AbstractWidget =

@@ -17,6 +17,7 @@ import net.minecraft.client.gui.widget.Positioner
 import net.minecraft.text.Text
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import top.fifthlight.touchcontroller.annoations.DontTranslate
 import top.fifthlight.touchcontroller.asset.Texts
 import top.fifthlight.touchcontroller.config.widget.BorderLayout
 import top.fifthlight.touchcontroller.config.widget.LayoutEditor
@@ -130,7 +131,7 @@ private class CustomTab(
                 setColumnSpacing(padding)
                 setRowSpacing(padding)
                 createAdder(2).apply {
-                    ButtonWidget.builder(Text.of("Cancel")) {
+                    ButtonWidget.builder(@DontTranslate Text.of("Cancel")) {
                         screen.cancelOrReset()
                         updateButtons()
                     }.apply {
@@ -149,7 +150,7 @@ private class CustomTab(
                         undoButton = it
                         add(it)
                     }
-                    ButtonWidget.builder(Text.literal("Finish")) {
+                    ButtonWidget.builder(@DontTranslate Text.literal("Finish")) {
                         screen.finishOrSave()
                         updateButtons()
                     }.apply {
@@ -161,7 +162,7 @@ private class CustomTab(
                 }
                 setSecondElement(this) { _, _, _ -> refreshPositions() }
             }
-            ButtonWidget.Builder(Text.literal("Save")) {
+            ButtonWidget.Builder(@DontTranslate Text.literal("Save")) {
                 screen.cancelOrReset()
             }.build()
         }.also { rightPanel ->
