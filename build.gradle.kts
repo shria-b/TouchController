@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.fabric.loom).apply(false)
     alias(libs.plugins.jetbrains.kotlin.jvm).apply(false)
+    alias(libs.plugins.jetbrains.kotlin.serialization).apply(false)
+    alias(libs.plugins.modrinth.minotaur).apply(false)
 }
 
 subprojects {

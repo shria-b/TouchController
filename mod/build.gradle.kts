@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.fabric.loom)
     alias(libs.plugins.jetbrains.kotlin.jvm)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.modrinth.minotaur)
 }
 
 version = "0.0.1"
@@ -10,6 +11,20 @@ group = "top.fifthlight.touchcontroller"
 var modName = "TouchController"
 base {
     archivesName = modName
+}
+
+modrinth {
+    token.set(System.getenv("MODRINTH_TOKEN"))
+    projectId.set("touchcontroller")
+    versionType.set("alpha")
+    uploadFile.set(tasks.remapJar)
+    gameVersions.addAll("1.23.3")
+    dependencies {
+        required.project("fabric-api")
+        required.version("fabric-language-kotlin", libs.versions.fabric.language.kotlin.get())
+        optional.version("modmenu", libs.versions.modmenu.get())
+        required.version("yacl", libs.versions.yacl.get())
+    }
 }
 
 fun DependencyHandlerScope.includeAndImplementation(dependencyNotation: Any) {
