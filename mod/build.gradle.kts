@@ -18,7 +18,7 @@ modrinth {
     projectId.set("touchcontroller")
     versionType.set("alpha")
     uploadFile.set(tasks.remapJar)
-    gameVersions.addAll("1.21.3")
+    gameVersions.addAll(libs.versions.minecraft.get())
     dependencies {
         required.project("fabric-api")
         required.version("fabric-language-kotlin", libs.versions.fabric.language.kotlin.get())
