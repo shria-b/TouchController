@@ -70,6 +70,7 @@ class ItemsListScreen(
                 ButtonWidget.builder(Texts.ITEMS_REMOVE_TITLE) {
                     itemsList.selectedIndex.value?.let {
                         items.value = items.value.removeAt(it)
+                        itemsList.selectedIndex.value = null
                     }
                 }.apply {
                     tooltip(Tooltip.of(Texts.ITEMS_REMOVE_TOOLTIP))
