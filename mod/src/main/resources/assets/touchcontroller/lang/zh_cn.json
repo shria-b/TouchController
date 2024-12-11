@@ -35,8 +35,13 @@
   "touchcontroller.screen.options.remove.tooltip": "删除选中的组件。",
 
   "touchcontroller.screen.options.widget.general.property.top.left": "锚点：左上角",
+  "touchcontroller.screen.options.widget.general.property.top.center": "锚点：中上",
   "touchcontroller.screen.options.widget.general.property.top.right": "锚点：右上角",
+  "touchcontroller.screen.options.widget.general.property.center.left": "锚点：左中",
+  "touchcontroller.screen.options.widget.general.property.center.center": "锚点：中心",
+  "touchcontroller.screen.options.widget.general.property.center.right": "锚点：右中",
   "touchcontroller.screen.options.widget.general.property.bottom.left": "锚点：左下角",
+  "touchcontroller.screen.options.widget.general.property.bottom.center": "锚点：中下",
   "touchcontroller.screen.options.widget.general.property.bottom.right": "锚点：右下角",
   "touchcontroller.screen.options.widget.general.property.opacity": "透明度: %s%%",
 
