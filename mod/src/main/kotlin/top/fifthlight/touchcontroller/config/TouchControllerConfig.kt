@@ -49,18 +49,22 @@ typealias TouchControllerLayout = PersistentList<ControllerWidget>
 val defaultTouchControllerLayout: TouchControllerLayout = persistentListOf(
     DPad(
         align = Align.LEFT_BOTTOM,
-        offset = IntOffset(8, 8)
+        offset = IntOffset(8, 8),
+        opacity = 0.6f
     ),
     JumpButton(
         align = Align.RIGHT_BOTTOM,
-        offset = IntOffset(42, 42)
+        offset = IntOffset(42, 68),
+        opacity = 0.6f
     ),
     PauseButton(
         align = Align.CENTER_TOP,
-        offset = IntOffset(-9, 0)
+        offset = IntOffset(-9, 0),
+        opacity = 0.6f
     ),
     ChatButton(
         align = Align.CENTER_TOP,
-        offset = IntOffset(9, 0)
+        offset = IntOffset(9, 0),
+        opacity = 0.6f
     )
 )

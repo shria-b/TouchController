@@ -1,5 +1,6 @@
 package top.fifthlight.touchcontroller.config.widget
 
+import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder
@@ -16,6 +17,8 @@ import top.fifthlight.touchcontroller.config.TouchControllerConfigHolder
 import top.fifthlight.touchcontroller.config.TouchControllerLayout
 import top.fifthlight.touchcontroller.config.replaceItem
 import top.fifthlight.touchcontroller.control.ControllerWidget
+import top.fifthlight.touchcontroller.ext.withBlend
+import top.fifthlight.touchcontroller.ext.withBlendFunction
 import top.fifthlight.touchcontroller.ext.withTranslate
 import top.fifthlight.touchcontroller.layout.Align.*
 import top.fifthlight.touchcontroller.layout.Context
@@ -50,18 +53,34 @@ class LayoutEditor(
                     scale = client.window.scaleFactor.toFloat(),
                     pointers = mutableMapOf(),
                     config = config,
+                    opacity = widgetConfig.opacity,
                     designMode = true,
                     result = ContextResult()
                 )
-                context.withAlign(
-                    align = widgetConfig.align,
-                    offset = widgetConfig.offset,
-                    size = widgetConfig.size()
+                context.transformDrawQueue(
+                    drawTransform = { draw ->
+                        withBlend {
+                            withBlendFunction(
+                                srcFactor = GlStateManager.SrcFactor.SRC_ALPHA,
+                                dstFactor = GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA,
+                                srcAlpha = GlStateManager.SrcFactor.ONE,
+                                dstAlpha = GlStateManager.DstFactor.ZERO
+                            ) {
+                                draw()
+                            }
+                        }
+                    }
                 ) {
-                    widgetConfig.layout(this)
-                    if (selectedConfig.value == widgetConfig) {
-                        this.drawQueue.enqueue { drawContext, _ ->
-                            drawContext.drawBorder(0, 0, size.width, size.height, Colors.WHITE)
+                    withAlign(
+                        align = widgetConfig.align,
+                        offset = widgetConfig.offset,
+                        size = widgetConfig.size()
+                    ) {
+                        widgetConfig.layout(this)
+                        if (selectedConfig.value == widgetConfig) {
+                            this.drawQueue.enqueue { drawContext, _ ->
+                                drawContext.drawBorder(0, 0, size.width, size.height, Colors.WHITE)
+                            }
                         }
                     }
                 }

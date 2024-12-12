@@ -107,6 +107,7 @@ data class Context(
     val size: IntSize,
     val screenOffset: IntOffset,
     val scale: Float,
+    val opacity: Float = 1f,
     val pointers: MutableMap<Int, Pointer> = mutableMapOf(),
     val result: ContextResult = ContextResult(),
     val status: ContextStatus = ContextStatus(),
@@ -120,8 +121,8 @@ data class Context(
         get() = client.window
 
     inline fun <reified T> transformDrawQueue(
-        crossinline drawTransform: DrawContext.(block: () -> Unit) -> Unit,
-        crossinline contextTransform: Context.(DrawQueue) -> Context,
+        crossinline drawTransform: DrawContext.(block: () -> Unit) -> Unit = { it() },
+        crossinline contextTransform: Context.(DrawQueue) -> Context = { copy(drawQueue = it) },
         crossinline block: Context.() -> T
     ): T {
         val newQueue = DrawQueue()
@@ -181,6 +182,17 @@ data class Context(
 
     inline fun <reified T> withRect(rect: IntRect, crossinline block: Context.() -> T): T =
         withRect(rect.offset, rect.size, block)
+
+    inline fun <reified T> withOpacity(opacity: Float, crossinline block: Context.() -> T): T =
+        transformDrawQueue(
+            contextTransform = { newQueue ->
+                copy(
+                    drawQueue = newQueue,
+                    opacity = this.opacity * opacity
+                )
+            },
+            block = block
+        )
 
     val Pointer.rawOffset: Offset
         get() = position * window.size
