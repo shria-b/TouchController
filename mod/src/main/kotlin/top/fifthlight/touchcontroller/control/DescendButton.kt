@@ -18,41 +18,43 @@ import kotlin.math.round
 @Serializable
 @SerialName("descend_button")
 data class DescendButton(
-    val size:Float = 2f,
-    val classic : Boolean = true,
+    val size: Float = 2f,
+    val classic: Boolean = true,
     override val align: Align = Align.RIGHT_BOTTOM,
     override val offset: IntOffset = IntOffset.ZERO,
     override val opacity: Float = 1f
-) :ControllerWidget(){
-    companion object{
+) : ControllerWidget() {
+    companion object {
         private val _properties = persistentListOf<Property<DescendButton, *, *>>(
             FloatProperty(
-                getValue = {it.size},
-                setValue = {config,value -> config.copy(size = value)  },
+                getValue = { it.size },
+                setValue = { config, value -> config.copy(size = value) },
                 startValue = .5f,
                 endValue = 4f,
                 messageFormatter = {
                     Text.translatable(
                         Texts.OPTIONS_WIDGET_DESCEND_BUTTON_PROPERTY_SIZE,
-                        round(it*100f).toString()
+                        round(it * 100f).toString()
                     )
                 }
             ),
             BooleanProperty(
-                getValue = {it.classic},
-                setValue = {config,value ->config.copy(classic = value)},
+                getValue = { it.classic },
+                setValue = { config, value -> config.copy(classic = value) },
                 message = Texts.OPTIONS_WIDGET_DESCEND_BUTTON_PROPERTY_CLASSIC
             )
         )
 
     }
+
     @Suppress("UNCHECKED_CAST")
     @Transient
     override val properties = super.properties + _properties as PersistentList<Property<ControllerWidget, *, *>>
 
     private val textureSize
         get() = if (classic) 18 else 22
-    override fun size(): IntSize = IntSize((size*textureSize).toInt())
+
+    override fun size(): IntSize = IntSize((size * textureSize).toInt())
 
     override fun layout(context: Context) {
         context.DescendButton(config = this)

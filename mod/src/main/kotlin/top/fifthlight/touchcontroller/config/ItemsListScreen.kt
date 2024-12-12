@@ -44,7 +44,7 @@ class ItemsListScreen(
             width = ItemStacksGrid.ITEM_SIZE * 12,
             message = Texts.ITEMS_SCREEN_ITEMS_LIST_MESSAGE,
             itemStacks = Registries.ITEM.map { ItemStack(it) }.toPersistentList(),
-            onStackClicked = {_, stack ->
+            onStackClicked = { _, stack ->
                 if (stack.item !in items.value) {
                     items.value = items.value.add(stack.item)
                 }

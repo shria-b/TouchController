@@ -9,10 +9,10 @@ import net.minecraft.client.gui.widget.ClickableWidget
 import net.minecraft.client.gui.widget.ElementListWidget
 import top.fifthlight.touchcontroller.config.ObservableValue
 import top.fifthlight.touchcontroller.config.TouchControllerLayout
+import top.fifthlight.touchcontroller.config.replaceItem
 import top.fifthlight.touchcontroller.control.ControllerWidget
 import top.fifthlight.touchcontroller.control.ControllerWidget.Property
 import top.fifthlight.touchcontroller.control.ControllerWidget.PropertyWidget
-import top.fifthlight.touchcontroller.config.replaceItem
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 
 class PropertiesPanelEntry<Property : ControllerWidget.Property<Config, *, Widget>, Widget : ClickableWidget, Config : ControllerWidget>(
@@ -62,7 +62,10 @@ class PropertiesPanel(
 ) : ElementListWidget<PropertiesPanelEntry<*, *, *>>(
     client, width, height, y, itemHeight,
 ) {
-    private fun <Config : ControllerWidget, Widget: ClickableWidget> createEntry(config: Config, property: Property<Config, *, Widget>) =
+    private fun <Config : ControllerWidget, Widget : ClickableWidget> createEntry(
+        config: Config,
+        property: Property<Config, *, Widget>
+    ) =
         PropertiesPanelEntry(
             initialConfig = config,
             widgetSize = IntSize(rowWidth, itemHeight),

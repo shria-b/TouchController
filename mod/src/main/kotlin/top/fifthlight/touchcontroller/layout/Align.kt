@@ -17,31 +17,39 @@ enum class Align {
     fun alignOffset(windowSize: IntSize, size: IntSize, offset: IntOffset): IntOffset {
         return when (this) {
             LEFT_TOP -> offset
+
             CENTER_TOP -> IntOffset(
                 x = (windowSize.width - size.width) / 2 + offset.x,
                 y = offset.y
             )
+
             RIGHT_TOP -> IntOffset(
                 x = windowSize.width - size.width - offset.x,
                 y = offset.y,
             )
+
             LEFT_CENTER -> IntOffset(
                 x = offset.x,
                 y = (windowSize.height - size.height) / 2 + offset.y
             )
+
             CENTER_CENTER -> (windowSize - size) / 2 + offset
+
             RIGHT_CENTER -> IntOffset(
                 x = windowSize.width - size.width - offset.x,
                 y = (windowSize.height - size.height) / 2 + offset.y
             )
+
             LEFT_BOTTOM -> IntOffset(
                 x = offset.x,
                 y = windowSize.height - size.height - offset.y,
             )
+
             CENTER_BOTTOM -> IntOffset(
                 x = (windowSize.width - size.width) / 2 + offset.x,
                 y = windowSize.height - size.height - offset.y,
             )
+
             RIGHT_BOTTOM -> IntOffset(
                 x = windowSize.width - size.width - offset.x,
                 y = windowSize.height - size.height - offset.y,

@@ -46,6 +46,7 @@ data class PauseButton(
         )
 
     }
+
     @Suppress("UNCHECKED_CAST")
     @Transient
     override val properties = super.properties + _properties as PersistentList<Property<ControllerWidget, *, *>>

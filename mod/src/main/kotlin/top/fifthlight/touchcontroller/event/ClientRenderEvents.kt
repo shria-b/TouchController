@@ -3,6 +3,8 @@ package top.fifthlight.touchcontroller.event
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
 import net.minecraft.client.MinecraftClient
+import top.fifthlight.touchcontroller.event.ClientRenderEvents.EndRenderTick
+import top.fifthlight.touchcontroller.event.ClientRenderEvents.StartRenderTick
 
 object ClientRenderEvents {
     val START_TICK: Event<StartRenderTick> = EventFactory.createArrayBacked(

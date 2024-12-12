@@ -79,14 +79,22 @@ fun openConfigScreen(parent: Screen): Screen {
                 name(Texts.OPTIONS_CATEGORY_ITEMS_PROJECTILE_SHOW_CROSSHAIR_TITLE)
                 description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_PROJECTILE_SHOW_CROSSHAIR_DESCRIPTION))
                 controller(textSwitch())
-                binding(true, { config.projectileShowCrosshair }, { config = config.copy(projectileShowCrosshair = it) })
+                binding(
+                    true,
+                    { config.projectileShowCrosshair },
+                    { config = config.copy(projectileShowCrosshair = it) }
+                )
             }
 
             val rangedWeaponShowCrosshair by rootOptions.registering {
                 name(Texts.OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_SHOW_CROSSHAIR_TITLE)
                 description(OptionDescription.of(Texts.OPTIONS_CATEGORY_ITEMS_RANGED_WEAPONS_SHOW_CROSSHAIR_DESCRIPTION))
                 controller(textSwitch())
-                binding(true, { config.rangedWeaponShowCrosshair }, { config = config.copy(rangedWeaponShowCrosshair = it) })
+                binding(
+                    true,
+                    { config.rangedWeaponShowCrosshair },
+                    { config = config.copy(rangedWeaponShowCrosshair = it) }
+                )
             }
 
             val foodUsable by rootOptions.registering {

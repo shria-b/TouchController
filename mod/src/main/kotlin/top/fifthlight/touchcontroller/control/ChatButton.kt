@@ -14,16 +14,17 @@ import top.fifthlight.touchcontroller.layout.Context
 import top.fifthlight.touchcontroller.proxy.data.IntOffset
 import top.fifthlight.touchcontroller.proxy.data.IntSize
 import kotlin.math.round
+
 @Serializable
 @SerialName("chat_button")
-data class ChatButton (
+data class ChatButton(
     val size: Float = 1f,
     val classic: Boolean = true,
     override val align: Align = Align.CENTER_TOP,
     override val offset: IntOffset = IntOffset.ZERO,
     override val opacity: Float = 1f
-):ControllerWidget(){
-    companion object{
+) : ControllerWidget() {
+    companion object {
         private val _properties = persistentListOf<Property<ChatButton, *, *>>(
             FloatProperty(
                 getValue = { it.size },
@@ -33,7 +34,7 @@ data class ChatButton (
                 messageFormatter = {
                     Text.translatable(
                         Texts.OPTIONS_WIDGET_CHAT_BUTTON_PROPERTY_SIZE,
-                        round(it*100f).toString()
+                        round(it * 100f).toString()
                     )
                 }
             ),
@@ -44,12 +45,14 @@ data class ChatButton (
             )
         )
     }
+
     @Suppress("UNCHECKED_CAST")
     @Transient
-    override val properties = super.properties + _properties as PersistentList<Property<ControllerWidget,*,*>>
+    override val properties = super.properties + _properties as PersistentList<Property<ControllerWidget, *, *>>
 
     private val textureSize
         get() = 18
+
     override fun size(): IntSize = IntSize((size * textureSize).toInt())
 
     override fun layout(context: Context) {

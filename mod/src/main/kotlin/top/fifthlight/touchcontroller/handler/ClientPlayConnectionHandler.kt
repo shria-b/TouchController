@@ -9,7 +9,7 @@ import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.SocketProxyHolder
 import top.fifthlight.touchcontroller.asset.Texts
 
-class ClientPlayConnectionHandler: ClientPlayConnectionEvents.Join, KoinComponent {
+class ClientPlayConnectionHandler : ClientPlayConnectionEvents.Join, KoinComponent {
     private val proxyHandler: SocketProxyHolder by inject()
 
     override fun onPlayReady(handler: ClientPlayNetworkHandler, sender: PacketSender, client: MinecraftClient) {

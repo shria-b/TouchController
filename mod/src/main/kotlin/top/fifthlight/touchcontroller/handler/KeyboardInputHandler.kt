@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.event.KeyboardInputEvents
 import top.fifthlight.touchcontroller.model.ControllerHudModel
 
-class KeyboardInputHandler: KeyboardInputEvents.EndInputTick, KoinComponent {
+class KeyboardInputHandler : KeyboardInputEvents.EndInputTick, KoinComponent {
     private val controllerHudModel: ControllerHudModel by inject()
     private val client: MinecraftClient by inject()
 

@@ -76,9 +76,11 @@ class WorldRendererHandler : WorldRenderEvents.Start, BeforeBlockOutline, HudRen
                                 position = message.position
                             )
                         }
+
                         is RemovePointerMessage -> {
                             touchStateModel.removePointer(message.index)
                         }
+
                         ClearPointerMessage -> touchStateModel.clearPointer()
                     }
                 }

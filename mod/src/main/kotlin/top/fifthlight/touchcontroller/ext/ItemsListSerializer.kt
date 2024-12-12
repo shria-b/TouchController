@@ -20,6 +20,7 @@ value class ItemsList(val items: PersistentList<Item> = persistentListOf())
 
 class ItemsListSerializer : KSerializer<ItemsList> {
     private class PersistentListDescriptor : SerialDescriptor by serialDescriptor<PersistentList<Item>>()
+
     private val itemSerializer = serializer<String>()
 
     override val descriptor: SerialDescriptor = PersistentListDescriptor()

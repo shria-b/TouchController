@@ -21,9 +21,11 @@ fun Context.SwipeButton(
                 newPointer = true
                 clicked = true
             }
+
             is PointerState.SwipeButton -> {
                 clicked = true
             }
+
             else -> {}
         }
     }
@@ -48,11 +50,13 @@ fun Context.Button(
                 newPointer = true
                 clicked = true
             }
+
             is PointerState.Button -> {
                 if (state.id == id) {
                     clicked = true
                 }
             }
+
             else -> {}
         }
     }

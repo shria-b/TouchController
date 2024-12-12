@@ -19,7 +19,7 @@ class ItemStacksGrid(
     height: Int = 0,
     message: Text,
     itemStacks: PersistentList<ItemStack> = persistentListOf(),
-    private val onStackClicked: (Int, ItemStack) -> Unit = {_, _ -> }
+    private val onStackClicked: (Int, ItemStack) -> Unit = { _, _ -> }
 ) : ClickableWidget(x, y, width, height, message) {
     companion object {
         const val ITEM_SIZE = 18
@@ -29,7 +29,7 @@ class ItemStacksGrid(
 
     private var scrollRows = 0
         set(value) {
-            field = value.coerceIn(0 .. maxRows)
+            field = value.coerceIn(0..maxRows)
         }
 
     private val maxRows: Int
@@ -73,7 +73,11 @@ class ItemStacksGrid(
             for (column in 0 until columns) {
                 val index = (row + scrollRows) * columns + column
                 val itemStack = itemStacks.getOrNull(index) ?: continue
-                context.drawItemWithoutEntity(itemStack, x + column * ITEM_SIZE + ITEM_PADDING, y + row * ITEM_SIZE + ITEM_PADDING)
+                context.drawItemWithoutEntity(
+                    itemStack,
+                    x + column * ITEM_SIZE + ITEM_PADDING,
+                    y + row * ITEM_SIZE + ITEM_PADDING
+                )
             }
         }
     }
@@ -88,6 +92,7 @@ class ItemStacksGrid(
             verticalAmount > 0 -> {
                 scrollRows -= 1
             }
+
             verticalAmount < 0 -> {
                 scrollRows += 1
             }

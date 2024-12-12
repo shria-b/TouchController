@@ -6,7 +6,7 @@ import org.koin.core.component.inject
 import top.fifthlight.touchcontroller.event.ClientHandleInputEvents
 import top.fifthlight.touchcontroller.model.ControllerHudModel
 
-class ClientInputHandler: ClientHandleInputEvents.HandleInput, KoinComponent {
+class ClientInputHandler : ClientHandleInputEvents.HandleInput, KoinComponent {
     private val controllerHudModel: ControllerHudModel by inject()
 
     override fun onHandleInput(client: MinecraftClient, context: ClientHandleInputEvents.InputContext) {

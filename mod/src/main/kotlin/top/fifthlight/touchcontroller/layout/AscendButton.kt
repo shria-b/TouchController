@@ -4,13 +4,13 @@ import top.fifthlight.touchcontroller.asset.Textures
 import top.fifthlight.touchcontroller.control.AscendButton
 
 fun Context.AscendButton(config: AscendButton) {
-    if (designMode || state != HudState.NORMAL){
-        val (_, clicked) = Button(id = "ascend") {clicked->
+    if (designMode || state != HudState.NORMAL) {
+        val (_, clicked) = Button(id = "ascend") { clicked ->
             if (config.classic) {
                 Texture(id = Textures.ASCEND_CLASSIC)
             } else if (designMode) {
                 Texture(id = Textures.FLYING_ASCEND)
-            } else{
+            } else {
                 when (Pair(state, clicked)) {
                     Pair(HudState.SWIMMING, false) -> Texture(id = Textures.WATER_ASCEND)
                     Pair(HudState.SWIMMING, true) -> Texture(id = Textures.WATER_ASCEND_ACTIVE)
