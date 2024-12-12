@@ -43,7 +43,7 @@
   "touchcontroller.screen.options.widget.general.property.bottom.left": "锚点：左下角",
   "touchcontroller.screen.options.widget.general.property.bottom.center": "锚点：中下",
   "touchcontroller.screen.options.widget.general.property.bottom.right": "锚点：右下角",
-  "touchcontroller.screen.options.widget.general.property.opacity": "透明度: %s%%",
+  "touchcontroller.screen.options.widget.general.property.opacity": "不透明度: %s%%",
 
   "touchcontroller.screen.options.widget.dpad.property.classic": "经典外观",
   "touchcontroller.screen.options.widget.dpad.property.size": "按键大小: %s%%",
