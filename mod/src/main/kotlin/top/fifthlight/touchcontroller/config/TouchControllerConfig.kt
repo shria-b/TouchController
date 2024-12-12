@@ -57,6 +57,16 @@ val defaultTouchControllerLayout: TouchControllerLayout = persistentListOf(
         offset = IntOffset(42, 68),
         opacity = 0.6f
     ),
+    AscendButton(
+        align = Align.RIGHT_BOTTOM,
+        offset = IntOffset(42, 116),
+        opacity = 0.6f
+    ),
+    DescendButton(
+        align = Align.RIGHT_BOTTOM,
+        offset = IntOffset(42, 20),
+        opacity = 0.6f
+    ),
     PauseButton(
         align = Align.CENTER_TOP,
         offset = IntOffset(-9, 0),
