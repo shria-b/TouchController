@@ -25,6 +25,7 @@ data class TouchControllerConfig(
     val disableMouse: Boolean = true,
     val disableMouseLock: Boolean = false,
     val disableCrosshair: Boolean = true,
+    val showPointers: Boolean = false,
     val enableTouchEmulation: Boolean = false,
     val projectileShowCrosshair: Boolean = true,
     val rangedWeaponShowCrosshair: Boolean = true,
@@ -34,7 +35,6 @@ data class TouchControllerConfig(
     val projectileUsable: Boolean = true,
     val rangedWeaponUsable: Boolean = true,
     val equippableUsable: Boolean = true,
-    val showPointers: Boolean = false,
     val crosshair: CrosshairConfig = CrosshairConfig()
 )
 

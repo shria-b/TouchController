@@ -35,7 +35,7 @@ fun openConfigScreen(parent: Screen): Screen {
                 name(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_LOCK_TITLE)
                 description(OptionDescription.of(Texts.OPTIONS_CATEGORY_GLOBAL_DISABLE_MOUSE_LOCK_DESCRIPTION))
                 controller(textSwitch())
-                binding(true, { config.disableMouseLock }, { config = config.copy(disableMouseLock = it) })
+                binding(false, { config.disableMouseLock }, { config = config.copy(disableMouseLock = it) })
             }
 
             val disableCrosshair by rootOptions.registering {
