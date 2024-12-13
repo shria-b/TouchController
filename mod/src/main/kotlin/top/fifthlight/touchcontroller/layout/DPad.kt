@@ -230,7 +230,7 @@ fun Context.DPad(config: DPad) {
         when (config.extraButton) {
             DPadExtraButton.NONE -> {}
             DPadExtraButton.SNEAK -> RawSneakButton(dpad = true, classic = config.classic, size = smallDisplaySize)
-            DPadExtraButton.JUMP -> RawJumpButton(classic = config.classic, size = smallDisplaySize)
+            DPadExtraButton.JUMP -> RawJumpButton(classic = config.classic, size = smallDisplaySize, swipe = true)
         }
     }
 }
