@@ -9,10 +9,7 @@ import top.fifthlight.touchcontroller.event.KeyboardInputEvents;
 
 @Mixin(KeyboardInput.class)
 public abstract class KeyboardInputMixin {
-    @Inject(
-            at = @At("TAIL"),
-            method = "tick"
-    )
+    @Inject(at = @At("TAIL"), method = "tick(ZFLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V")
     private void tick(boolean slowDown, float slowDownFactor, CallbackInfo info) {
         KeyboardInputEvents.INSTANCE.getEND_INPUT_TICK().invoker().onEndTick((KeyboardInput) (Object) this);
     }
