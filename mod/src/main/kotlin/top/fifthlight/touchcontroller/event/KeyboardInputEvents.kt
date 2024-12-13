@@ -1,22 +1,19 @@
-package top.fifthlight.touchcontroller.event
+package top.fifthlight.touchcontroller.mixin;
 
-import net.fabricmc.fabric.api.event.Event
-import net.fabricmc.fabric.api.event.EventFactory
-import net.minecraft.client.input.KeyboardInput
-import top.fifthlight.touchcontroller.event.KeyboardInputEvents.EndInputTick
+import net.minecraft.client.input.KeyboardInput;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.fifthlight.touchcontroller.event.KeyboardInputEvents;
 
-object KeyboardInputEvents {
-    val END_INPUT_TICK: Event<EndInputTick> = EventFactory.createArrayBacked(
-        EndInputTick::class.java
-    ) { callbacks: Array<EndInputTick> ->
-        EndInputTick { input ->
-            for (event in callbacks) {
-                event.onEndTick(input)
-            }
-        }
-    }
-
-    fun interface EndInputTick {
-        fun onEndTick(input: KeyboardInput)
+@Mixin(KeyboardInput.class)
+public abstract class KeyboardInputMixin {
+    @Inject(
+            at = @At("TAIL"),
+            method = "tick"
+    )
+    private void tick(boolean slowDown, float slowDownFactor, CallbackInfo info) {
+        KeyboardInputEvents.END_INPUT_TICK.invoker().onEndTick((KeyboardInput) (Object) this);
     }
 }
