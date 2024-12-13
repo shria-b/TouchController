@@ -62,5 +62,6 @@ object TouchController : ClientModInitializer {
         ClientRenderEvents.START_TICK.register(get())
         ClientHandleInputEvents.HANDLE_INPUT.register(get())
         ClientPlayConnectionEvents.JOIN.register(get())
+
     }
 }
